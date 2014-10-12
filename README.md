@@ -18,7 +18,7 @@ Typefolio is a template for agencies/designers/photographers/etc.
 ## License Information
 
 * Feel free to use it in a personal/commercial project. 
-* No resell in template/theme markets allowed!
+* Please do not resell in template/theme markets!
 * I've purchased the images from various sources (mainly Shutterstock), and I don't have extended licenses for most of them. In other words, **you can't use the placeholder images as-is**.
 
 
