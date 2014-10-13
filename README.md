@@ -6,10 +6,16 @@ typefolio
 Typefolio is a template for agencies/designers/photographers/etc. 
 
 
+## Preview
+
+[http://preview.typebig.com/typefolio-html/](http://preview.typebig.com/typefolio-html/)
+
+
 
 ## Features
 * Valid W3C HTML5
 * Fully responsive
+* Custom-built Responsive CSS Grid System
 * Custom-built JS menu & sticky sidebar
 * Lightweight
 
