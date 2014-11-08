@@ -10,6 +10,8 @@ Typefolio is a template for agencies/designers/photographers/etc.
 
 [http://preview.typebig.com/typefolio-html/](http://preview.typebig.com/typefolio-html/)
 
+![Screenshot](http://preview.typebig.com/github-preview-images/typefolio_github_preview.png)
+
 
 
 ## Features
