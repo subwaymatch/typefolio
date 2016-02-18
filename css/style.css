@@ -578,7 +578,7 @@ b, strong { font-weight: bold; }
 			3.2 Header
 	---------------------------------------------------*/
 	
-	#header .logo-wrap { padding: 50px 0 50px 0; }
+	#header .logo-wrap { padding: 20px 0 20px 0; }
 
 	#header h1 {
 		font-size: 24px;
