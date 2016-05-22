@@ -31,7 +31,6 @@ Typefolio is a template for agencies/designers/photographers/etc.
 
 
 
-## Other
+## Author
 
-I will try to continue updating this readme, and will eventually add a doc file for this template. 
 Feel free to e-mail me at [subwaymatch@gmail.com](mailto:subwaymatch@gmail.com) for any questions. 
