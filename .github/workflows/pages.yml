@@ -1,0 +1,113 @@
+name: Pages
+
+# Publishes main to the site root on gh-pages, but only once Checks has passed
+# on that commit. A red main never reaches the live site.
+#
+# PR previews live in pr-<number>/ directories on the same branch, written by
+# pr-preview.yml. This job leaves them alone.
+
+on:
+  workflow_run:
+    workflows: [Checks]
+    types: [completed]
+    branches: [main]
+  # For the first deploy, or to republish without a new commit.
+  workflow_dispatch:
+
+# Shared with pr-preview.yml: only one job may write to gh-pages at a time.
+concurrency:
+  group: gh-pages
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Publish main
+    # workflow_dispatch has no workflow_run payload, so allow it through.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Assemble the site
+        run: |
+          chmod +x .github/scripts/assemble-site.sh
+          .github/scripts/assemble-site.sh /tmp/site
+
+      - name: Publish to gh-pages
+        run: |
+          set -euo pipefail
+
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            git fetch --depth=1 origin gh-pages
+            git worktree add /tmp/ghp gh-pages
+          else
+            git worktree add --detach /tmp/ghp
+            git -C /tmp/ghp checkout --orphan gh-pages
+            git -C /tmp/ghp rm -rf --quiet . 2>/dev/null || true
+          fi
+
+          # Replace the site at the root, leaving every pr-*/ preview in place.
+          find /tmp/ghp -mindepth 1 -maxdepth 1 \
+            ! -name '.git' ! -name 'pr-*' -exec rm -rf {} +
+          cp -R /tmp/site/. /tmp/ghp/
+
+          cd /tmp/ghp
+          git add -A
+          if git diff --staged --quiet; then
+            echo "Site is unchanged; nothing to publish."
+            exit 0
+          fi
+          git commit -m "Publish ${GITHUB_SHA::7}"
+          git push origin gh-pages
+
+      - name: Wait for the deploy to go live
+        id: live
+        run: |
+          set -euo pipefail
+          url="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+          for i in $(seq 1 40); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' -L "$url" || true)
+            if [ "$code" = "200" ]; then
+              echo "Live after $((i * 15))s."
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "Site did not answer 200 within 10 minutes." >&2
+          exit 1
+
+      # Confirms the published site is reachable and still works. The headers
+      # suite skips its header assertions unless EXPECT_HEADERS is set, which
+      # it is not here: GitHub Pages cannot set response headers.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+
+      - name: Smoke-test the live site
+        env:
+          BASE_URL: ${{ steps.live.outputs.url }}
+        run: |
+          npm run test:headers
+          npm run test:behavior
+
+      - name: Summarise
+        if: always()
+        run: echo "Published ${{ steps.live.outputs.url }}" >> "$GITHUB_STEP_SUMMARY"

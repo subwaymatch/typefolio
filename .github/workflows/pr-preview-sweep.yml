@@ -1,0 +1,95 @@
+name: PR preview sweep
+
+# A safety net for previews the close event never cleaned up: a workflow run
+# that failed, a branch force-deleted before the pull request closed, or a
+# preview created before this cleanup existed.
+#
+# Compares the pr-*/ directories on gh-pages against the open pull requests and
+# removes any that no longer has one.
+
+on:
+  schedule:
+    # Sundays, 04:17 UTC. Off the hour, because everything runs on the hour.
+    - cron: '17 4 * * 0'
+  workflow_dispatch:
+
+concurrency:
+  group: gh-pages
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  sweep:
+    name: Remove orphaned previews
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: List open pull requests
+        id: open
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prs = await github.paginate(github.rest.pulls.list, {
+              ...context.repo, state: 'open', per_page: 100,
+            });
+            const numbers = prs.map(p => p.number);
+            core.info(`Open pull requests: ${numbers.join(', ') || 'none'}`);
+            return numbers.join(' ');
+          result-encoding: string
+
+      - name: Sweep gh-pages
+        env:
+          OPEN_PRS: ${{ steps.open.outputs.result }}
+        run: |
+          set -euo pipefail
+
+          if ! git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            echo "No gh-pages branch yet; nothing to sweep."
+            exit 0
+          fi
+
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git fetch --depth=1 origin gh-pages
+          git worktree add /tmp/ghp gh-pages
+          cd /tmp/ghp
+
+          removed=()
+          for dir in pr-*/; do
+            [ -d "$dir" ] || continue
+            number="${dir#pr-}"
+            number="${number%/}"
+
+            keep=false
+            for open in $OPEN_PRS; do
+              if [ "$open" = "$number" ]; then keep=true; break; fi
+            done
+
+            if [ "$keep" = false ]; then
+              echo "Removing stale preview for #${number}"
+              rm -rf "$dir"
+              removed+=("#${number}")
+            fi
+          done
+
+          if [ ${#removed[@]} -eq 0 ]; then
+            echo "Nothing stale." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          git add -A
+          if git diff --staged --quiet; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+
+          git commit -m "Sweep stale previews: ${removed[*]}"
+          git push origin gh-pages
+          echo "Removed ${removed[*]}" >> "$GITHUB_STEP_SUMMARY"
