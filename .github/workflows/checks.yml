@@ -42,6 +42,10 @@ jobs:
 
       - name: Run checks
         id: checks
+        # shell: bash gets `-o pipefail`, which the default `bash -e` does not
+        # have. Without it the pipe into tee swallows the exit code and this
+        # step passes however badly the suite fails.
+        shell: bash
         run: npm test 2>&1 | tee /tmp/checks.log
 
       - name: Summarise
