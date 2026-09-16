@@ -1,0 +1,19 @@
+# macOS / Windows cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.idea/
+.vscode/
+*.sublime-workspace
+*.swp
+
+# Dependencies and build output, if you add a toolchain
+node_modules/
+dist/
+.cache/
+
+# Logs
+*.log
+npm-debug.log*

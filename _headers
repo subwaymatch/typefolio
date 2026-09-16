@@ -1,0 +1,42 @@
+# Cloudflare Pages headers
+# https://developers.cloudflare.com/pages/configuration/headers/
+#
+# This file has to sit in the build output directory. The Pages project uses
+# no build command and the repository root as its output directory, so it
+# belongs here, next to index.html.
+#
+# Netlify reads the same format, so this file works there unchanged.
+
+/*
+  # The template loads nothing from a third party, and has no inline styles
+  # or inline scripts, so 'self' is enough everywhere. The one exception is
+  # the OpenStreetMap iframe on the contact page.
+  Content-Security-Policy: default-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; frame-src https://www.openstreetmap.org; connect-src 'self'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  # Nothing here needs a camera, a microphone or a location.
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin
+
+# HTML is cheap and changes often: always revalidate so an edit is live at once.
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+# The font filename identifies the font, so it can be cached forever.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Images, CSS and JS are not content-hashed, so they get a short cache and
+# serve stale while revalidating. If you add a build step that fingerprints
+# these filenames, raise this to immutable like the fonts above.
+/images/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=604800
+
+/css/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/js/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400

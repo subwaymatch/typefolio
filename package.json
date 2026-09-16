@@ -1,0 +1,21 @@
+{
+  "name": "typefolio",
+  "version": "2.0.0",
+  "description": "A typography-led portfolio template. Static HTML, CSS and one small script.",
+  "private": true,
+  "license": "SEE LICENSE IN README.md",
+  "scripts": {
+    "start": "npx --yes http-server -p 8099 -c-1 --silent",
+    "test": "node tests/run.mjs",
+    "test:a11y": "node tests/a11y.mjs",
+    "test:behavior": "node tests/behavior.mjs",
+    "test:render": "node tests/render.mjs",
+    "test:markup": "node tests/markup.mjs",
+    "test:headers": "node tests/headers.mjs"
+  },
+  "devDependencies": {
+    "axe-core": "^4.10.3",
+    "http-server": "^14.1.1",
+    "playwright": "1.56.1"
+  }
+}
