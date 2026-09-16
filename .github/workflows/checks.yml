@@ -62,7 +62,16 @@ jobs:
   comment:
     name: Report on the pull request
     needs: checks
-    if: always() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    # Say nothing about a run that was cancelled or skipped. Pushing again
+    # cancels the run in flight, and reporting that as a failure puts a red
+    # comment on a pull request that is fine: the superseding run posts the
+    # real result a few minutes later.
+    if: >-
+      always() &&
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      needs.checks.result != 'cancelled' &&
+      needs.checks.result != 'skipped'
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
