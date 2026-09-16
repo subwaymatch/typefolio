@@ -1,11 +1,9 @@
 /*--------------------------------------------------------------------------
-   
+
 
 	Typefolio
 
-	LESS-based responsive grid system
-
-	0. YUI Library is used for CSS reset (http://yuilibrary.com/yui/docs/cssreset/)
+	0. Design tokens
 	1. Body
 	2. Typography
 	3. Pages
@@ -19,37 +17,176 @@
 		3.7. Archive (Blog)
 		3.8. Contact
 		3.9. Footer
-	4. jQuery Plugins
-		4.1. iosSlider
-		4.2. Flexslider
+	4. Components
+		4.1. Slider
+		4.2. Slider navigation
 
+	Load order: reset.css, typegrid.css, style.css.
 
 --------------------------------------------------------------------------*/
+
+/*--------------------------------------------------------------------------
+	Web font
+
+	Roboto Slab, self-hosted. The template used to pull this from
+	fonts.googleapis.com over plain HTTP, which meant a blocked request on
+	any HTTPS site, two extra DNS lookups and connections on every page
+	load, and a visitor IP address handed to a third party.
+
+	One variable file covers both weights the design uses. Licence in
+	fonts/LICENSE.txt (Apache 2.0).
+--------------------------------------------------------------------------*/
+
+@font-face {
+	font-family: "Roboto Slab";
+	font-style: normal;
+	font-weight: 300 400;
+	font-display: swap;
+	src: url("../fonts/roboto-slab-latin.woff2") format("woff2");
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+		U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+		U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+	font-family: "Roboto Slab";
+	font-style: normal;
+	font-weight: 300 400;
+	font-display: swap;
+	src: url("../fonts/roboto-slab-latin-ext.woff2") format("woff2");
+	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+		U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+		U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+		U+A720-A7FF;
+}
+
+
+/*--------------------------------------------------------------------------
+	0. Design tokens
+
+	Change a value here and it takes effect everywhere. The dark palette at
+	the bottom of this block is what the template shows to visitors whose
+	system is set to dark mode.
+--------------------------------------------------------------------------*/
+
+:root {
+	color-scheme: light dark;
+
+	/* Brand */
+	--color-accent: #22eedd;
+	--color-accent-hover: #12e5d3;
+
+	/* A darkened accent for small text, which #22eedd is far too light for
+	   (1.4:1 on white). This one clears WCAG AA at 5.1:1. */
+	--color-accent-text: #097b72;
+
+	/* Accent text on a dark panel or stage, where the raw accent is the
+	   readable one in both themes. */
+	--color-accent-invert: #22eedd;
+
+	/* Surfaces */
+	--color-bg: #fff;
+	--color-bg-invert: #111;
+	--color-bg-sunken: #f7f7f7;
+
+	/*
+		Dark panels (menus, inverted buttons, notices). These stay dark in
+		dark mode too: a white panel flashing over a dark page is jarring,
+		and the design was built around a black menu. In dark mode the panel
+		lifts slightly off the page instead of inverting.
+	*/
+	--color-panel: #111;
+	--color-on-panel: #fff;
+	--color-panel-rule: #2a2a2a;
+
+	/* The stage a photograph sits on. Always dark, in both themes. */
+	--color-stage: #111;
+	--color-on-stage: #fff;
+	--color-on-stage-muted: #8a8a8a;
+
+	/* Text */
+	--color-text: #111;
+	--color-text-muted: #555;
+
+	/* Replaces the old #aaa / #ccc / #ddd greys, which all failed contrast
+	   against white. 5.0:1. */
+	--color-text-subtle: #6f6f6f;
+	--color-text-invert: #fff;
+
+	/* Rules and borders */
+	--color-rule: #e8e8e8;
+	--color-rule-strong: #d4d4d4;
+	--color-rule-invert: #2a2a2a;
+
+	/* Status */
+	--color-danger: #c62c10;
+	--color-price: #c62c10;
+
+	/* Text sitting on the accent fill. The accent is a light cyan, so this
+	   has to stay dark in both themes (13:1 against the accent). */
+	--color-on-accent: #111;
+
+	/* Type */
+	--font-sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+	--font-serif: "Roboto Slab", Georgia, "Times New Roman", serif;
+
+	/* Motion */
+	--transition-fast: 150ms ease;
+	--transition-base: 250ms ease;
+
+	/* Focus ring */
+	--focus-ring: 2px solid var(--color-accent-text);
+	--focus-ring-offset: 3px;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-bg: #101010;
+		--color-bg-invert: #f5f5f5;
+		--color-bg-sunken: #181818;
+
+		--color-text: #f2f2f2;
+		--color-text-muted: #b8b8b8;
+		--color-text-subtle: #9a9a9a;
+		--color-text-invert: #101010;
+
+		/* On a dark surface the raw accent has plenty of contrast, so text
+		   can use it directly. */
+		--color-accent-text: #35f0e0;
+
+
+		--color-rule: #2a2a2a;
+		--color-rule-strong: #3d3d3d;
+		--color-rule-invert: #e0e0e0;
+
+		--color-panel: #1e1e1e;
+		--color-on-panel: #f2f2f2;
+		--color-panel-rule: #383838;
+
+		--color-stage: #000;
+
+		--color-danger: #ff7a60;
+		--color-price: #ff8a70;
+
+		--focus-ring: 2px solid var(--color-accent);
+	}
+}
+
 
 /*--------------------------------------------------------------------------
 	1. Body
 --------------------------------------------------------------------------*/
 
 body {
-	color: #111;
-	font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 14px;
-	line-height: 28px;
-	-webkit-font-smoothing: antialiased;
-	/* Fix for webkit rendering */
-	-webkit-text-size-adjust: 100%;
+	color: var(--color-text);
+	background: var(--color-bg);
+	font-family: var(--font-sans);
+
+	/* Scales smoothly between phone and desktop instead of stepping at a
+	   single breakpoint. */
+	font-size: clamp(0.8125rem, 0.72rem + 0.4vw, 0.875rem);
+	line-height: 1.85;
 }
-
-@media screen and (max-width: 767px) { 
-	body {
-		font-size: 12px;
-		line-height: 23px;
-	}
-}
-
-
-
-
 
 
 /*--------------------------------------------------------------------------
@@ -65,40 +202,85 @@ h5,
 h6 { font-weight: bold; }
 
 
-
 /* Links */
 a,
 a:visited {
-	color: #333;
+	color: var(--color-text-muted);
 	text-decoration: none;
-	outline: 0;
 }
 
-a:hover,
-a:focus { color: black; }
+a:hover { color: var(--color-text); }
+
 p a,
 p a:visited { line-height: inherit; }
 
+/*
+	The template used to set `outline: 0` on every link, which removed the
+	only cue keyboard users have about where they are. :focus-visible shows
+	a ring for keyboard and assistive-tech users without putting one around
+	everything a mouse touches.
+*/
+:focus-visible {
+	outline: var(--focus-ring);
+	outline-offset: var(--focus-ring-offset);
+	border-radius: 2px;
+}
+
+
+/* Fades in on hover. Used by the footer social links; this was a jQuery
+   fadeTo() pair writing inline styles on every mouse event. */
+.hoverMe {
+	color: var(--color-text-subtle);
+	transition: color var(--transition-base);
+}
+
+.hoverMe:hover,
+.hoverMe:focus-visible { color: var(--color-text); }
 
 
 /* Visibility */
 .hide { display: none !important; }
 
+/* Visible to screen readers, out of the way visually. */
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* Jump link for keyboard users, revealed once focused. */
+.skip-link {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	padding: 12px 20px;
+	color: var(--color-on-panel);
+	background: var(--color-panel);
+	font-size: 13px;
+	font-weight: bold;
+	transform: translateY(-120%);
+	transition: transform var(--transition-fast);
+}
+
+.skip-link:focus {
+	color: var(--color-on-panel);
+	transform: translateY(0);
+}
 
 
 /* Selection Highlighted Text */
 ::selection {
-	background: #22eedd;
-	color: white;
+	background: var(--color-accent);
+	color: var(--color-text);
 	text-shadow: none;
 }
-
-::-moz-selection {
-	background: #22eedd;
-	color: white;
-	text-shadow: none;
-}
-
 
 
 /* Formatting */
@@ -110,23 +292,18 @@ b, strong { font-weight: bold; }
 .underline {
 	display: inline-block;
 	padding-bottom: 4px;
-	border-bottom: 1px solid #22eedd;
+	border-bottom: 1px solid var(--color-accent);
 }
 
 
-
 /* Colors */
-.font-color-primary { color: #22eedd; }
-.background-color-primary { background: #22eedd; }
+.font-color-primary { color: var(--color-accent-text); }
+.background-color-primary { background: var(--color-accent); }
 
-.font-color-secondary { color: #a33; }
-.font-color-black { color: black; }
-.font-color-white { color: white; }
-.background-color-white { background: white; }
-
-
-
-
+.font-color-secondary { color: var(--color-danger); }
+.font-color-black { color: var(--color-text); }
+.font-color-white { color: var(--color-text-invert); }
+.background-color-white { background: var(--color-bg); }
 
 
 /*--------------------------------------------------------------------------
@@ -141,10 +318,22 @@ b, strong { font-weight: bold; }
 	img { max-width: 100%; }
 
 
+	/*
+		The placeholder artwork is black line art on a transparent
+		background, which vanishes on a dark page. Flipping it keeps the
+		drawing readable in both themes.
+
+		Put this on line art and logos only. A photograph given this class
+		turns into a colour negative, so the .jpg placeholders deliberately
+		do not carry it.
+	*/
+	@media (prefers-color-scheme: dark) {
+		.invert-on-dark { filter: invert(1); }
+	}
+
 
 	/* Used to remove whitespace below an image */
 	.remove-line-height { line-height: 0; }
-
 
 
 	/* Vertical spacing */
@@ -154,40 +343,33 @@ b, strong { font-weight: bold; }
 	}
 
 
-
 	/* Used frequently to apply a light border on top */
 	.border-top {
-		border-top: 1px solid #f5f5f5;
+		border-top: 1px solid var(--color-rule);
 		padding-top: 30px;
 	}
-
 
 
 	/* Featured image */
 	.post img.featured { margin-bottom: 50px; }
 
 
-
 	/* Buttons */
 	button,
 	.button,
 	a.button {
-		color: white;
-		background: #22eedd;
-		font-size: 14px; 
-		font-weight: bold; 
+		color: var(--color-on-accent);
+		background: var(--color-accent);
+		font-size: 14px;
+		font-weight: bold;
 		text-align: center;
 		padding: 20px 25px 18px 25px;
-		border-bottom: 2px solid #11ddcc; 
+		border: 0;
+		border-bottom: 2px solid var(--color-accent-hover);
+		transition: background var(--transition-fast); 
 		cursor: pointer;
 		display: inline-block;
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
 		box-sizing: border-box;
-		-webkit-border-radius: 4px;
-		-moz-border-radius: 4px;
-		-ms-border-radius: 4px;
-		-o-border-radius: 4px;
 		border-radius: 4px;
 	}
 
@@ -197,10 +379,6 @@ b, strong { font-weight: bold; }
 			font-size: 14px;
 			line-height: 24px;
 			padding: 16px 24px;
-			-webkit-border-radius: 3px;
-			-moz-border-radius: 3px;
-			-ms-border-radius: 3px;
-			-o-border-radius: 3px;
 			border-radius: 3px;
 		}
 
@@ -209,34 +387,29 @@ b, strong { font-weight: bold; }
 		a.button.full {
 			display: block;
 			width: 100%;
-			-webkit-border-radius: 5px;
-			-moz-border-radius: 5px;
-			-ms-border-radius: 5px;
-			-o-border-radius: 5px;
 			border-radius: 5px;
 			padding: 30px 40px 26px 40px;
-			border-bottom: 4px solid #11ddcc; 
+			border-bottom: 4px solid var(--color-accent-hover); 
 		}
 
 			button:hover,
 			.button:hover,
-			a.button:hover { background: #12e5d3; }
+			a.button:hover { background: var(--color-accent-hover); }
 
 			button.black,
 			.button.black,
 			a.button.black {
-				color: white;
-				background: #000; 
-				border-color: #111; 
+				color: var(--color-on-panel);
+				background: var(--color-panel);
+				border-color: var(--color-text); 
 			}
 
 			button.black:hover,
 			.button.black:hover,
 			a.button.black:hover {
-				color: #22eedd;
-				background: #111;
+				color: var(--color-accent-invert);
+				background: var(--color-panel);
 			}
-
 
 
 	/* Forms */
@@ -249,7 +422,7 @@ b, strong { font-weight: bold; }
 
 	label {
 		display: block;
-		color: #111;
+		color: var(--color-text);
 		font-size: 13px;
 		line-height: 23px;
 		margin: 20px 0;
@@ -266,12 +439,10 @@ b, strong { font-weight: bold; }
 	select {
 		width: 100%;
 		padding: 20px 25px;
-		color: #111;
+		color: var(--color-text);
 		margin: 0 0 15px 0;
-		border: 1px solid #ddd;
+		border: 1px solid var(--color-rule-strong);
 		outline: none;
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
 		box-sizing: border-box;
 	}
 
@@ -284,18 +455,16 @@ b, strong { font-weight: bold; }
 		input[type=password]:focus, 
 		textarea:focus,
 		select:focus {
-			color: #22eedd;
-			border: 1px solid #22eedd;
+			color: var(--color-accent-text);
+			border: 1px solid var(--color-accent);
 		}
 
 
-
 	/* Placeholder */
-	::-webkit-input-placeholder { color: #ddd; }
-	::-moz-placeholder { color: #ddd; }
-	:-ms-input-placeholder { color: #ddd; }
-	input:-moz-placeholder { color: #ddd; }
-
+	::placeholder {
+		color: var(--color-text-subtle);
+		opacity: 1;
+	}
 
 
 	/* Input - submit */
@@ -304,22 +473,20 @@ b, strong { font-weight: bold; }
 	}
 
 
-
 	/* Required */
-	span.required { color: #22eedd; }
-
+	span.required { color: var(--color-accent-text); }
 
 
 	/* Page elements */
 	.page p.title-desc {
-		color: #ddd;
+		color: var(--color-text-subtle);
 		font-weight: bold;
 		margin-top: 0;
 	}
 
 	.page p.page-desc {
-		color: #222;
-		font-family: 'Roboto Slab', Georgia, serif;
+		color: var(--color-text);
+		font-family: var(--font-serif);
 		font-size: 34px;
 		line-height: 60px;
 		font-weight: 300; 
@@ -344,18 +511,30 @@ b, strong { font-weight: bold; }
 	.page p { margin-top: 30px; }
 
 
+	/*
+		Sidebar (sticky)
 
-	/* Sidebar (sticky) */
+		This used to be a jQuery plugin that cloned the sidebar, hid the
+		original, and repositioned the copy on every scroll and resize event.
+		CSS position: sticky does the same job natively, with no script, no
+		duplicated DOM and no jank.
+
+		The sticky element has to be the grid column itself: its containing
+		block is .container, which is as tall as the main content, so the
+		sidebar has room to travel. Putting sticky on the inner .sidebar
+		would trap it inside a box its own height.
+	*/
 	.sidebar { padding-bottom: 20px; }
 
-		.sidebar.sticked {
-			background: white; 
-			display: none;
-			padding: 0 20px 20px 20px;
+	@media screen and (min-width: 960px) {
+		.container > .columns:has(> .sidebar.sticky) {
+			position: sticky;
+			top: 0;
+			align-self: start;
+			background: var(--color-bg);
+			padding-bottom: 20px;
 		}
-
-			.sidebar.sticked h3.border-top { border-top: 0; }
-
+	}
 
 
 	/* Page Navigation */
@@ -366,7 +545,7 @@ b, strong { font-weight: bold; }
 
 		.nav-pages a.link-prev,
 		.nav-pages a.link-next {
-			color: #555;
+			color: var(--color-text-muted);
 			text-transform: uppercase;
 			letter-spacing: 2px;
 			text-align: center;
@@ -374,8 +553,6 @@ b, strong { font-weight: bold; }
 			display: block;
 			width: 50%;
 			float: left;
-			-webkit-box-sizing: border-box;
-			-moz-box-sizing: border-box;
 			box-sizing: border-box;
 		}
 
@@ -383,7 +560,7 @@ b, strong { font-weight: bold; }
 			.nav-pages a.link-next span {
 				display: inline-block;
 				padding-bottom: 4px;
-				border-bottom: 1px solid #555555;
+				border-bottom: 1px solid var(--color-text-muted);
 			}
 
 			.nav-pages a.link-prev div { padding-right: 33.33333333%; }
@@ -406,9 +583,9 @@ b, strong { font-weight: bold; }
 				.nav-pages a.link-next div { padding-left: 0%; }
 			}
 
-			.nav-pages a:hover { color: #22eedd; }
+			.nav-pages a:hover { color: var(--color-accent-text); }
 
-				.nav-pages a:hover span { border-bottom-color: #22eedd; }
+				.nav-pages a:hover span { border-bottom-color: var(--color-accent-text); }
 
 			.container .nav-pages a.link-prev,
 			.container .nav-pages a.link-next { padding: 20px 0; }
@@ -416,145 +593,204 @@ b, strong { font-weight: bold; }
 			.container .nav-pages a.link-next { text-align: right; }
 
 
-
-
 	/*---------------------------------------------------
 			3.1 Navigation
 	---------------------------------------------------*/
 
+	/*
+		The desktop bar is a flex row, so it fits any number of top-level
+		items instead of assuming exactly four 25% cells.
+
+		Submenus open on :hover and on :focus-within. The old build needed
+		jQuery focus/blur handlers to add a .hover class for keyboard users;
+		:focus-within covers that in CSS. The .hover class is still honoured
+		so existing markup and scripts keep working.
+	*/
+
 	ul#nav {
+		display: flex;
+		flex-wrap: wrap;
 		font-size: 12px;
 		line-height: 21px;
 		font-weight: bold;
-		overflow: visible;
 	}
 
-	@media screen and (min-width: 768px) and (max-width: 959px) { 
-		ul#nav {
-			font-size: 11px;
-			line-height: 21px;
-		}
+	@media screen and (min-width: 768px) and (max-width: 959px) {
+		ul#nav { font-size: 11px; }
 	}
 
-	@media screen and (max-width: 767px) { 
-		ul#nav { display: none; }
+	/*
+		Hide the whole bar, not just the list. Leaving an empty <nav> behind
+		put two navigation landmarks with the same name in the accessibility
+		tree at phone widths.
+	*/
+	@media screen and (max-width: 767px) {
+		.topbar { display: none; }
 	}
 
 	ul#nav li { position: relative; }
 
-		ul#nav li ul a {
-			color: #555;
-			padding: 25px 0;
-			border-bottom: 1px solid #222;
-		}
+	ul#nav > li { flex: 1 1 0; }
 
-	ul#nav > li {
-		zoom: 1;
-		width: 25%;
-		display: inline;
-		float: left;
-	}
-
-		ul#nav > li a {
-			color: #aaa;
+		ul#nav > li > a {
+			color: var(--color-text-subtle);
 			display: block;
 			padding: 18px 0 15px 0;
 			margin: 0 20px;
-			border-bottom: 1px solid #f5f5f5;
+			border-bottom: 1px solid var(--color-rule);
+			transition: color var(--transition-fast);
 		}
 
-			ul#nav > li a span.count {
-				color: #ddd;
+			ul#nav > li > a span.count {
+				color: var(--color-text-subtle);
 				display: block;
 				font-size: 11px;
 			}
 
-		ul#nav > li a:hover {
-			color: white;
-			border-bottom: none;
-		}
-
-			ul#nav > li a:hover span.count { color: white; }
-
 	ul#nav > li:hover,
+	ul#nav > li:focus-within,
 	ul#nav > li.hover {
-		background: #111;
-		margin: 0;
+		background: var(--color-panel);
 	}
 
-		ul#nav > li:hover a,
-		ul#nav > li.hover a {
-			color: white;
-			border-bottom: none;
+		ul#nav > li:hover > a,
+		ul#nav > li:focus-within > a,
+		ul#nav > li.hover > a {
+			color: var(--color-on-panel);
+			border-bottom-color: transparent;
+			margin: 0;
+			padding-inline: 20px;
 		}
 
-			ul#nav > li:hover a span.count,
-			ul#nav > li.hover a span.count { color: white; }
+			ul#nav > li:hover > a span.count,
+			ul#nav > li:focus-within > a span.count,
+			ul#nav > li.hover > a span.count { color: var(--color-on-panel); }
 
-		ul#nav > li:hover ul li:last-child > a,
-		ul#nav > li.hover ul li:last-child > a,
-		ul#nav > li:hover ul li.last-child > a,
-		ul#nav > li.hover ul li.last-child > a { border-bottom: none; }
+	/*
+		Parent items keep a hairline under the label so the open submenu
+		reads as attached. :has() finds them in CSS; the old build needed a
+		jQuery pass to tag them with .hasChild, which is still honoured.
+	*/
+	ul#nav > li:has(> ul):hover > a,
+	ul#nav > li:has(> ul):focus-within > a,
+	ul#nav > li.hasChild:hover > a,
+	ul#nav > li.hasChild:focus-within > a,
+	ul#nav > li.hasChild.hover > a { border-bottom-color: var(--color-panel-rule); }
 
-	ul#nav > li.hasChild:hover a,
-	ul#nav > li.hasChild.hover a { border-bottom: 1px solid #222; }
-
+	/* Submenus */
 	ul#nav li ul {
-		background: #111;
+		background: var(--color-panel);
 		width: 100%;
-		visibility: hidden;
+		min-width: 11rem;
 		position: absolute;
 		z-index: 10;
 		top: 100%;
-		left: 0px;
+		left: 0;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity var(--transition-fast), visibility var(--transition-fast);
 	}
 
 		ul#nav li:hover > ul,
+		ul#nav li:focus-within > ul,
 		ul#nav li.hover > ul {
+			opacity: 1;
 			visibility: visible;
 		}
-		
-		ul#nav li ul a:hover,
-		ul#nav li ul a:focus {
-			color: #22eedd;
-			border-bottom: 1px solid #222;
+
+		ul#nav li ul a {
+			color: var(--color-on-panel);
+			display: block;
+			padding: 18px 20px;
+			border-bottom: 1px solid var(--color-panel-rule);
+			transition: color var(--transition-fast);
 		}
 
-		ul#nav li ul li:last-child > a,
-		ul#nav li ul li.last-child > a { border-bottom: none; }
+		ul#nav li ul a:hover,
+		ul#nav li ul a:focus-visible {
+			color: var(--color-accent-invert);
+		}
 
+		ul#nav li ul li:last-child > a { border-bottom: none; }
+
+	/* Third level opens sideways, flipping in before it leaves the viewport. */
 	ul#nav > li ul ul {
-		position: absolute;
 		top: 0;
 		left: 100%;
 	}
 
+	ul#nav > li:last-child ul ul,
+	ul#nav > li:nth-last-child(2) ul ul {
+		left: auto;
+		right: 100%;
+	}
 
 
 	/* Mobile Menu */
 	#menu-mobile-wrapper { display: none; }
 
-	@media screen and (max-width: 767px) { 
+	@media screen and (max-width: 767px) {
 		#menu-mobile-wrapper { display: block; }
 	}
 
+	/*
+		A real <button>, so it is reachable by keyboard and announced with
+		its expanded state. The icon is drawn in CSS rather than loaded from
+		menu_open.png / menu_closed.png, which were flat black bitmaps and
+		vanished against a dark background.
+	*/
 	#menu-mobile-wrapper #toggle-menu {
-		cursor: pointer;
-		color: #222;
-		display: block;
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		width: 100%;
+		padding: 20px 0;
+		color: var(--color-text);
+		background: none;
+		border: 0;
+		border-bottom: 1px solid var(--color-rule);
+		border-radius: 0;
 		font-size: 15px;
 		line-height: 25px;
-		padding: 20px 0 20px 30px;
-		background: url('../images/menu_open.png') no-repeat left center;
-		border-bottom: 1px solid #f5f5f5;
+		font-weight: bold;
+		text-align: left;
+		cursor: pointer;
 	}
 
-	#menu-mobile-wrapper.toggle-open #toggle-menu { background-image: url('../images/menu_closed.png'); }
+		#toggle-menu .toggle-icon {
+			position: relative;
+			flex: none;
+			width: 18px;
+			height: 2px;
+			background: currentColor;
+			transition: background var(--transition-fast);
+		}
+
+		#toggle-menu .toggle-icon::before,
+		#toggle-menu .toggle-icon::after {
+			content: "";
+			position: absolute;
+			left: 0;
+			width: 18px;
+			height: 2px;
+			background: currentColor;
+			transition: transform var(--transition-base);
+		}
+
+		#toggle-menu .toggle-icon::before { top: -6px; }
+		#toggle-menu .toggle-icon::after { top: 6px; }
+
+		/* Bars fold into an X while the menu is open. */
+		#toggle-menu[aria-expanded="true"] .toggle-icon { background: transparent; }
+		#toggle-menu[aria-expanded="true"] .toggle-icon::before { transform: translateY(6px) rotate(45deg); }
+		#toggle-menu[aria-expanded="true"] .toggle-icon::after { transform: translateY(-6px) rotate(-45deg); }
+
 	#menu-mobile-wrapper ul#menu-mobile {
 		display: none;
 		margin-bottom: 15px;
-		overflow: hidden;
 	}
+
+	#menu-mobile-wrapper ul#menu-mobile.is-open { display: block; }
 
 		#menu-mobile-wrapper ul#menu-mobile li {
 			font-size: 12px;
@@ -563,15 +799,19 @@ b, strong { font-weight: bold; }
 		}
 
 			#menu-mobile-wrapper ul#menu-mobile li a {
-				color: #444;
+				color: var(--color-text-muted);
 				display: block;
+				/* At least 44px tall, the minimum comfortable touch target. */
+				min-height: 44px;
 				padding: 12px 0;
-				border-bottom: 1px solid #f5f5f5;
+				border-bottom: 1px solid var(--color-rule);
 			}
 
-			#menu-mobile-wrapper ul#menu-mobile li a:hover { color: #22eedd; }
+			#menu-mobile-wrapper ul#menu-mobile li a:hover { color: var(--color-accent-text); }
 
-
+			/* Nested items are indented instead of relying on an arrow glyph. */
+			#menu-mobile-wrapper ul#menu-mobile li ul li a { padding-left: 20px; }
+			#menu-mobile-wrapper ul#menu-mobile li ul ul li a { padding-left: 40px; }
 
 
 	/*---------------------------------------------------
@@ -587,12 +827,10 @@ b, strong { font-weight: bold; }
 	}
 
 	#header p.site-desc {
-		color: #ccc;
+		color: var(--color-text-subtle);
 		font-size: 12px;
 		line-height: 19px;
 	}
-
-
 
 
 	/*---------------------------------------------------
@@ -606,15 +844,15 @@ b, strong { font-weight: bold; }
 		padding: 30px 0 20px 0;
 	}
 
-		.box-recent h3 a { color: #ddd; }
+		.box-recent h3 a { color: var(--color-text-subtle); }
 
 	.box-recent a.permalink {
 		display: block;
-		border-top: 1px solid #eee;
+		border-top: 1px solid var(--color-rule);
 	}
 
 		.box-recent a.permalink h4 {
-			color: #444; 
+			color: var(--color-text-muted); 
 			font-size: 22px;
 			line-height: 36px;
 			font-weight: normal;
@@ -622,19 +860,19 @@ b, strong { font-weight: bold; }
 		}
 
 			.box-recent a.permalink:hover h4 {
-				color: #22eedd; 
+				color: var(--color-accent-text); 
 			}
 
-		.box-recent a.permalink p.meta { color: #22eedd; }
+		.box-recent a.permalink p.meta { color: var(--color-accent-text); }
 
-			.box-recent a.permalink p.meta span { color: #ccc; }
+			.box-recent a.permalink p.meta span { color: var(--color-text-subtle); }
 
 	.box-recent a.permalink:hover {
-		color: #22eedd;
-		border-top: 1px solid #22eedd;
+		color: var(--color-accent-text);
+		border-top: 1px solid var(--color-accent);
 	}
 
-		.box-recent a.permalink:hover p.meta span { color: #22eedd; }
+		.box-recent a.permalink:hover p.meta span { color: var(--color-accent-text); }
 	
 	.box-recent .item { padding: 20px 0; }
 	
@@ -655,7 +893,7 @@ b, strong { font-weight: bold; }
 		.box-about h3 { margin-bottom: 50px; }
 
 		.box-about p.tagline {
-			font-family: 'Roboto Slab', Georgia, serif;
+			font-family: var(--font-serif);
 			font-size: 24px;
 			line-height: 44px;
 			font-weight: 300; 
@@ -671,8 +909,6 @@ b, strong { font-weight: bold; }
 	}
 
 
-
-
 	/*---------------------------------------------------
 			3.4 About
 	---------------------------------------------------*/
@@ -686,12 +922,12 @@ b, strong { font-weight: bold; }
 
 	#about .services .item { padding: 30px 0; }
 
-	#about .services h4 {
+	#about .services h3 {
 		font-size: 16px;
 		line-height: 26px;
 		display: inline-block;
 		padding-bottom: 5px;
-		border-bottom: 1px solid #111;
+		border-bottom: 1px solid var(--color-text);
 	}
 
 	#about .services p {
@@ -701,7 +937,7 @@ b, strong { font-weight: bold; }
 	}
 
 	@media screen and (max-width: 767px) {
-		#about .services h4 {
+		#about .services h3 {
 			margin-top: 40px; 
 		}
 
@@ -712,8 +948,6 @@ b, strong { font-weight: bold; }
 	}
 
 
-
-
 	/*---------------------------------------------------
 			3.5 Works
 	---------------------------------------------------*/
@@ -721,23 +955,23 @@ b, strong { font-weight: bold; }
 	#works .item { margin-bottom: 40px; }
 
 		#works .item h3 {
-			color: #555;
+			color: var(--color-text-muted);
 			font-size: 12px;
 			line-height: 22px;
 			font-weight: bold;
 		}
 
-		#works a.permalink:hover h3 { color: #111; }
+		#works a.permalink:hover h3 { color: var(--color-text); }
 
 	#works .item span.category {
-		color: #ccc;
+		color: var(--color-text-subtle);
 		display: block;
 		font-size: 12px;
 		line-height: 18px;
 		margin-bottom: 10px;
 	}
 
-		#works a.permalink:hover span.category { color: #22eedd; }
+		#works a.permalink:hover span.category { color: var(--color-accent-text); }
 
 	#works .item p.excerpt {
 		font-size: 13px;
@@ -787,22 +1021,30 @@ b, strong { font-weight: bold; }
 		margin-top: 0;
 	}
 
+		/*
+			The overlay used to be revealed by a jQuery fadeIn/fadeOut pair
+			and tinted with a 60%-alpha PNG. CSS handles both, and adding
+			:focus-within means the caption also appears for keyboard users,
+			who previously never saw it.
+		*/
 		#works.stackgrid.images-only .item .box-desc {
-			display: none;
+			position: absolute;
+			inset: 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
 			text-align: left;
 			padding: 25px 30px;
-			background: url('../images/alpha/bg_alpha60.png');
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			-webkit-box-sizing: border-box;
-			-moz-box-sizing: border-box;
-			box-sizing: border-box;
+			background: rgb(0 0 0 / 0.6);
+			opacity: 0;
+			transition: opacity var(--transition-base);
 		}
-			
-			#works.stackgrid.images-only .item .box-desc h3 { color: white; }
+
+		#works.stackgrid.images-only .item:hover .box-desc,
+		#works.stackgrid.images-only .item:focus-within .box-desc { opacity: 1; }
+
+			#works.stackgrid.images-only .item .box-desc h3 { color: #fff; }
+			#works.stackgrid.images-only .item .box-desc span.category { color: #d8d8d8; }
 
 		#works.stackgrid.images-only .nav-pages { margin-top: 0; }
 
@@ -819,9 +1061,6 @@ b, strong { font-weight: bold; }
 
 	
 	/* Single */
-	#works.single {
-	
-	}
 
 		#works.single img { 
 			margin-bottom: 60px; 
@@ -834,7 +1073,7 @@ b, strong { font-weight: bold; }
 		}
 			
 			#works.single .box-info p.project-desc {
-				color: #ddd; 
+				color: var(--color-text-subtle); 
 				font-weight: bold; 
 				margin-top: 0; 
 			}
@@ -862,8 +1101,6 @@ b, strong { font-weight: bold; }
 			}
 
 
-
-
 	/*---------------------------------------------------
 			3.6 Shop
 	---------------------------------------------------*/
@@ -877,7 +1114,7 @@ b, strong { font-weight: bold; }
 	}
 
 		#shop .shop-info p {
-			color: #111; 
+			color: var(--color-text); 
 			font-size: 13px; 
 			line-height: 26px; 
 			margin-top: 20px; 
@@ -910,46 +1147,45 @@ b, strong { font-weight: bold; }
 			float: left; 
 		}
 
-			#shop .cart-item .item-name h4 {
-				color: #aaa;
+			#shop .cart-item .item-name h3 {
+				color: var(--color-text-subtle);
 				font-weight: bold;
 			}
 
 			#shop .cart-item .item-name span.category {
-				color: #ccc;
+				color: var(--color-text-subtle);
 			}
 
 		#shop .cart-item .item-price {
-			color: #222;
+			color: var(--color-text);
 			width: 30%;
 			float: right;
 			text-align: right;
-			border-left: 1px solid #f5f5f5;
+			border-left: 1px solid var(--color-rule);
 		}
 
 			#shop .cart-item .item-price span.markdown {
-				color: #aaa;
+				color: var(--color-text-subtle);
 				text-decoration: line-through;
 				display: block;
 			}
 
 			#shop .cart-item .item-price span.item_price {
-				color: #f54;
+				color: var(--color-price);
 				display: block;
 			}
 
-		#shop .cart-item a:hover .item-name h4 { 
-			color: #222; 
+		#shop .cart-item a:hover .item-name h3 { 
+			color: var(--color-text); 
 		}
 
 		#shop .cart-item a:hover .item-name span.category { 
-			color: #999; 
+			color: var(--color-text-subtle); 
 		}
 
 		#shop .cart-item a:hover .item-price { 
-			border-color: #ddd;
+			border-color: var(--color-text-subtle);
 		}
-
 
 
 	@media screen and (max-width: 767px) {
@@ -986,7 +1222,7 @@ b, strong { font-weight: bold; }
 	}
 
 		h2.item-name span.item-price {
-			color: #ff5544;
+			color: var(--color-price);
 			float: right; 
 		}
 
@@ -999,11 +1235,11 @@ b, strong { font-weight: bold; }
 	}
 
 	#shop .sidecart h2 a:hover {
-		color: #22eedd; 
+		color: var(--color-accent-text); 
 	}
 	
 	#shop .sidecart h4 {
-		color: #aaa; 
+		color: var(--color-text-subtle); 
 	}
 
 		#shop .sidecart h4 a {
@@ -1012,19 +1248,19 @@ b, strong { font-weight: bold; }
 		}
 
 		#shop .sidecart p.desc {
-			color: #aaa; 
+			color: var(--color-text-subtle); 
 			margin-top: 20px; 
 		}
 
 	section#cart h3 { padding: 30px 0; }
 
-		section#cart h3 a { color: #333; }
+		section#cart h3 a { color: var(--color-text-muted); }
 
 	section#cart .sidebar p.title-desc { margin-bottom: 20px; }
 
 	#shop p.vertical-divider,
 	#cart p.vertical-divider {
-		color: #ddd;
+		color: var(--color-text-subtle);
 		font-size: 16px;
 		font-style: italic;
 		font-weight: bold;
@@ -1033,13 +1269,14 @@ b, strong { font-weight: bold; }
 	}
 
 
-
-
 	
-	/* Cart */
-	.table-cart {
+	/*
+		Cart and checkout
 
-	}
+		Styling for a cart page and a checkout form. The template does not ship
+		either page; these are here so the ones you build match the rest. Delete
+		this block and the #checkout block below if you do not need them.
+	*/
 
 	.cart-header {
 		font-weight: bold; 
@@ -1047,8 +1284,8 @@ b, strong { font-weight: bold; }
 
 		.cart-header > div {
 			padding: 20px 0; 
-			border-top: 1px solid #f5f5f5; 
-			border-bottom: 1px solid #f5f5f5;
+			border-top: 1px solid var(--color-rule); 
+			border-bottom: 1px solid var(--color-rule);
 		}
 
 	.product-item {
@@ -1126,15 +1363,9 @@ b, strong { font-weight: bold; }
 	}
 
 
-
-
-	#checkout {
-
-	}
-
 	#checkout label {
 		display: block;
-		color: #111;
+		color: var(--color-text);
 		font-size: 13px;
 		line-height: 23px;
 		margin: 10px 0 6px 0;
@@ -1150,14 +1381,12 @@ b, strong { font-weight: bold; }
 	#checkout textarea,
 	#checkout select {
 		width: 100%;
-		color: #111;
-		background: #f5f5f5; 
+		color: var(--color-text);
+		background: var(--color-bg-sunken); 
 		padding: 20px 25px;
 		margin: 0 0 12px 0;
-		border: 1px solid #ddd;
+		border: 1px solid var(--color-rule-strong);
 		outline: none;
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
 		box-sizing: border-box;
 	}
 
@@ -1170,26 +1399,23 @@ b, strong { font-weight: bold; }
 		#checkout input[type=password]:focus, 
 		#checkout textarea:focus,
 		#checkout select:focus {
-			color: #22eedd;
-			background: white; 
-			border: 1px solid #22eedd;
+			color: var(--color-accent-text);
+			background: var(--color-bg); 
+			border: 1px solid var(--color-accent);
 		}
 
 
-
 	/* Placeholder */
-	#checkout ::-webkit-input-placeholder { color: #ddd; }
-	#checkout ::-moz-placeholder { color: #ddd; }
-	#checkout :-ms-input-placeholder { color: #ddd; }
-	#checkout input:-moz-placeholder { color: #ddd; }
-
+	#checkout ::placeholder {
+		color: var(--color-text-subtle);
+		opacity: 1;
+	}
 
 
 	/* Input - submit */
 	#checkout input[type=submit] {
 		border: none; 
 	}
-
 
 
 	/*---------------------------------------------------
@@ -1208,13 +1434,13 @@ b, strong { font-weight: bold; }
 
 		#archive .box-meta span.category,
 		#archive .box-meta span.date {
-			color: #ccc;
+			color: var(--color-text-subtle);
 			font-size: 12px;
 			line-height: 22px;
 		}
 		
 		#archive .box-meta span.category {
-			color: #333;
+			color: var(--color-text-muted);
 			font-weight: bold;
 		}
 
@@ -1225,8 +1451,8 @@ b, strong { font-weight: bold; }
 		margin-top: 30px; 
 	}
 
-	#archive .entry h4 {
-		font-family: 'Roboto Slab', Georgia, serif;
+	#archive .entry h3 {
+		font-family: var(--font-serif);
 		font-size: 26px;
 		line-height: 40px;
 		font-weight: 300; 
@@ -1234,22 +1460,20 @@ b, strong { font-weight: bold; }
 	}
 
 	#archive .entry p {
-		color: #111;
+		color: var(--color-text);
 		margin-top: 40px;
 		font-size: 16px;
 		line-height: 32px;
 	}
 
-		#archive .entry a:hover h4 { 
-			color: #22eedd; 
+		#archive .entry a:hover h3 { 
+			color: var(--color-accent-text); 
 		}
 
 		#archive .entry a:hover p { 
-			color: #111; 
+			color: var(--color-text); 
 		}
 
-	#archive .entry .box-tags h5 {
-	}
 
 	#archive .entry p.tags {
 		font-size: 12px; 
@@ -1258,16 +1482,16 @@ b, strong { font-weight: bold; }
 	}
 
 		#archive .entry p.tags a {
-			color: #111; 
+			color: var(--color-text); 
 			display: inline-block; 
 			padding-bottom: 3px; 
-			border-bottom: 1px solid #111; 
+			border-bottom: 1px solid var(--color-text); 
 			margin-right: 5px; 
 		}
 
 			#archive .entry p.tags a:hover {
-				color: #22eedd; 
-				border-bottom: 1px solid #22eedd; 
+				color: var(--color-accent-text); 
+				border-bottom: 1px solid var(--color-accent); 
 			}
 
 	@media screen and (max-width: 959px) { 
@@ -1280,14 +1504,13 @@ b, strong { font-weight: bold; }
 	}
 
 
-
 	/* BLockquote */
 	#archive .entry blockquote {
 		margin-bottom: 15px; 
 	}
 
 		#archive .entry blockquote p {
-			font-family: 'Roboto Slab', Georgia, serif;
+			font-family: var(--font-serif);
 			font-size: 36px;
 			line-height: 60px;
 			font-style: italic; 
@@ -1296,14 +1519,14 @@ b, strong { font-weight: bold; }
 		}
 
 		#archive .entry blockquote footer { 
-			color: #22eedd;  
+			color: var(--color-accent-text);  
 			font-size: 12px; 
 			line-height: 22px; 
 			font-style: italic; 
 			display: inline-block; 
 			margin-top: 10px; 
 			padding-top: 4px; 
-			border-top: 1px solid #22eedd; 
+			border-top: 1px solid var(--color-accent); 
 		}
 
 	@media screen and (max-width: 959px) { 
@@ -1314,28 +1537,26 @@ b, strong { font-weight: bold; }
 	}
 
 
-
-
 	/*---------------------------------------------------
 			3.8 Contact
 	---------------------------------------------------*/
 
-	section#contact { /* Register Form */:  }
+	
 
 		section#contact p.title-desc { margin-bottom: 40px; }
 
 		section#contact form { margin-bottom: 40px; }
 
 		section#contact #contact-warning {
-			color: white;
-			background: #ee3a22;
+			color: var(--color-text-invert);
+			background: var(--color-danger);
 			padding: 20px 25px;
 			margin-bottom: 30px;
 		}
 
 		section#contact #contact-success {
-			color: #22eedd;
-			background: #111;
+			color: var(--color-accent-invert);
+			background: var(--color-panel);
 			padding: 20px 25px;
 			margin-bottom: 30px;
 		}
@@ -1347,7 +1568,7 @@ b, strong { font-weight: bold; }
 		}
 
 			section#contact .box-contact h3 {
-				color: #22eedd;
+				color: var(--color-accent-text);
 				font-size: 14px;
 				line-height: 24px;
 				font-weight: normal;
@@ -1376,11 +1597,45 @@ b, strong { font-weight: bold; }
 
 		/* Map */
 		section#contact #map {
-			height: 500px;
-			margin-bottom: 30px;
+			aspect-ratio: 4 / 3;
+			max-height: 500px;
+			margin-bottom: 15px;
+			background: var(--color-bg-sunken);
 		}
 
+			section#contact #map iframe {
+				width: 100%;
+				height: 100%;
+			}
 
+		section#contact p.map-link {
+			margin: 0 0 30px 0;
+			font-size: 12px;
+		}
+
+			section#contact p.map-link a {
+				color: var(--color-accent-text);
+				border-bottom: 1px solid currentColor;
+			}
+
+		/* Honeypot: off-screen rather than display:none, which some bots skip. */
+		.honeypot {
+			position: absolute;
+			left: -9999px;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
+		}
+
+		/* Spacing between fields now comes from CSS, not <br> tags. */
+		#contactForm label { margin: 24px 0 8px; }
+		#contactForm label:first-of-type { margin-top: 0; }
+		#contactForm button[type=submit] { margin-top: 24px; }
+
+		#contactForm input:user-invalid,
+		#contactForm textarea:user-invalid {
+			border-color: var(--color-danger);
+		}
 
 
 	/*---------------------------------------------------
@@ -1395,7 +1650,7 @@ b, strong { font-weight: bold; }
 
 		#footer p { margin-top: 30px; }
 
-			#footer p a { color: #22eedd; }
+			#footer p a { color: var(--color-accent-text); }
 
 		#footer ul#social li {
 			display: inline-block;
@@ -1419,360 +1674,257 @@ b, strong { font-weight: bold; }
 				#footer ul#social li a {
 					display: block;
 					padding: 20px 0; 
-					border-top: 1px solid #eee; 
+					border-top: 1px solid var(--color-rule); 
 				}
 		}
 
 
-
-
-
 /*--------------------------------------------------------------------------
-	4. jQuery Plugins
+	4. Components
 --------------------------------------------------------------------------*/
 
 	/*---------------------------------------------------
-			4.1 iosSlider
+			4.1 Slider
 	---------------------------------------------------*/
 
-	.containerOuter {
-		background: #111;
-		height: 357px;
-		overflow: hidden;
-	}
+	/*
+		Replaces iosSlider and FlexSlider, both abandoned jQuery plugins that
+		pinned the template to jQuery 1.8. The track is a scroll-snap
+		container: swipe, trackpad scroll, arrow keys and the buttons below
+		all work, and it still slides if JavaScript never loads.
+	*/
 
-	.iosContainer {
+	.tf-slider {
 		position: relative;
-		width: 100%;
-		height: 357px;
-		margin: 0 auto;
-		overflow: visible;
+		background: var(--color-stage);
+
+		/*
+			Shape of one slide. Set it to match your artwork and the track
+			height follows, instead of the five hard-coded pixel heights the
+			old slider needed one per breakpoint.
+		*/
+		--slide-ratio: 1160 / 450;
 	}
 
-		.iosContainer .iosSliderContainer {
+	/* Matches the wider full-bleed artwork on the second home page. */
+	.tf-slider.is-wide { --slide-ratio: 1600 / 550; }
+
+	@media screen and (max-width: 767px) {
+		/* A 2.6:1 letterbox is a sliver on a phone. Crop taller instead. */
+		.tf-slider,
+		.tf-slider.is-wide { --slide-ratio: 3 / 2; }
+	}
+
+	.tf-slider__track {
+		display: flex;
+		gap: 0;
+		overflow-x: auto;
+		overscroll-behavior-x: contain;
+		scroll-snap-type: x mandatory;
+		scroll-behavior: smooth;
+
+		/* The native scrollbar would sit across the artwork. */
+		scrollbar-width: none;
+	}
+
+	.tf-slider__track::-webkit-scrollbar { display: none; }
+
+	@media (prefers-reduced-motion: reduce) {
+		.tf-slider__track { scroll-behavior: auto; }
+	}
+
+	.tf-slider__slide {
+		flex: 0 0 100%;
+		aspect-ratio: var(--slide-ratio);
+		scroll-snap-align: center;
+		scroll-snap-stop: always;
+		margin: 0;
+	}
+
+		.tf-slider__slide img {
 			width: 100%;
-			height: 357px;
-			margin: 0;
-			overflow: visible;
+			height: 100%;
+			object-fit: cover;
 		}
 
-	.iosSlider {
-		position: relative;
-		top: 0;
-		left: 0;
-		overflow: visible;
-		width: 100%;
-		height: 357px;
+	/*
+		Wide variant: neighbouring slides peek in at the edges, the way the
+		old iosSlider home page looked. Below tablet each slide takes the
+		full width so nothing is cropped on a phone.
+	*/
+	.tf-slider.is-peeking .tf-slider__slide { flex-basis: 100%; }
+
+	@media screen and (min-width: 768px) {
+		.tf-slider.is-peeking .tf-slider__slide { flex-basis: min(1160px, 80%); }
 	}
 
-		.iosSlider .slider {
-			width: 10000px;
-			height: 100%;
-		}
 
-			.iosSlider .slider .item {
-				float: left;
-				width: 920px;
-				height: 100%;
-			}
-				.iosSlider .slider .item img { width: 100%; }
-
-	.iosThumb2Load {
-		height: 93px;
-		background: #111;
+	/* Previous / next */
+	.tf-slider__arrow {
+		position: absolute;
+		top: 50%;
+		z-index: 2;
+		display: grid;
+		place-items: center;
+		width: 44px;
+		height: 44px;
+		padding: 0;
+		color: var(--color-text);
+		background: var(--color-bg);
+		border: 0;
+		border-radius: 50%;
+		opacity: 0;
+		cursor: pointer;
+		transform: translateY(-50%);
+		transition: opacity var(--transition-base);
 	}
 
-		.iosThumb2Load .slider {
-			width: 100%;
-			height: 100%;
+	.tf-slider__arrow[data-slider-prev] { left: 12px; }
+	.tf-slider__arrow[data-slider-next] { right: 12px; }
+
+	.tf-slider:hover .tf-slider__arrow,
+	.tf-slider:focus-within .tf-slider__arrow { opacity: 0.9; }
+
+	.tf-slider__arrow:hover { opacity: 1; }
+
+	/*
+		Keep a disabled arrow hidden at rest. Giving :disabled its own
+		opacity outright would out-rank the hidden state and leave the arrow
+		showing on a page nobody is pointing at.
+	*/
+	.tf-slider__arrow:disabled { cursor: default; }
+
+	.tf-slider:hover .tf-slider__arrow:disabled,
+	.tf-slider:focus-within .tf-slider__arrow:disabled { opacity: 0.25; }
+
+	@media (hover: none) {
+		.tf-slider__arrow:disabled { opacity: 0.25; }
+	}
+
+	/* Touch devices have no hover, so the controls stay visible. */
+	@media (hover: none) {
+		.tf-slider__arrow { opacity: 0.9; }
+	}
+
+		.tf-slider__arrow svg {
+			width: 18px;
+			height: 18px;
+			fill: none;
+			stroke: currentColor;
+			stroke-width: 2;
 		}
 
-		.iosThumb2Load .button-thumb {
-			float: left;
-			margin: 0;
-			width: 240px;
-			height: 93px;
-			opacity: 0.5;
-			-ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=(50));
-			filter: alpha(opacity = (50));
+
+	/* Dots, used when there is no thumbnail strip */
+	.tf-slider__dots {
+		display: flex;
+		justify-content: center;
+		gap: 10px;
+		padding: 16px 0;
+		background: var(--color-stage);
+	}
+
+		.tf-slider__dots button {
+			width: 10px;
+			height: 10px;
+			padding: 0;
+			background: var(--color-on-stage);
+			border: 0;
+			border-radius: 50%;
+			opacity: 0.35;
+			cursor: pointer;
+			transition: opacity var(--transition-fast);
 		}
 
-		.iosThumb2Load .selected {
+		.tf-slider__dots button[aria-current="true"] {
+			background: var(--color-accent);
 			opacity: 1;
-			-ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=(100));
-			filter: alpha(opacity = (100));
 		}
 
-	@media screen and (min-width: 1300px) { 
-		.iosSlider .slider .item { width: 1160px; }
-		.containerOuter,
-		.iosContainer,
-		.iosContainer .iosSliderContainer,
-		.iosSlider { height: 450px; }
-	}
-
-	@media screen and (min-width: 768px) and (max-width: 959px) { 
-		.iosSlider .slider .item { width: 660px; }
-		.containerOuter,
-		.iosContainer,
-		.iosContainer .iosSliderContainer,
-		.iosSlider { height: 256px; }
-	}
-
-	@media screen and (max-width: 767px) { 
-		.iosSlider .slider .item { width: 280px; }
-		.containerOuter,
-		.iosContainer,
-		.iosContainer .iosSliderContainer,
-		.iosSlider { height: 109px; }
-		.iosThumb2Load {
-			visibility: hidden;
-			margin: 0;
-			height: 0;
-		}
-	}
-
-	@media screen and (min-width: 480px) and (max-width: 767px) { 
-		.iosSlider .slider .item { width: 400px; }
-		.containerOuter,
-		.iosContainer,
-		.iosContainer .iosSliderContainer,
-		.iosSlider { height: 150px; }
-		.iosThumb2Load {
-			visibility: hidden;
-			margin: 0;
-			height: 0;
-		}
-	}
-
-
+		.tf-slider__dots button:hover { opacity: 0.8; }
 
 
 	/*---------------------------------------------------
-			4.2 FlexSlider
+			4.2 Slider navigation
 	---------------------------------------------------*/
-	/*
-	* 	jQuery FlexSlider v2.0
-	* 	http://www.woothemes.com/flexslider/
-	*
-	* 	Copyright 2012 WooThemes
-	* 	Free to use under the GPLv2 license.
-	* 	http://www.gnu.org/licenses/gpl-2.0.html
-	*
-	* 	Contributing author: Tyler Smith (@mbmufffin)
-	*/
 
-	/* FlexSlider Necessary Styles
-	*********************************/
-	.flexslider .slides > div {
-		display: none;
-		-webkit-backface-visibility: hidden;
+	/* Thumbnail strip (home page with slider) */
+	.slider-thumbs {
+		display: flex;
+		overflow-x: auto;
+		scrollbar-width: none;
+		background: var(--color-stage);
 	}
 
-	/* Hide the slides before the JS is loaded. Avoids image jumping */
-	.flexslider .slides img {
-		display: block;
-		width: 100%;
-	}
+	.slider-thumbs::-webkit-scrollbar { display: none; }
 
-	.flex-pauseplay span { text-transform: capitalize; }
-
-	/* Clearfix for the .slides element */
-	.slides:after {
-		content: ".";
-		display: block;
-		clear: both;
-		visibility: hidden;
-		line-height: 0;
-		height: 0;
-	}
-
-	html[xmlns] .slides { display: block; }
-	* html .slides { height: 1%; }
-	
-
-
-	/* FlexSlider for TypeFolio
-	*********************************/
-	.flexslider {
-		background: white;
-		position: relative;
-		zoom: 1;
-		overflow: hidden;
-	}
-
-	.flex-viewport {
-		max-height: 2000px;
-		-webkit-transition: all 1s ease;
-		-moz-transition: all 1s ease;
-		transition: all 1s ease;
-	}
-
-	.loading .flex-viewport { max-height: 300px; }
-
-	.flexslider .slides { zoom: 1; }
-
-	/* Direction Nav */
-	.flex-direction-nav { *height: 0; }
-
-		.flex-direction-nav a {
-			width: 30px;
-			height: 30px;
-			margin: -20px 0 0;
-			display: block;
-			background: url(../images/bg_direction_nav.png) no-repeat 0 0;
-			position: absolute;
-			top: 50%;
-			z-index: 10;
+		.slider-thumbs button {
+			flex: 0 0 25%;
+			padding: 0;
+			background: none;
+			border: 0;
+			border-radius: 0;
+			opacity: 0.5;
 			cursor: pointer;
-			text-indent: -9999px;
-			opacity: 0;
-			-webkit-transition: all .3s ease;
+			transition: opacity var(--transition-fast);
 		}
 
-		.flex-direction-nav .flex-next {
-			background-position: 100% 0;
-			right: -36px;
+		@media screen and (max-width: 767px) {
+			.slider-thumbs button { flex-basis: 33.3333%; }
 		}
 
-		.flex-direction-nav .flex-prev { left: -36px; }
+		.slider-thumbs button:hover { opacity: 0.8; }
 
-	.flexslider:hover .flex-next {
-		opacity: 0.8;
-		right: 5px;
-	}
+		.slider-thumbs button[aria-current="true"] { opacity: 1; }
 
-	.flexslider:hover .flex-prev {
-		opacity: 0.8;
-		left: 5px;
-	}
+			.slider-thumbs img {
+				width: 100%;
+				aspect-ratio: 16 / 6;
+				object-fit: cover;
+			}
 
-	.flexslider:hover .flex-next:hover,
-	.flexslider:hover .flex-prev:hover { 
-		opacity: 1;
-	}
 
-	.flex-direction-nav .flex-disabled {
-		opacity: .3!important;
-		filter: alpha(opacity=30);
-		cursor: default;
-	}
-
-	/* Control Nav */
-	.flex-control-nav {
-		width: 100%;
-		position: absolute;
-		bottom: -40px;
-		text-align: center;
-	}
-
-		.flex-control-nav li {
-			margin: 0 6px;
-			display: inline-block;
-			zoom: 1;
-			*display: inline;
-		}
-
-	.flex-control-paging li a {
-		width: 11px;
-		height: 11px;
-		display: block;
-		background: #666;
-		background: rgba(0, 0, 0, 0.5);
-		cursor: pointer;
-		text-indent: -9999px;
-		-webkit-border-radius: 20px;
-		-moz-border-radius: 20px;
-		-o-border-radius: 20px;
-		border-radius: 20px;
-		box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
-	}
-
-	.flex-control-paging li a:hover {
-		background: #333;
-		background: rgba(0, 0, 0, 0.7);
-	}
-
-	.flex-control-paging li a.flex-active {
-		background: black;
-		background: rgba(0, 0, 0, 0.9);
-		cursor: default;
-	}
-
-	.flex-control-thumbs {
-		margin: 5px 0 0;
-		position: static;
-		overflow: hidden;
-	}
-
-		.flex-control-thumbs li {
-			width: 25%;
-			float: left;
-			margin: 0;
-		}
-
-		.flex-control-thumbs img {
-			width: 100%;
-			display: block;
-			opacity: .7;
-			cursor: pointer;
-		}
-
-		.flex-control-thumbs img:hover { opacity: 1; }
-		.flex-control-thumbs .flex-active {
-			opacity: 1;
-			cursor: default;
-		}
-
+	/* Labelled strip (home page with slider 2) */
 	.flexslider-nav-carousel {
-		background: #111;
+		background: var(--color-stage);
 		margin-bottom: 30px;
 	}
 
 	.item-nav {
-		cursor: pointer;
+		width: 100%;
 		padding: 27px 0;
-		border-right: 1px solid #222; 
+		background: none;
+		border: 0;
+		border-right: 1px solid var(--color-panel-rule);
+		border-radius: 0;
+		text-align: left;
+		cursor: pointer;
 	}
 
-		.item-nav h4 {
-			color: #444;
+		.item-nav h3 {
+			color: var(--color-on-stage-muted);
 			font-size: 20px;
 			line-height: 30px;
+			transition: color var(--transition-fast);
 		}
 
 		.item-nav span.category {
 			display: inline-block;
-			color: #444;
+			color: var(--color-on-stage-muted);
 			font-size: 11px;
 			line-height: 21px;
-			text-transform: uppercase; 
-			letter-spacing: 2px; 
-			margin-top: 10px; 
-			border-top: 1px solid #333; 
-			padding-top: 10px; 
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			margin-top: 10px;
+			border-top: 1px solid var(--color-panel-rule);
+			padding-top: 10px;
+			transition: color var(--transition-fast), border-color var(--transition-fast);
 		}
 
-	.item-nav.flex-active {}
+		.item-nav:hover h3,
+		.item-nav[aria-current="true"] h3 { color: var(--color-on-stage); }
 
-	.item-nav.flex-active h4 { 
-		color: white; 
-	}
-
-	.item-nav.flex-active span.category { 
-		color: #777; 
-		border-top: 1px solid #22eedd; 
-	}
-
-	@media screen and (max-width: 860px) { 
-
-		.flex-direction-nav .flex-prev {
-			opacity: 1;
-			left: 0;
+		.item-nav[aria-current="true"] span.category {
+			color: var(--color-on-stage);
+			border-top-color: var(--color-accent);
 		}
-		.flex-direction-nav .flex-next {
-			opacity: 1;
-			right: 0;
-		}
-
-	}

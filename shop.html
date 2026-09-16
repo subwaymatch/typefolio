@@ -1,136 +1,149 @@
-
 <!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<html lang="en">
 <head>
 
 	<!-- Basic Page Needs
 	================================================== -->
 	<meta charset="utf-8">
-	<title>Typefolio</title>
-	<meta name="description" content=".">
-	<meta name="author" content="">
-	
+	<title>Shop | Typefolio</title>
+	<meta name="description" content="Prints, posters and objects from the Emily Bernd &amp; Associates studio shop.">
+
 	<!-- Mobile Specific Metas
 	================================================== -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	
-	<!-- CSS Files
-	* cssreset-min.css 			- CSS reset
-	* typegrid.css				- Responsive grid system
-	* style.css					- Main CSS file
-	
-	Original LESS Stylesheet
-	<link rel="stylesheet/less" type="text/css" href="css/style.less" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="color-scheme" content="light dark">
+	<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+	<meta name="theme-color" content="#101010" media="(prefers-color-scheme: dark)">
+
+	<!-- Social Sharing
+	     Replace the og:url and og:image values with absolute URLs on your
+	     own domain. Relative paths are not resolved by most link previews.
 	================================================== -->
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.8.0/build/cssreset/cssreset-min.css">
-	<link rel="stylesheet" type="text/css" href="css/typegrid.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="Typefolio">
+	<meta property="og:title" content="Shop">
+	<meta property="og:description" content="Prints, posters and objects from the Emily Bernd &amp; Associates studio shop.">
+	<meta property="og:image" content="images/item_shop01.jpg">
+	<meta name="twitter:card" content="summary_large_image">
 
+	<!-- CSS Files
+	* reset.css     - Local reset and element defaults
+	* typegrid.css  - Fluid 12-column grid
+	* style.css     - Design tokens and everything else
+	================================================== -->
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/typegrid.css">
+	<link rel="stylesheet" href="css/style.css">
 
-		
-	<!--[if lt IE 8]>
-		<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE8.js"></script>
-	<![endif]-->
-
-	<!--[if lt IE 9]>
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-
-	<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,300' rel='stylesheet' type='text/css'>
+	<!-- Fonts
+	     Self-hosted, so there is no third-party request on page load.
+	     Preloaded because it is used above the fold on most pages.
+	================================================== -->
+	<link rel="preload" href="fonts/roboto-slab-latin.woff2" as="font" type="font/woff2" crossorigin>
 
 	<!-- Favicons
 	================================================== -->
-	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="icon" href="images/favicon.ico" sizes="32x32">
+	<link rel="icon" href="images/favicon.png" type="image/png" sizes="32x32">
 	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+	<!-- JS
+	     defer keeps the parser moving and still runs before DOMContentLoaded.
+	================================================== -->
+	<script src="js/typefolio.js" defer></script>
 
 </head>
 
 <body>
 
 
-	<!-- Header - Half Logo
+	<!-- Header
 	================================================== -->
-	<section id="header">
+	<header id="header">
+
+		<a class="skip-link" href="#main">Skip to content</a>
 
 		<!-- * * * * * * * * * * * * * * * * * * * * * * *
 
 			Top Bar & Menu (#nav)
 
+			This one list drives both menus. js/typefolio.js copies it into a
+			collapsible menu below 768px, so there is nothing to keep in sync.
+			Add .hide-on-mobile to an <li> to drop it from narrow viewports.
+
 		* * * * * * * * * * * * * * * * * * * * * * * * -->
 		<div class="topbar">
 			<div class="container">
+				<nav aria-label="Main">
+					<ul id="nav" class="full">
+						<li>
+							<a href="about.html">
+								<span class="count hide-on-mobile">01.</span>
+								About
+							</a>
+							<ul>
+								<li><a href="index-with-iosslider.html">Home w/ Slider</a></li>
+								<li><a href="index-with-flexslider.html">Home w/ Slider 2</a></li>
+								<li><a href="contact.html">Contact Us</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="works-stackgrid-with-title.html">
+								<span class="count hide-on-mobile">02.</span>
+								Works
+							</a>
+							<ul>
+								<li><a href="works-stackgrid-images.html">Images Only</a></li>
+								<li><a href="works-architecture-three-columns.html">Architecture</a></li>
+								<li class="hide-on-mobile"><a href="works-architecture-two-columns.html">Two Columns</a></li>
+								<li>
+									<a href="single-photography-sidebar-right.html">Single</a>
+									<ul>
+										<li><a href="single-photography-full-width.html">Full Width</a></li>
+										<li><a href="single-photography-sidebar-left.html">Left Sidebar</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="shop.html">
+								<span class="count hide-on-mobile">03.</span>
+								Shop
+							</a>
+							<ul>
+								<li><a href="shop-item.html">Single Item</a></li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="archive-blog.html">
+								<span class="count hide-on-mobile">04.</span>
+								Blog
+							</a>
+							<ul>
+								<li><a href="single-blog.html">Single Page</a></li>
+							</ul>
+						</li>
 					
-				<!--
-					A custom jQuery plugin called typeMenu handles the menu
-					Add .hide-on-mobile to <li> elements to hide a specific item on mobile viewports
-				-->
-				<ul id="nav" class="full">
-					<li>
-						<a href="about.html">
-							<span class="count hide-on-mobile">01.</span>
-							About
-						</a>
-						<ul>
-							<li><a href="index-with-iosslider.html">Home w/ Slider</a></li>
-							<li><a href="index-with-flexslider.html">Home w/ Slider 2</a></li>
-							<li><a href="contact.html">Contact Us</a></li>
-						</ul>
-					</li>
-					<li>
-						<a href="works-stackgrid-with-title.html">
-							<span class="count hide-on-mobile">02.</span>
-							Works
-						</a>
-						<ul>
-							<li><a href="works-stackgrid-images.html">Images Only</a></li>
-							<li><a href="works-architecture-three-columns.html">Architecture</a></li>
-							<li class="hide-on-mobile"><a href="works-architecture-two-columns.html">Two Columns</a></li>
-							<li>
-								<a href="single-photography-sidebar-right.html">Single</a>
-								<ul>
-									<li><a href="single-photography-full-width.html">Full Width</a></li>
-									<li><a href="single-photography-sidebar-left.html">Left Sidebar</a></li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-
-					<li>
-						<a href="shop.html">
-							<span class="count hide-on-mobile">03.</span>Shop
-						</a>
-						<ul>
-							<li><a href="shop-item.html">Single Item</a></li>
-						</ul>
-					</li>
-
-					<li>
-						<a href="archive-blog.html">
-							<span class="count hide-on-mobile">04.</span>
-							Blog
-						</a>
-						<ul>
-							<li><a href="single-blog.html">Single Page</a></li>
-						</ul>
-					</li>
-					
-				</ul><!-- // #nav -->
-
+					</ul><!-- // #nav -->
+				</nav>
 			</div><!-- // .container -->
 		</div><!-- // .topbar -->
 
 		<div class="logo-wrap">
 			<div class="container">
 				<div class="desktop-6 columns">
-					<h1><a href="index.html" title="Home"><img src="images/logo_text_half.png" alt="" /></a></h1>
+					<h1 class="site-title">
+						<a href="index.html">
+							<img src="images/logo_text_half.png" alt="Bernd" width="764" height="157" loading="eager" decoding="async" fetchpriority="high" class="invert-on-dark">
+						</a>
+					</h1>
 				</div><!-- // .desktop-6 -->
 
 				<div class="desktop-6 columns">
 					<p class="site-desc">
-						Emily Bernd &amp; Associates<br />
+						Emily Bernd &amp; Associates<br>
 						<span class="font-color-primary">From product to all things digital</span>
 					</p><!-- // .site-desc -->
 				</div><!-- // .desktop-6 -->
@@ -138,7 +151,11 @@
 				<div class="clear"></div>
 			</div><!-- // .container -->
 		</div><!-- // .logo-wrap -->
-	</section><!-- // #header -->
+	</header><!-- // #header -->
+
+	<main id="main">
+
+		<h2 class="visually-hidden">Shop</h2>
 
 
 
@@ -159,11 +176,11 @@
 					<div class="cart-item">
 						<a href="shop-item.html" class="permalink">
 
-							<img src="images/item_shop01.jpg" alt="" />
+							<img src="images/item_shop01.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
 							
 							<div class="item-info">
 								<div class="item-name">
-									<h4>Rubato Umbrella</h4>
+									<h3>Rubato Umbrella</h3>
 									<span class="category">Accessories</span>
 								</div><!-- // .item-info -->
 
@@ -188,11 +205,11 @@
 					<div class="cart-item">
 						<a href="shop-item.html" class="permalink">
 
-							<img src="images/item_shop02.jpg" alt="" />
+							<img src="images/item_shop02.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
 							
 							<div class="item-info">
 								<div class="item-name">
-									<h4>Le Bleu Blazer</h4>
+									<h3>Le Bleu Blazer</h3>
 									<span class="category">Men's Clothing</span>
 								</div><!-- // .item-info -->
 
@@ -216,16 +233,15 @@
 				<div class="clear show-on-mobile"></div>
 
 
-
 				<div class="desktop-3 tablet-4 mobile-half columns">
 					<div class="cart-item">
 						<a href="shop-item.html" class="permalink">
 
-							<img src="images/item_shop03.jpg" alt="" />
+							<img src="images/item_shop03.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
 							
 							<div class="item-info">
 								<div class="item-name">
-									<h4>Synth Black Label</h4>
+									<h3>Synth Black Label</h3>
 									<span class="category">Liquor</span>
 								</div><!-- // .item-info -->
 
@@ -254,11 +270,11 @@
 					<div class="cart-item">
 						<a href="shop-item.html" class="permalink">
 
-							<img src="images/item_shop04.jpg" alt="" />
+							<img src="images/item_shop04.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
 							
 							<div class="item-info">
 								<div class="item-name">
-									<h4>Le Bleu Water</h4>
+									<h3>Le Bleu Water</h3>
 									<span class="category">Food &amp; Drinks</span>
 								</div><!-- // .item-info -->
 
@@ -282,16 +298,15 @@
 				<div class="clear show-on-mobile"></div>
 
 
-
 				<div class="desktop-3 tablet-4 mobile-half columns">
 					<div class="cart-item">
 						<a href="shop-item.html" class="permalink">
 
-							<img src="images/item_shop05.jpg" alt="" />
+							<img src="images/item_shop05.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
 							
 							<div class="item-info">
 								<div class="item-name">
-									<h4>Navigator</h4>
+									<h3>Navigator</h3>
 									<span class="category">Men's Accessories</span>
 								</div><!-- // .item-info -->
 
@@ -316,11 +331,11 @@
 					<div class="cart-item">
 						<a href="shop-item.html" class="permalink">
 
-							<img src="images/item_shop06.jpg" alt="" />
+							<img src="images/item_shop06.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
 							
 							<div class="item-info">
 								<div class="item-name">
-									<h4>Small Ben</h4>
+									<h3>Small Ben</h3>
 									<span class="category">Men's Accessories</span>
 								</div><!-- // .item-info -->
 
@@ -344,7 +359,6 @@
 				<div class="clear show-on-mobile"></div>
 
 
-
 				<div class="clear hide-under-tablet"></div>
 
 				
@@ -353,11 +367,11 @@
 					<div class="cart-item">
 						<a href="shop-item.html" class="permalink">
 
-							<img src="images/item_shop07.jpg" alt="" />
+							<img src="images/item_shop07.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
 							
 							<div class="item-info">
 								<div class="item-name">
-									<h4>Call Away Signature</h4>
+									<h3>Call Away Signature</h3>
 									<span class="category">Golf</span>
 								</div><!-- // .item-info -->
 
@@ -382,11 +396,11 @@
 					<div class="cart-item">
 						<a href="shop-item.html" class="permalink">
 
-							<img src="images/item_shop08.jpg" alt="" />
+							<img src="images/item_shop08.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
 							
 							<div class="item-info">
 								<div class="item-name">
-									<h4>Kudos Set</h4>
+									<h3>Kudos Set</h3>
 									<span class="category">Kitchen</span>
 								</div><!-- // .item-info -->
 
@@ -410,16 +424,15 @@
 				<div class="clear show-on-mobile"></div>
 
 
-
 				<div class="desktop-3 tablet-4 mobile-half columns">
 					<div class="cart-item">
 						<a href="shop-item.html" class="permalink">
 
-							<img src="images/item_shop09.jpg" alt="" />
+							<img src="images/item_shop09.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
 							
 							<div class="item-info">
 								<div class="item-name">
-									<h4>Kudos Silverware</h4>
+									<h3>Kudos Silverware</h3>
 									<span class="category">Kitchen</span>
 								</div><!-- // .item-info -->
 
@@ -448,11 +461,11 @@
 					<div class="cart-item">
 						<a href="shop-item.html" class="permalink">
 
-							<img src="images/item_shop10.jpg" alt="" />
+							<img src="images/item_shop10.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
 							
 							<div class="item-info">
 								<div class="item-name">
-									<h4>Fritz Hansen Replica</h4>
+									<h3>Fritz Hansen Replica</h3>
 									<span class="category">Furniture</span>
 								</div><!-- // .item-info -->
 
@@ -476,16 +489,15 @@
 				<div class="clear show-on-mobile"></div>
 
 
-
 				<div class="desktop-3 tablet-4 mobile-half columns">
 					<div class="cart-item">
 						<a href="shop-item.html" class="permalink">
 
-							<img src="images/item_shop11.jpg" alt="" />
+							<img src="images/item_shop11.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
 							
 							<div class="item-info">
 								<div class="item-name">
-									<h4>Scandinavian Series III</h4>
+									<h3>Scandinavian Series III</h3>
 									<span class="category">Furniture</span>
 								</div><!-- // .item-info -->
 
@@ -510,11 +522,11 @@
 					<div class="cart-item">
 						<a href="shop-item.html" class="permalink">
 
-							<img src="images/item_shop12.jpg" alt="" />
+							<img src="images/item_shop12.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
 							
 							<div class="item-info">
 								<div class="item-name">
-									<h4>Scandinavian Series VI</h4>
+									<h3>Scandinavian Series VI</h3>
 									<span class="category">Furniture</span>
 								</div><!-- // .item-info -->
 
@@ -536,7 +548,6 @@
 				
 
 				<div class="clear show-on-mobile"></div>
-
 
 
 				<div class="clear hide-under-tablet"></div>
@@ -570,7 +581,7 @@
 					<div class="shop-info">
 						<h2 class="border-top">Bernd Products</h2>
 						
-						<img src="images/shop_description.png" alt="" />
+						<img src="images/shop_description.png" alt="" width="720" height="400" loading="lazy" decoding="async" class="invert-on-dark">
 						
 						<p><strong>Bernd</strong> is a German luxury lifestyle brand founded in 1987 by Helmut Bernd. Today, it carries a range of products including clothings, furnitures, kitchenwares, and sports items. </p>
 
@@ -584,54 +595,29 @@
 			
 		</div><!-- // .container -->
 	</section><!-- // section#shop -->
-
-
-
+	</main><!-- // #main -->
 
 	<!-- Footer
 	================================================== -->
-	<section id="footer">
+	<footer id="footer">
 		<div class="container">
 			<div class="desktop-3 columns">
-				<p>Copyright &copy; <a href="http://www.typebig.com" class="italic">Typebig</a></p>
+				<p>Copyright &copy; <a href="https://www.typebig.com" class="italic">Typebig</a></p>
 			</div><!-- // .desktop-3 -->
 
 			<div class="desktop-9 columns">
-				<ul id="social">
-					<li><a href="http://www.facebook.com" class="hoverMe">Facebook</a></li>
-					<li><a href="http://www.twitter.com" class="hoverMe">Twitter</a></li>
-					<li><a href="http://www.google.com" class="hoverMe">Google+</a></li>
-				</ul><!-- // #social -->
+				<nav aria-label="Social">
+					<ul id="social">
+						<li><a href="https://www.facebook.com" class="hoverMe" rel="me noopener">Facebook</a></li>
+						<li><a href="https://www.instagram.com" class="hoverMe" rel="me noopener">Instagram</a></li>
+						<li><a href="https://www.linkedin.com" class="hoverMe" rel="me noopener">LinkedIn</a></li>
+					</ul><!-- // #social -->
+				</nav>
 			</div><!-- // .desktop-9 -->
 
 			<div class="clear"></div>
 		</div><!-- // .container -->
-	</section><!-- // section#footer -->
-
-
-	<!-- JS
-	================================================== -->
-	<!-- 
-		Flexslider 2.1 has known issues of manualControls setting with jQuery 1.9~
-		Use jQuery 1.8 until Flexslider 2.2 stable version is released
-	-->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-	<script src="js/jQuery.BlackAndWhite.min.js"></script>
-	<script src="js/modernizr.js"></script>
-	<script src="js/less-1.4.0.min.js"></script>
-	<script src="js/jquery.typeMenu.js"></script>
-	<script src="js/jquery.typeSticky.js"></script>
-
-
-	
-
-	
-
-
-	
-
-
-	<script src="js/jquery.custom.js"></script>
+	</footer><!-- // #footer -->
 
 
 <!-- End Document
