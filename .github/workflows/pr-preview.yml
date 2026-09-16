@@ -1,0 +1,148 @@
+name: PR preview
+
+# Publishes each pull request to pr-<number>/ on gh-pages and removes it again
+# when the pull request closes, merged or not.
+#
+# Previews are not gated on Checks: a preview of a failing change is often
+# exactly what you want to look at.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+concurrency:
+  group: gh-pages
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  preview:
+    name: Deploy or remove the preview
+    # A fork PR gets a read-only token, so it could not push anyway, and
+    # publishing unreviewed markup to this origin is not something to do
+    # automatically.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      PR: ${{ github.event.pull_request.number }}
+      # github.sha on a pull_request event is an ephemeral merge commit that
+      # exists in no branch. The checkout below uses the head, so report that.
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Assemble the site
+        if: github.event.action != 'closed'
+        run: |
+          chmod +x .github/scripts/assemble-site.sh
+          .github/scripts/assemble-site.sh /tmp/site
+
+      - name: Update gh-pages
+        id: publish
+        run: |
+          set -euo pipefail
+
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            git fetch --depth=1 origin gh-pages
+            git worktree add /tmp/ghp gh-pages
+          elif [ "${{ github.event.action }}" = "closed" ]; then
+            echo "No gh-pages branch, nothing to remove."
+            exit 0
+          else
+            git worktree add --detach /tmp/ghp
+            git -C /tmp/ghp checkout --orphan gh-pages
+            git -C /tmp/ghp rm -rf --quiet . 2>/dev/null || true
+            touch /tmp/ghp/.nojekyll
+          fi
+
+          if [ "${{ github.event.action }}" = "closed" ]; then
+            rm -rf "/tmp/ghp/pr-${PR}"
+            message="Remove preview for #${PR}"
+          else
+            rm -rf "/tmp/ghp/pr-${PR}"
+            mkdir -p "/tmp/ghp/pr-${PR}"
+            cp -R /tmp/site/. "/tmp/ghp/pr-${PR}/"
+            message="Preview #${PR} at ${HEAD_SHA::7}"
+          fi
+
+          cd /tmp/ghp
+          git add -A
+          if git diff --staged --quiet; then
+            echo "Nothing changed."
+            exit 0
+          fi
+          git commit -m "$message"
+          git push origin gh-pages
+
+      - name: Is the site reachable yet
+        id: reachable
+        if: github.event.action != 'closed'
+        run: |
+          url="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/pr-${PR}/"
+          # Pages needs a minute after a push, and answers 404 until someone
+          # points Settings -> Pages at the gh-pages branch.
+          code=404
+          for _ in 1 2 3 4 5 6; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' -L "$url" || echo 000)
+            [ "$code" = "200" ] && break
+            sleep 10
+          done
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          echo "$url answered $code"
+
+      - name: Comment the preview URL
+        if: github.event.action != 'closed'
+        uses: actions/github-script@v7
+        env:
+          REACHABLE: ${{ steps.reachable.outputs.code }}
+        with:
+          script: |
+            const repo = context.repo.repo;
+            const url = `https://${context.repo.owner}.github.io/${repo}/pr-${context.issue.number}/`;
+            const head = context.payload.pull_request.head.sha.slice(0, 7);
+            const live = process.env.REACHABLE === '200';
+            const marker = '<!-- typefolio-preview -->';
+            const body = [
+              marker,
+              '### Preview',
+              '',
+              `[${url}](${url})`,
+              '',
+              `Updated for \`${head}\`. It is removed when this pull request closes.`,
+              '',
+              ...(live ? [] : [
+                `> The URL answers \`${process.env.REACHABLE}\` right now. The files are on`,
+                '> `gh-pages`, but GitHub Pages will not serve them until someone sets',
+                '> Settings → Pages → Source → Deploy from a branch → `gh-pages` / `root`.',
+                '',
+              ]),
+              'GitHub Pages cannot set response headers, so the `_headers` file has no effect here.',
+              'The CSP and cache rules it declares apply on Cloudflare Pages or Netlify.',
+              '',
+              '---',
+              '_Generated by [Claude Code](https://claude.ai/code)_',
+            ].join('\n');
+
+            const { data: comments } = await github.rest.issues.listComments({
+              ...context.repo, issue_number: context.issue.number, per_page: 100,
+            });
+            const existing = comments.find(c => c.body.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({ ...context.repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({
+                ...context.repo, issue_number: context.issue.number, body,
+              });
+            }

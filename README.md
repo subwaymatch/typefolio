@@ -68,10 +68,30 @@ safe.
 ## Deploying
 
 There is no build step, so any static host works: upload the folder, or point
-a host at the repository.
+a host at the repository. Every path in the template is relative, so it runs
+from a subdirectory as happily as from a domain root.
 
-The repository is set up for **Cloudflare Pages**, which gives a preview URL
-for every branch and pull request:
+### GitHub Pages
+
+This repository publishes to GitHub Pages, which is set up in `.github/workflows`:
+
+| Workflow | Does |
+| --- | --- |
+| `pages.yml` | Publishes `main` to the site root, but only after `Checks` passes on that commit |
+| `pr-preview.yml` | Publishes each pull request to `pr-<number>/` and removes it when the PR closes |
+| `pr-preview-sweep.yml` | Weekly, deletes previews whose pull request is no longer open |
+
+All three write to a `gh-pages` branch and share a concurrency group, so they
+never race. `.github/scripts/assemble-site.sh` decides what ships: the HTML,
+`css/`, `js/`, `fonts/` and `images/`, and nothing else.
+
+To enable it: Settings → Pages → Source → Deploy from a branch → `gh-pages` / `root`.
+
+**GitHub Pages cannot set response headers.** It serves a fixed
+`cache-control: max-age=600` and no security headers, so `_headers` has no
+effect there. The file is still worth keeping for the hosts below.
+
+### Cloudflare Pages, Netlify
 
 | Setting | Value |
 | --- | --- |
@@ -79,12 +99,21 @@ for every branch and pull request:
 | Build command | *(leave empty)* |
 | Build output directory | `/` |
 
-`_headers` at the root is picked up automatically. It sets cache lifetimes and
-a strict Content-Security-Policy. Netlify reads the same file format, and the
-same two settings (no build command, publish `.`) apply there.
+`_headers` is picked up automatically on both. It sets cache lifetimes and a
+strict Content-Security-Policy, and both give preview URLs natively, so none
+of the preview workflows above are needed.
 
-For Vercel, translate `_headers` into a `vercel.json` `headers` array; the
-values carry over unchanged.
+### Cloudflare Workers
+
+The newer Workers Builds flow needs a `wrangler.jsonc` declaring the assets
+directory, and a `.assetsignore` so `tests/` and `node_modules/` are not
+published. Note that its preview command is `npx wrangler versions upload`;
+`wrangler preview` has not existed since Wrangler 2.
+
+### Vercel
+
+Translate `_headers` into a `vercel.json` `headers` array; the values carry
+over unchanged.
 
 ## Tests
 
@@ -99,8 +128,16 @@ npm test
 
 It covers markup validity, the CSP, accessibility, the interactive behaviour
 and rendering at eight widths in both themes. GitHub Actions runs it on every
-pull request, and separately smoke-tests each Cloudflare preview deployment to
-confirm the headers are actually being served.
+pull request, and again against the published site after each deploy.
+
+Point the suite at a deployed URL with `BASE_URL`:
+
+```sh
+BASE_URL=https://example.github.io/typefolio npm run test:behavior
+```
+
+Add `EXPECT_HEADERS=1` on a host that honours `_headers` to also assert the
+declared headers are being served.
 
 ## Project structure
 

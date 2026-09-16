@@ -47,16 +47,34 @@ const browser = await chromium.launch();
 const external = Boolean(process.env.BASE_URL);
 
 if (external) {
-  // Deployed: the host should be sending what the file declares.
+  /*
+    Deployed. Every page must be reachable; whether the declared headers
+    arrive depends on the host. GitHub Pages cannot set response headers at
+    all, so asserting them there would fail for a reason that is not a bug.
+    Set EXPECT_HEADERS=1 on a host that honours _headers (Cloudflare Pages,
+    Netlify) to check they are actually served.
+  */
+  const expectHeaders = process.env.EXPECT_HEADERS === '1';
+
   for (const file of PAGES) {
     const res = await fetch(BASE + file);
     r.ok(`${file}: served 200`, res.ok);
+
+    if (!expectHeaders) continue;
     for (const [name, value] of Object.entries(global.headers)) {
       r.ok(`${file}: sends ${name}`, res.headers.get(name) === value);
     }
   }
+
   const font = await fetch(BASE + 'fonts/roboto-slab-latin.woff2');
-  r.ok('fonts are cached immutably', (font.headers.get('cache-control') || '').includes('immutable'));
+  r.ok('the web font is reachable', font.ok);
+
+  if (expectHeaders) {
+    r.ok('fonts are cached immutably',
+         (font.headers.get('cache-control') || '').includes('immutable'));
+  } else {
+    r.note('EXPECT_HEADERS is not set, so served headers were not asserted.');
+  }
 } else {
   // Local: enforce the policy in the browser and watch for violations.
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
