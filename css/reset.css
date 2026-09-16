@@ -96,7 +96,6 @@ fieldset { border: 0; }
 
 /* Replaced elements behave like blocks and never overflow their column. */
 img,
-picture,
 video,
 canvas,
 svg,
@@ -104,6 +103,14 @@ iframe {
 	display: block;
 	max-width: 100%;
 }
+
+/*
+	<picture> is only a wrapper for format negotiation. display: contents
+	takes it out of the box tree so every `img` rule in the stylesheet still
+	applies to the image exactly as it did before the AVIF and WebP sources
+	were added.
+*/
+picture { display: contents; }
 
 img,
 video { height: auto; }

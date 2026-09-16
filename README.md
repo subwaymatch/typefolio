@@ -2,7 +2,7 @@
 
 A typography-led portfolio template for studios, designers and photographers.
 Static HTML, CSS and one small JavaScript file. No build step, no framework,
-no package manager: open `index.html` and it works.
+nothing to install: open `index.html` and it works.
 
 Originally released in 2013 and rebuilt in 2026 for current browsers.
 
@@ -39,6 +39,9 @@ against a dark page.
   are unchanged from earlier versions.
 - **No dependencies.** One 10 KB script covers the menu and the sliders.
 - **No third-party requests.** The web font is self-hosted; nothing phones home.
+- **AVIF and WebP** for every image, with the original JPG/PNG as fallback.
+- **A strict CSP** that needs no `unsafe-inline`, verified in a browser on
+  every page.
 - **Dark mode** via `prefers-color-scheme`, driven by CSS custom properties.
 - **Accessible.** Keyboard-operable menu and sliders, visible focus, real form
   labels, AA contrast throughout. Zero axe-core violations on all 18 pages in
@@ -62,6 +65,43 @@ templating layer, so the header and footer blocks are repeated. They are
 byte-identical across pages, which makes a find-and-replace across all of them
 safe.
 
+## Deploying
+
+There is no build step, so any static host works: upload the folder, or point
+a host at the repository.
+
+The repository is set up for **Cloudflare Pages**, which gives a preview URL
+for every branch and pull request:
+
+| Setting | Value |
+| --- | --- |
+| Framework preset | None |
+| Build command | *(leave empty)* |
+| Build output directory | `/` |
+
+`_headers` at the root is picked up automatically. It sets cache lifetimes and
+a strict Content-Security-Policy. Netlify reads the same file format, and the
+same two settings (no build command, publish `.`) apply there.
+
+For Vercel, translate `_headers` into a `vercel.json` `headers` array; the
+values carry over unchanged.
+
+## Tests
+
+The template ships with no dependencies, but the repository has a test suite
+for developing it. See [`tests/README.md`](tests/README.md).
+
+```sh
+npm install
+npx playwright install chromium
+npm test
+```
+
+It covers markup validity, the CSP, accessibility, the interactive behaviour
+and rendering at eight widths in both themes. GitHub Actions runs it on every
+pull request, and separately smoke-tests each Cloudflare preview deployment to
+confirm the headers are actually being served.
+
 ## Project structure
 
 ```
@@ -72,9 +112,14 @@ css/
 js/
   typefolio.js   menu and slider
 fonts/           self-hosted Roboto Slab (Apache 2.0)
-images/          placeholder artwork
+images/          placeholder artwork, each in AVIF, WebP and the original
+_headers         cache and security headers for Cloudflare Pages / Netlify
+tests/           development only, see tests/README.md
 docs/            screenshots used by this README
 ```
+
+Nothing outside `css/`, `js/`, `fonts/`, `images/`, `_headers` and the HTML
+files is served to a visitor.
 
 ## Customising
 
@@ -158,6 +203,36 @@ it into a collapsible menu, so there is no second list to keep in sync. Add
 Add `.sticky` to a `.sidebar` inside a grid column. It holds position while
 the main column scrolls, from 960px up, using `position: sticky`.
 
+### Images
+
+Every image ships in three formats. The browser takes the first it
+understands, and the original is the fallback, so nothing breaks anywhere:
+
+```html
+<picture>
+  <source srcset="images/thumb_item01.avif" type="image/avif">
+  <source srcset="images/thumb_item01.webp" type="image/webp">
+  <img src="images/thumb_item01.png" alt="" width="720" height="720"
+       loading="lazy" decoding="async" class="invert-on-dark">
+</picture>
+```
+
+`<picture>` is `display: contents` in the reset, so it generates no box and
+every `img` rule in the stylesheet still applies exactly as it did before.
+
+Keep `width` and `height` on the `img`: they reserve the space and stop the
+page jumping as images load.
+
+To regenerate the AVIF and WebP copies after replacing the artwork, any
+encoder will do. With [sharp](https://sharp.pixelplumbing.com):
+
+```js
+await sharp(src).avif({ quality: 55, effort: 6 }).toFile(dest + '.avif');
+await sharp(src).webp({ quality: 78, effort: 6 }).toFile(dest + '.webp');
+```
+
+`npm run test:markup` fails if an image is missing either sibling.
+
 ### Dark mode and images
 
 Black line art on a transparent background disappears on a dark page. Add
@@ -208,10 +283,18 @@ without it.
 - Images had no dimensions, so every page shifted as they loaded.
 
 **Added:** dark mode, self-hosted fonts, `prefers-reduced-motion` support,
-lazy loading, Open Graph tags, a skip link, and design tokens.
+lazy loading, Open Graph tags, a skip link, design tokens, AVIF and WebP
+sources, a strict CSP, and a test suite wired into CI.
 
-Payload dropped from roughly 250 KB of scripts to 10 KB, with 5 external
-requests down to 0.
+Scripts dropped from roughly 250 KB to 10 KB, and 5 external requests to 0.
+Converting the artwork cut what a visitor downloads by a further two thirds:
+
+| Page | Before | After |
+| --- | ---: | ---: |
+| Home | 3.7 MB | 1.4 MB |
+| Works grid | 3.1 MB | 0.7 MB |
+| Home with carousel | 1.6 MB | 0.2 MB |
+| About | 272 KB | 160 KB |
 
 ## License
 

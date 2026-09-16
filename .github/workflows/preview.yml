@@ -1,0 +1,49 @@
+name: Preview
+
+# Cloudflare Pages records a GitHub Deployment for every preview build. When
+# one goes live this checks the deployed site rather than the checkout, which
+# is the only way to catch a problem in _headers: the checks workflow proves
+# the CSP does not break the pages, this proves the host is actually sending
+# it.
+
+on:
+  deployment_status:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: Smoke-test the deployment
+    # deployment_status fires on pending and error too.
+    if: github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      BASE_URL: ${{ github.event.deployment_status.environment_url }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+
+      # Against a URL, this asserts the host serves the headers _headers
+      # declares and that every page returns 200.
+      - name: Check served headers
+        run: npm run test:headers
+
+      # A smaller pass than the checks workflow: the deployment is the same
+      # bytes, so this is about delivery, not content.
+      - name: Check the deployment renders
+        run: npm run test:behavior
+
+      - name: Note the URL
+        if: always()
+        run: echo "Checked ${BASE_URL}" >> "$GITHUB_STEP_SUMMARY"
