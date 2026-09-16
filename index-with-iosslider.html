@@ -37,7 +37,9 @@
 
 	<!-- Fonts
 	     Self-hosted, so there is no third-party request on page load.
-	     Preloaded because it is used above the fold on most pages.
+	     Preloaded here because this page renders Roboto Slab. Pages that
+	     do not use it must not preload it: the browser would fetch 33 KB
+	     and never draw a glyph with it.
 	================================================== -->
 	<link rel="preload" href="fonts/roboto-slab-latin.woff2" as="font" type="font/woff2" crossorigin>
 

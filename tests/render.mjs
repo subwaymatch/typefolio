@@ -29,6 +29,11 @@ for (const scheme of ['light', 'dark']) {
         }
       });
 
+      const fonts = [];
+      page.on('response', (res) => {
+        if (res.url().endsWith('.woff2')) fonts.push(res.url().split('/').pop());
+      });
+
       try {
         await page.goto(BASE + file, { waitUntil: 'load', timeout: 30000 });
       } catch (e) {
@@ -56,6 +61,20 @@ for (const scheme of ['light', 'dark']) {
 
       if (layout.hScroll) problems.push('page scrolls horizontally');
       if (layout.overflowing.length) problems.push('overflowing: ' + layout.overflowing.join(', '));
+
+      /*
+        A page that downloads a web font and never draws a glyph with it has
+        spent 33 KB of someone's bandwidth for nothing. That is what a blanket
+        <link rel="preload"> on every page does, and nothing else in this suite
+        would notice: it is not an error, just waste.
+      */
+      if (fonts.length) {
+        const drawn = await page.evaluate(() =>
+          [...document.fonts].some((f) => f.status === 'loaded'));
+        if (!drawn) {
+          problems.push(`downloaded ${fonts.join(', ')} but rendered no glyph with it`);
+        }
+      }
 
       r.ok(`${scheme}/${name} ${file}`, problems.length === 0);
       for (const p of [...new Set(problems)].slice(0, 5)) r.note('   ' + p);
