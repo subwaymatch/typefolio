@@ -69,7 +69,7 @@ jobs:
             echo "Site is unchanged; nothing to publish."
             exit 0
           fi
-          git commit -m "Publish ${GITHUB_SHA::7}"
+          git commit -m "Publish $(git -C "$GITHUB_WORKSPACE" rev-parse --short HEAD)"
           git push origin gh-pages
 
       - name: Wait for the deploy to go live
