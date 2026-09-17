@@ -66,7 +66,7 @@ if (external) {
     }
   }
 
-  const font = await fetch(BASE + 'fonts/roboto-slab-latin.woff2');
+  const font = await fetch(BASE + 'fonts/inter-latin.woff2');
   r.ok('the web font is reachable', font.ok);
 
   if (expectHeaders) {
