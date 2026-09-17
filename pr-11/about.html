@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<!-- Basic Page Needs
+	================================================== -->
+	<meta charset="utf-8">
+	<title>About the Studio | Typefolio</title>
+	<meta name="description" content="What Emily Bernd &amp; Associates does, how the studio works, and the services it offers.">
+
+	<!-- Mobile Specific Metas
+	================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="color-scheme" content="light dark">
+	<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+	<meta name="theme-color" content="#101010" media="(prefers-color-scheme: dark)">
+
+	<!-- Social Sharing
+	     Replace the og:url and og:image values with absolute URLs on your
+	     own domain. Relative paths are not resolved by most link previews.
+	================================================== -->
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="Typefolio">
+	<meta property="og:title" content="About the Studio">
+	<meta property="og:description" content="What Emily Bernd &amp; Associates does, how the studio works, and the services it offers.">
+	<meta property="og:image" content="images/bg_title_about.png">
+	<meta name="twitter:card" content="summary_large_image">
+
+	<!-- CSS Files
+	* reset.css     - Local reset and element defaults
+	* typegrid.css  - Fluid 12-column grid
+	* style.css     - Design tokens and everything else
+	================================================== -->
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/typegrid.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Fonts
+	     Self-hosted, so there is no third-party request on page load.
+	     Preloaded here because this page renders Roboto Slab. Pages that
+	     do not use it must not preload it: the browser would fetch 33 KB
+	     and never draw a glyph with it.
+	================================================== -->
+	<link rel="preload" href="fonts/roboto-slab-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="icon" href="images/favicon.ico" sizes="32x32">
+	<link rel="icon" href="images/favicon.png" type="image/png" sizes="32x32">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+	<!-- JS
+	     defer keeps the parser moving and still runs before DOMContentLoaded.
+	================================================== -->
+	<script src="js/typefolio.js" defer></script>
+
+</head>
+
+<body>
+
+
+	<!-- Header
+	================================================== -->
+	<header id="header">
+
+		<a class="skip-link" href="#main">Skip to content</a>
+
+		<!-- * * * * * * * * * * * * * * * * * * * * * * *
+
+			Top Bar & Menu (#nav)
+
+			This one list drives both menus. js/typefolio.js copies it into a
+			collapsible menu below 768px, so there is nothing to keep in sync.
+			Add .hide-on-mobile to an <li> to drop it from narrow viewports.
+
+		* * * * * * * * * * * * * * * * * * * * * * * * -->
+		<div class="topbar">
+			<div class="container">
+				<nav aria-label="Main">
+					<ul id="nav" class="full">
+						<li>
+							<a href="about.html">
+								<span class="count hide-on-mobile">01.</span>
+								About
+							</a>
+							<ul>
+								<li><a href="index-with-iosslider.html">Home w/ Slider</a></li>
+								<li><a href="index-with-flexslider.html">Home w/ Slider 2</a></li>
+								<li><a href="contact.html">Contact Us</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="works-stackgrid-with-title.html">
+								<span class="count hide-on-mobile">02.</span>
+								Works
+							</a>
+							<ul>
+								<li><a href="works-stackgrid-images.html">Images Only</a></li>
+								<li><a href="works-architecture-three-columns.html">Architecture</a></li>
+								<li class="hide-on-mobile"><a href="works-architecture-two-columns.html">Two Columns</a></li>
+								<li>
+									<a href="single-photography-sidebar-right.html">Single</a>
+									<ul>
+										<li><a href="single-photography-full-width.html">Full Width</a></li>
+										<li><a href="single-photography-sidebar-left.html">Left Sidebar</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="shop.html">
+								<span class="count hide-on-mobile">03.</span>
+								Shop
+							</a>
+							<ul>
+								<li><a href="shop-item.html">Single Item</a></li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="archive-blog.html">
+								<span class="count hide-on-mobile">04.</span>
+								Blog
+							</a>
+							<ul>
+								<li><a href="single-blog.html">Single Page</a></li>
+							</ul>
+						</li>
+					
+					</ul><!-- // #nav -->
+				</nav>
+			</div><!-- // .container -->
+		</div><!-- // .topbar -->
+
+		<div class="logo-wrap">
+			<div class="container">
+				<div class="desktop-6 columns">
+					<h1 class="site-title">
+						<a href="index.html">
+							<picture>
+								<source srcset="images/logo_text_half.avif" type="image/avif">
+								<source srcset="images/logo_text_half.webp" type="image/webp">
+								<img src="images/logo_text_half.png" alt="Bernd" width="764" height="157" loading="eager" decoding="async" fetchpriority="high" class="invert-on-dark">
+							</picture>
+						</a>
+					</h1>
+				</div><!-- // .desktop-6 -->
+
+				<div class="desktop-6 columns">
+					<p class="site-desc">
+						Emily Bernd &amp; Associates<br>
+						<span class="font-color-primary">From product to all things digital</span>
+					</p><!-- // .site-desc -->
+				</div><!-- // .desktop-6 -->
+
+				<div class="clear"></div>
+			</div><!-- // .container -->
+		</div><!-- // .logo-wrap -->
+	</header><!-- // #header -->
+
+	<main id="main">
+
+
+	<!-- About
+	================================================== -->
+	<section id="about" class="page">
+		
+		<div class="container">
+
+			<div class="desktop-12 columns"><div class="border-top"></div></div>
+			
+			<div class="clear"></div>
+
+			<div class="desktop-3 tablet-12 columns">
+				<h2>Services</h2>
+			</div>
+			<div class="desktop-9 tablet-12 columns">
+				<p class="page-desc">Make a memorable experience. Let your brand act in a way that well exceeds users' expectations. See what we can do to help you. </p>
+			</div>
+		</div><!-- // .container -->
+
+		<div class="services">
+
+			<div class="container">
+				
+					<div class="item">
+						<div class="desktop-3 tablet-6 columns">
+							<picture>
+								<source srcset="images/about_services01.avif" type="image/avif">
+								<source srcset="images/about_services01.webp" type="image/webp">
+								<img src="images/about_services01.png" alt="" width="720" height="600" loading="lazy" decoding="async" class="invert-on-dark">
+							</picture>
+						</div><!-- // .desktop-3 -->
+
+						<div class="desktop-6 tablet-6 columns">
+							<h3>Illustration</h3>
+							<p>Architectural drawings are made according to a set of conventions, which include particular views (floor plan, section etc.), sheet sizes, units of measurement and scales, annotation and cross referencing. Conventionally, drawings were made in ink on paper or a similar material, and any copies required had to be laboriously made by hand. </p>
+						</div><!-- // .desktop-6 -->
+
+						<div class="clear"></div>
+					</div><!-- // .item -->
+
+
+					
+					<div class="item">
+						<div class="desktop-3 offset-3 tablet-6 tablet-offset-0 columns">
+							<picture>
+								<source srcset="images/about_services02.avif" type="image/avif">
+								<source srcset="images/about_services02.webp" type="image/webp">
+								<img src="images/about_services02.png" alt="" width="720" height="600" loading="lazy" decoding="async" class="invert-on-dark">
+							</picture>
+						</div><!-- // .desktop-3 -->
+
+						<div class="desktop-6 tablet-6 columns">
+							<h3>Digital</h3>
+							<p>The development of the computer had a major impact on the methods used to design and create technical drawings, making manual draughting almost obsolete, and opening up new possibilities of form using organic shapes and complex geometry. Today the vast majority of drawings are created using CAD software.</p>
+						</div><!-- // .desktop-6 -->
+
+						<div class="clear"></div>
+					</div><!-- // .item -->
+
+					
+
+
+					<div class="item">
+						<div class="desktop-3 push-6 tablet-6 tablet-push-0 columns">
+							<picture>
+								<source srcset="images/about_services03.avif" type="image/avif">
+								<source srcset="images/about_services03.webp" type="image/webp">
+								<img src="images/about_services03.png" alt="" width="720" height="600" loading="lazy" decoding="async" class="invert-on-dark">
+							</picture>
+						</div><!-- // .desktop-3 -->
+
+						<div class="desktop-6 pull-3 tablet-6 tablet-pull-0 columns">
+							<h3>Architectural CG</h3>
+							<p>Design, finance, and legal aspects overlap and interrelate. The design must be not only structurally sound and appropriate for the use and location, but must also be financially possible to build. The financial structure must accommodate the need for building the design provided, and must pay amounts that are legally owed. </p>
+						</div><!-- // .desktop-6 -->
+
+						<div class="clear"></div>
+					</div><!-- // .item -->
+
+					
+
+
+					<div class="item">
+						<div class="desktop-3 offset-3 tablet-6 tablet-offset-0 columns">
+							<picture>
+								<source srcset="images/about_services04.avif" type="image/avif">
+								<source srcset="images/about_services04.webp" type="image/webp">
+								<img src="images/about_services04.png" alt="" width="720" height="600" loading="lazy" decoding="async" class="invert-on-dark">
+							</picture>
+						</div><!-- // .desktop-3 -->
+
+						<div class="desktop-6 tablet-6 columns">
+							<h3>Structural Robustness</h3>
+							<p>A structure designed and constructed to have robustness will not suffer from disproportionate collapse (progressive collapse) under accidental loading. When it comes to steel framed buildings, to achieve robustness is about designing connections appropriately. Cncrete structures is less problem with structural robustness.</p>
+						</div><!-- // .desktop-6 -->
+
+						<div class="clear"></div>
+					</div><!-- // .item -->
+
+			</div><!-- // .container -->
+
+		</div><!-- // .services -->
+
+	</section><!-- // section#about -->
+	</main><!-- // #main -->
+
+	<!-- Footer
+	================================================== -->
+	<footer id="footer">
+		<div class="container">
+			<div class="desktop-3 columns">
+				<p>Copyright &copy; <a href="https://www.typebig.com" class="italic">Typebig</a></p>
+			</div><!-- // .desktop-3 -->
+
+			<div class="desktop-9 columns">
+				<nav aria-label="Social">
+					<ul id="social">
+						<li><a href="https://www.facebook.com" class="hoverMe" rel="me noopener">Facebook</a></li>
+						<li><a href="https://www.instagram.com" class="hoverMe" rel="me noopener">Instagram</a></li>
+						<li><a href="https://www.linkedin.com" class="hoverMe" rel="me noopener">LinkedIn</a></li>
+					</ul><!-- // #social -->
+				</nav>
+			</div><!-- // .desktop-9 -->
+
+			<div class="clear"></div>
+		</div><!-- // .container -->
+	</footer><!-- // #footer -->
+
+
+<!-- End Document
+================================================== -->
+</body>
+</html>
