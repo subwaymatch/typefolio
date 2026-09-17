@@ -203,6 +203,20 @@ The dark palette is a second `:root` block under
 
 Columns are full width below 768px unless a `.mobile-*` class says otherwise.
 
+Every width is a percentage of the element's own container, so a grid nested
+in a column counts against that column rather than the page. Mark the outer
+column `.nested` to drop its padding, then number the columns inside it out of
+twelve again: three equal cells inside a `.desktop-9` column are `.desktop-4`,
+not `.desktop-3`.
+
+```html
+<div class="desktop-9 tablet-12 nested columns">
+  <div class="desktop-4 tablet-4 mobile-half columns"> ... </div>
+  <div class="desktop-4 tablet-4 mobile-half columns"> ... </div>
+  <div class="desktop-4 tablet-4 mobile-half columns"> ... </div>
+</div>
+```
+
 ### Sliders
 
 ```html
