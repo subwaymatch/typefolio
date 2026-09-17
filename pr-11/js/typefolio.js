@@ -31,41 +31,16 @@
 		mobileMenuId: 'menu-mobile',
 		toggleElementId: 'toggle-menu',
 		menuOnCollapseText: 'Menu',
-		menuOnExpandText: 'Close',
-		addFirstLevelArrow: true,
-		firstLevelArrow: '▾',
-		addDeeperLevelArrow: true,
-		deeperLevelArrow: '▸'
+		menuOnExpandText: 'Close'
 	};
 
 	function initMenu(nav, options) {
 		var opts = Object.assign({}, MENU_DEFAULTS, options || {});
 
-		// Snapshot the markup before the arrows go in, so the phone menu
-		// does not inherit decorations meant for the desktop bar.
-		var sourceMarkup = nav.innerHTML;
-
-		if (opts.addFirstLevelArrow) {
-			addArrows(nav.querySelectorAll(':scope > li:has(> ul) > a'), opts.firstLevelArrow);
-		}
-
-		if (opts.addDeeperLevelArrow) {
-			addArrows(nav.querySelectorAll(':scope li ul li:has(> ul) > a'), opts.deeperLevelArrow);
-		}
-
-		buildMobileMenu(nav, sourceMarkup, opts);
-	}
-
-	function addArrows(links, glyph) {
-		Array.prototype.forEach.call(links, function (link) {
-			var span = document.createElement('span');
-			span.className = 'arrow';
-			span.textContent = ' ' + glyph;
-
-			// Decorative: the link text already says where it goes.
-			span.setAttribute('aria-hidden', 'true');
-			link.appendChild(span);
-		});
+		// The chevron on a parent item is drawn by CSS, so the markup the
+		// phone menu is cloned from carries no desktop decoration and there
+		// is nothing to snapshot around.
+		buildMobileMenu(nav, nav.innerHTML, opts);
 	}
 
 	function buildMobileMenu(nav, sourceMarkup, opts) {
@@ -257,6 +232,85 @@
 				goTo(current + 1);
 			}
 		});
+
+		/*
+			Drag to navigate.
+
+			A touch screen and a trackpad can already pan the track; a mouse
+			has nothing to grab, so pan it here. Snapping is switched off for
+			the length of the drag - mandatory snapping fights every pixel of
+			a scrollLeft written by hand - and the nearest slide is snapped
+			to on release.
+		*/
+		var drag = null;
+		var dragged = false;
+
+		track.classList.add('is-draggable');
+
+		/*
+			Without this the browser starts dragging the artwork itself the
+			moment the pointer moves, and the gesture is over: a native image
+			drag swallows every pointer event that would have followed.
+		*/
+		track.addEventListener('dragstart', function (event) {
+			event.preventDefault();
+		});
+
+		track.addEventListener('pointerdown', function (event) {
+			// Leave touch and pen to the browser, which does this better.
+			if (event.pointerType !== 'mouse' || event.button !== 0) return;
+
+			drag = {
+				id: event.pointerId,
+				startX: event.clientX,
+				startLeft: track.scrollLeft,
+				moved: false
+			};
+		});
+
+		track.addEventListener('pointermove', function (event) {
+			if (!drag || event.pointerId !== drag.id) return;
+
+			var dx = event.clientX - drag.startX;
+
+			// Under a few pixels this is someone clicking a slide, not
+			// dragging it.
+			if (!drag.moved) {
+				if (Math.abs(dx) < 4) return;
+
+				drag.moved = true;
+				track.classList.add('is-dragging');
+				track.setPointerCapture(drag.id);
+			}
+
+			track.scrollLeft = drag.startLeft - dx;
+			event.preventDefault();
+		});
+
+		function endDrag(event) {
+			if (!drag || (event && event.pointerId !== drag.id)) return;
+
+			var moved = drag.moved;
+			if (track.hasPointerCapture(drag.id)) track.releasePointerCapture(drag.id);
+			drag = null;
+			dragged = moved;
+			track.classList.remove('is-dragging');
+
+			// Snapping was off for the drag, so land on a slide.
+			if (moved) goTo(nearestSlide());
+		}
+
+		track.addEventListener('pointerup', endDrag);
+		track.addEventListener('pointercancel', endDrag);
+
+		// A drag that happens to end on a link must not follow it.
+		track.addEventListener('click', function (event) {
+			if (!dragged) return;
+
+			dragged = false;
+			event.preventDefault();
+			event.stopPropagation();
+		}, true);
 
 		var scrollTimer;
 		track.addEventListener('scroll', function () {
