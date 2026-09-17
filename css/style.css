@@ -28,32 +28,33 @@
 /*--------------------------------------------------------------------------
 	Web font
 
-	Roboto Slab, self-hosted. The template used to pull this from
+	Inter, self-hosted. The template used to pull its web font from
 	fonts.googleapis.com over plain HTTP, which meant a blocked request on
 	any HTTPS site, two extra DNS lookups and connections on every page
 	load, and a visitor IP address handed to a third party.
 
-	One variable file covers both weights the design uses. Licence in
-	fonts/LICENSE.txt (Apache 2.0).
+	One variable file covers every weight the design uses, from the 300 of
+	the display lines to the 800 of the wordmark. Licence in
+	fonts/LICENSE.txt (SIL Open Font License 1.1).
 --------------------------------------------------------------------------*/
 
 @font-face {
-	font-family: "Roboto Slab";
+	font-family: "Inter";
 	font-style: normal;
-	font-weight: 300 400;
+	font-weight: 100 900;
 	font-display: swap;
-	src: url("../fonts/roboto-slab-latin.woff2") format("woff2");
+	src: url("../fonts/inter-latin.woff2") format("woff2");
 	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
 		U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
 		U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
-	font-family: "Roboto Slab";
+	font-family: "Inter";
 	font-style: normal;
-	font-weight: 300 400;
+	font-weight: 100 900;
 	font-display: swap;
-	src: url("../fonts/roboto-slab-latin-ext.woff2") format("woff2");
+	src: url("../fonts/inter-latin-ext.woff2") format("woff2");
 	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
 		U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
 		U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
@@ -99,6 +100,16 @@
 	--color-on-panel: #fff;
 	--color-panel-rule: #2a2a2a;
 
+	/*
+		The dropdown menu has its own surface rather than borrowing the dark
+		panel. A black block stamped over the page every time the pointer
+		crossed the bar; this sits just far enough off the page to read as a
+		panel and no further.
+	*/
+	--color-menu: #f4f4f4;
+	--color-on-menu: #111;
+	--color-menu-rule: #e4e4e4;
+
 	/* The stage a photograph sits on. Always dark, in both themes. */
 	--color-stage: #111;
 	--color-on-stage: #fff;
@@ -126,9 +137,24 @@
 	   has to stay dark in both themes (13:1 against the accent). */
 	--color-on-accent: #111;
 
-	/* Type */
-	--font-sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
-	--font-serif: "Roboto Slab", Georgia, "Times New Roman", serif;
+	/* Type
+
+	   One family sets the whole template. Inter is drawn a touch wide for
+	   its own defaults, so everything is tracked in slightly: a little at
+	   text sizes, more on display lines, which need less air the larger
+	   they get. */
+	--font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+	--tracking-text: -0.011em;
+	--tracking-display: -0.022em;
+	--tracking-wordmark: -0.05em;
+
+	/* Icons
+
+	   Lucide chevrons (https://lucide.dev, ISC), inlined as masks so they
+	   take the colour of the text they sit next to, in either theme, and
+	   cost no request. */
+	--icon-chevron-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+	--icon-chevron-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E");
 
 	/* Motion */
 	--transition-fast: 150ms ease;
@@ -163,6 +189,12 @@
 		--color-on-panel: #f2f2f2;
 		--color-panel-rule: #383838;
 
+		/* Same idea the other way up: one step off the page, not a white
+		   sheet dropped over it. */
+		--color-menu: #1d1d1d;
+		--color-on-menu: #f2f2f2;
+		--color-menu-rule: #303030;
+
 		--color-stage: #000;
 
 		--color-danger: #ff7a60;
@@ -183,9 +215,11 @@ body {
 	font-family: var(--font-sans);
 
 	/* Scales smoothly between phone and desktop instead of stepping at a
-	   single breakpoint. */
-	font-size: clamp(0.8125rem, 0.72rem + 0.4vw, 0.875rem);
+	   single breakpoint. The floor is 14px: nothing in the template is set
+	   smaller than that. */
+	font-size: clamp(0.875rem, 0.7825rem + 0.4vw, 0.9375rem);
 	line-height: 1.85;
+	letter-spacing: var(--tracking-text);
 }
 
 
@@ -263,7 +297,7 @@ p a:visited { line-height: inherit; }
 	padding: 12px 20px;
 	color: var(--color-on-panel);
 	background: var(--color-panel);
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: bold;
 	transform: translateY(-120%);
 	transition: transform var(--transition-fast);
@@ -354,16 +388,24 @@ b, strong { font-weight: bold; }
 	.post img.featured { margin-bottom: 50px; }
 
 
-	/* Buttons */
-	button,
+	/*
+		Buttons
+
+		Scoped to the .button class rather than the bare <button> element.
+		The slider arrows, the thumbnail strip and the labelled project nav
+		are real buttons that carry their own look; as an element selector
+		this skin's :hover rule outranked their `background: none` and filled
+		them with accent whenever the pointer passed over.
+	*/
 	.button,
 	a.button {
 		color: var(--color-on-accent);
 		background: var(--color-accent);
 		font-size: 14px;
+		line-height: 20px;
 		font-weight: bold;
 		text-align: center;
-		padding: 20px 25px 18px 25px;
+		padding: 13px 24px 12px 24px;
 		border: 0;
 		border-bottom: 2px solid var(--color-accent-hover);
 		transition: background var(--transition-fast); 
@@ -373,30 +415,28 @@ b, strong { font-weight: bold; }
 		border-radius: 4px;
 	}
 
-		button.small,
 		.button.small,
 		a.button.small {
 			font-size: 14px;
-			line-height: 24px;
-			padding: 16px 24px;
+			line-height: 20px;
+			padding: 9px 18px 8px 18px;
 			border-radius: 3px;
 		}
 
-		button.full,
+		/* The full-width call to action. Taller than the inline button, but
+		   sized to its label rather than to the column it happens to fill. */
 		.button.full,
 		a.button.full {
 			display: block;
 			width: 100%;
 			border-radius: 5px;
-			padding: 30px 40px 26px 40px;
-			border-bottom: 4px solid var(--color-accent-hover); 
+			padding: 17px 32px 16px 32px;
+			border-bottom: 3px solid var(--color-accent-hover);
 		}
 
-			button:hover,
 			.button:hover,
 			a.button:hover { background: var(--color-accent-hover); }
 
-			button.black,
 			.button.black,
 			a.button.black {
 				color: var(--color-on-panel);
@@ -404,7 +444,6 @@ b, strong { font-weight: bold; }
 				border-color: var(--color-text); 
 			}
 
-			button.black:hover,
 			.button.black:hover,
 			a.button.black:hover {
 				color: var(--color-accent-invert);
@@ -423,7 +462,7 @@ b, strong { font-weight: bold; }
 	label {
 		display: block;
 		color: var(--color-text);
-		font-size: 13px;
+		font-size: 14px;
 		line-height: 23px;
 		margin: 20px 0;
 	}
@@ -486,8 +525,8 @@ b, strong { font-weight: bold; }
 
 	.page p.page-desc {
 		color: var(--color-text);
-		font-family: var(--font-serif);
 		font-size: 34px;
+		letter-spacing: var(--tracking-display);
 		line-height: 60px;
 		font-weight: 300; 
 		margin-top: 30px;
@@ -539,7 +578,7 @@ b, strong { font-weight: bold; }
 
 	/* Page Navigation */
 	.nav-pages {
-		font-size: 11px;
+		font-size: 14px;
 		margin-top: 30px;
 	}
 
@@ -610,13 +649,9 @@ b, strong { font-weight: bold; }
 	ul#nav {
 		display: flex;
 		flex-wrap: wrap;
-		font-size: 12px;
+		font-size: 14px;
 		line-height: 21px;
 		font-weight: bold;
-	}
-
-	@media screen and (min-width: 768px) and (max-width: 959px) {
-		ul#nav { font-size: 11px; }
 	}
 
 	/*
@@ -634,37 +669,30 @@ b, strong { font-weight: bold; }
 
 		ul#nav > li > a {
 			color: var(--color-text-subtle);
-			display: block;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 8px;
 			padding: 18px 0 15px 0;
 			margin: 0 20px;
 			border-bottom: 1px solid var(--color-rule);
 			transition: color var(--transition-fast);
 		}
 
-			ul#nav > li > a span.count {
-				color: var(--color-text-subtle);
-				display: block;
-				font-size: 11px;
-			}
-
 	ul#nav > li:hover,
 	ul#nav > li:focus-within,
 	ul#nav > li.hover {
-		background: var(--color-panel);
+		background: var(--color-menu);
 	}
 
 		ul#nav > li:hover > a,
 		ul#nav > li:focus-within > a,
 		ul#nav > li.hover > a {
-			color: var(--color-on-panel);
+			color: var(--color-on-menu);
 			border-bottom-color: transparent;
 			margin: 0;
 			padding-inline: 20px;
 		}
-
-			ul#nav > li:hover > a span.count,
-			ul#nav > li:focus-within > a span.count,
-			ul#nav > li.hover > a span.count { color: var(--color-on-panel); }
 
 	/*
 		Parent items keep a hairline under the label so the open submenu
@@ -675,11 +703,12 @@ b, strong { font-weight: bold; }
 	ul#nav > li:has(> ul):focus-within > a,
 	ul#nav > li.hasChild:hover > a,
 	ul#nav > li.hasChild:focus-within > a,
-	ul#nav > li.hasChild.hover > a { border-bottom-color: var(--color-panel-rule); }
+	ul#nav > li.hasChild.hover > a { border-bottom-color: var(--color-menu-rule); }
 
 	/* Submenus */
 	ul#nav li ul {
-		background: var(--color-panel);
+		background: var(--color-menu);
+		box-shadow: 0 14px 28px rgb(0 0 0 / 0.07);
 		width: 100%;
 		min-width: 11rem;
 		position: absolute;
@@ -699,19 +728,47 @@ b, strong { font-weight: bold; }
 		}
 
 		ul#nav li ul a {
-			color: var(--color-on-panel);
-			display: block;
+			color: var(--color-on-menu);
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 8px;
 			padding: 18px 20px;
-			border-bottom: 1px solid var(--color-panel-rule);
+			border-bottom: 1px solid var(--color-menu-rule);
 			transition: color var(--transition-fast);
 		}
 
 		ul#nav li ul a:hover,
 		ul#nav li ul a:focus-visible {
-			color: var(--color-accent-invert);
+			color: var(--color-accent-text);
 		}
 
 		ul#nav li ul li:last-child > a { border-bottom: none; }
+
+	/*
+		Parent items carry a chevron at the far right of their own row:
+		down for a submenu below, right for one that opens sideways. The
+		script used to append a ▾ and a ▸ text node; a masked icon keeps
+		the shape a real chevron at any size and leaves the menu markup
+		alone, which is also what the phone menu is cloned from.
+	*/
+	ul#nav > li:has(> ul) > a::after,
+	ul#nav > li.hasChild > a::after,
+	ul#nav li ul li:has(> ul) > a::after,
+	ul#nav li ul li.hasChild > a::after {
+		content: "";
+		flex: none;
+		width: 16px;
+		height: 16px;
+		background-color: currentColor;
+		mask-image: var(--icon-chevron-down);
+		mask-repeat: no-repeat;
+		mask-position: center;
+		mask-size: contain;
+	}
+
+	ul#nav li ul li:has(> ul) > a::after,
+	ul#nav li ul li.hasChild > a::after { mask-image: var(--icon-chevron-right); }
 
 	/* Third level opens sideways, flipping in before it leaves the viewport. */
 	ul#nav > li ul ul {
@@ -793,7 +850,7 @@ b, strong { font-weight: bold; }
 	#menu-mobile-wrapper ul#menu-mobile.is-open { display: block; }
 
 		#menu-mobile-wrapper ul#menu-mobile li {
-			font-size: 12px;
+			font-size: 14px;
 			line-height: 21px;
 			display: block;
 		}
@@ -820,15 +877,44 @@ b, strong { font-weight: bold; }
 	
 	#header .logo-wrap { padding: 50px 0 50px 0; }
 
-	#header h1 {
-		font-size: 24px;
-		line-height: 34px;
-		font-weight: bold;
+	/*
+		The wordmark. It used to be a 764px PNG, which meant a request, a
+		fetchpriority hint, and an invert filter to keep it visible in dark
+		mode. As text it is sharp at any size and takes its colour from the
+		theme like everything else.
+
+		Sized in cqw against its own column, so it fills the header the way
+		the bitmap did at every width instead of stepping at breakpoints.
+	*/
+	#header h1.site-title {
+		container-type: inline-size;
+		font-weight: 800;
 	}
+
+		#header h1.site-title a {
+			display: inline-flex;
+			align-items: flex-start;
+			color: var(--color-text);
+			font-size: 28cqw;
+			line-height: 0.82;
+			letter-spacing: var(--tracking-wordmark);
+			text-transform: uppercase;
+		}
+
+			/* The ring the original artwork set over the last letter. */
+			#header h1.site-title .wordmark-ring {
+				flex: none;
+				width: 0.21em;
+				height: 0.21em;
+				margin-top: 0.04em;
+				margin-left: 0.05em;
+				border: 0.042em solid currentColor;
+				border-radius: 50%;
+			}
 
 	#header p.site-desc {
 		color: var(--color-text-subtle);
-		font-size: 12px;
+		font-size: 14px;
 		line-height: 19px;
 	}
 
@@ -893,8 +979,8 @@ b, strong { font-weight: bold; }
 		.box-about h3 { margin-bottom: 50px; }
 
 		.box-about p.tagline {
-			font-family: var(--font-serif);
 			font-size: 24px;
+			letter-spacing: var(--tracking-display);
 			line-height: 44px;
 			font-weight: 300; 
 			margin-top: 30px;
@@ -942,7 +1028,7 @@ b, strong { font-weight: bold; }
 		}
 
 		#about .services p {
-			font-size: 12px; 
+			font-size: 14px; 
 			line-height: 24px; 
 		}
 	}
@@ -956,7 +1042,7 @@ b, strong { font-weight: bold; }
 
 		#works .item h3 {
 			color: var(--color-text-muted);
-			font-size: 12px;
+			font-size: 14px;
 			line-height: 22px;
 			font-weight: bold;
 		}
@@ -966,7 +1052,7 @@ b, strong { font-weight: bold; }
 	#works .item span.category {
 		color: var(--color-text-subtle);
 		display: block;
-		font-size: 12px;
+		font-size: 14px;
 		line-height: 18px;
 		margin-bottom: 10px;
 	}
@@ -974,7 +1060,7 @@ b, strong { font-weight: bold; }
 		#works a.permalink:hover span.category { color: var(--color-accent-text); }
 
 	#works .item p.excerpt {
-		font-size: 13px;
+		font-size: 14px;
 		line-height: 18px;
 		margin-top: 10px;
 	}
@@ -1079,7 +1165,7 @@ b, strong { font-weight: bold; }
 			}
 
 			#works.single .box-info h4 {
-				font-size: 11px; 
+				font-size: 14px; 
 				line-height: 21px; 
 				text-transform: uppercase; 
 				letter-spacing: 3px; 
@@ -1095,7 +1181,7 @@ b, strong { font-weight: bold; }
 
 			@media screen and (max-width: 767px) {
 				#works.single .box-info p {
-					font-size: 12px; 
+					font-size: 14px; 
 					line-height: 24px; 
 				}
 			}
@@ -1115,7 +1201,7 @@ b, strong { font-weight: bold; }
 
 		#shop .shop-info p {
 			color: var(--color-text); 
-			font-size: 13px; 
+			font-size: 14px; 
 			line-height: 26px; 
 			margin-top: 20px; 
 		}
@@ -1133,7 +1219,7 @@ b, strong { font-weight: bold; }
 
 
 	#shop .cart-item {
-		font-size: 12px;
+		font-size: 14px;
 		line-height: 22px;
 		margin-bottom: 40px; 
 	}
@@ -1191,7 +1277,7 @@ b, strong { font-weight: bold; }
 	@media screen and (max-width: 767px) {
 
 		#shop .cart-item {
-			font-size: 11px;
+			font-size: 14px;
 			line-height: 21px;
 		}
 
@@ -1366,7 +1452,7 @@ b, strong { font-weight: bold; }
 	#checkout label {
 		display: block;
 		color: var(--color-text);
-		font-size: 13px;
+		font-size: 14px;
 		line-height: 23px;
 		margin: 10px 0 6px 0;
 	}
@@ -1435,7 +1521,7 @@ b, strong { font-weight: bold; }
 		#archive .box-meta span.category,
 		#archive .box-meta span.date {
 			color: var(--color-text-subtle);
-			font-size: 12px;
+			font-size: 14px;
 			line-height: 22px;
 		}
 		
@@ -1452,8 +1538,8 @@ b, strong { font-weight: bold; }
 	}
 
 	#archive .entry h3 {
-		font-family: var(--font-serif);
 		font-size: 26px;
+		letter-spacing: var(--tracking-display);
 		line-height: 40px;
 		font-weight: 300; 
 		margin-bottom: 28px;
@@ -1476,7 +1562,7 @@ b, strong { font-weight: bold; }
 
 
 	#archive .entry p.tags {
-		font-size: 12px; 
+		font-size: 14px; 
 		line-height: 22px; 
 		margin-top: 0; 
 	}
@@ -1496,7 +1582,7 @@ b, strong { font-weight: bold; }
 
 	@media screen and (max-width: 959px) { 
 		#archive .entry p {
-			font-size: 13px;
+			font-size: 14px;
 			line-height: 25px;
 		}
 
@@ -1510,8 +1596,8 @@ b, strong { font-weight: bold; }
 	}
 
 		#archive .entry blockquote p {
-			font-family: var(--font-serif);
 			font-size: 36px;
+			letter-spacing: var(--tracking-display);
 			line-height: 60px;
 			font-style: italic; 
 			font-weight: 300;
@@ -1520,7 +1606,7 @@ b, strong { font-weight: bold; }
 
 		#archive .entry blockquote footer { 
 			color: var(--color-accent-text);  
-			font-size: 12px; 
+			font-size: 14px; 
 			line-height: 22px; 
 			font-style: italic; 
 			display: inline-block; 
@@ -1580,7 +1666,7 @@ b, strong { font-weight: bold; }
 		
 		@media screen and (max-width: 767px) { 
 			section#contact .box-contact {
-				font-size: 12px; 
+				font-size: 14px; 
 				line-height: 24px; 
 				margin-bottom: 30px; 
 			}
@@ -1588,7 +1674,7 @@ b, strong { font-weight: bold; }
 
 		@media screen and (max-width: 479px) { 
 			section#contact .box-contact {
-				font-size: 11px; 
+				font-size: 14px; 
 				line-height: 22px; 
 			}
 		}
@@ -1610,7 +1696,7 @@ b, strong { font-weight: bold; }
 
 		section#contact p.map-link {
 			margin: 0 0 30px 0;
-			font-size: 12px;
+			font-size: 14px;
 		}
 
 			section#contact p.map-link a {
@@ -1643,7 +1729,7 @@ b, strong { font-weight: bold; }
 	---------------------------------------------------*/
 
 	#footer {
-		font-size: 13px;
+		font-size: 14px;
 		line-height: 24px;
 		padding: 30px 0;
 	}
@@ -1728,6 +1814,21 @@ b, strong { font-weight: bold; }
 	}
 
 	.tf-slider__track::-webkit-scrollbar { display: none; }
+
+	/*
+		The script marks the track draggable once it is running, so the
+		grab cursor only appears where a drag will actually do something.
+		Snapping is switched off for the length of a drag: mandatory
+		snapping fights a scrollLeft written by hand, pixel by pixel.
+	*/
+	.tf-slider__track.is-draggable { cursor: grab; }
+
+	.tf-slider__track.is-dragging {
+		cursor: grabbing;
+		scroll-snap-type: none;
+		scroll-behavior: auto;
+		user-select: none;
+	}
 
 	@media (prefers-reduced-motion: reduce) {
 		.tf-slider__track { scroll-behavior: auto; }
@@ -1911,7 +2012,7 @@ b, strong { font-weight: bold; }
 		.item-nav span.category {
 			display: inline-block;
 			color: var(--color-on-stage-muted);
-			font-size: 11px;
+			font-size: 14px;
 			line-height: 21px;
 			text-transform: uppercase;
 			letter-spacing: 2px;
@@ -1928,3 +2029,20 @@ b, strong { font-weight: bold; }
 			color: var(--color-on-stage);
 			border-top-color: var(--color-accent);
 		}
+
+
+	/*
+		Focus ring for the controls that sit flush inside a dark strip.
+
+		The shared ring is drawn 3px outside the element, which here either
+		spills past the panel onto the page or is clipped away by the
+		thumbnail strip's own scrolling box. The light-mode ring colour is
+		also too dark to read against the panel. So: bright accent, drawn
+		inside the control.
+	*/
+	.slider-thumbs button:focus-visible,
+	.item-nav:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: -2px;
+		border-radius: 0;
+	}

@@ -35,6 +35,12 @@
 	<link rel="stylesheet" href="css/typegrid.css">
 	<link rel="stylesheet" href="css/style.css">
 
+	<!-- Fonts
+	     Self-hosted, so there is no third-party request on page load. Inter
+	     sets every page, so every page preloads it.
+	================================================== -->
+	<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+
 	<!-- Favicons
 	================================================== -->
 	<link rel="icon" href="images/favicon.ico" sizes="32x32">
@@ -71,10 +77,7 @@
 				<nav aria-label="Main">
 					<ul id="nav" class="full">
 						<li>
-							<a href="about.html">
-								<span class="count hide-on-mobile">01.</span>
-								About
-							</a>
+							<a href="about.html">About</a>
 							<ul>
 								<li><a href="index-with-iosslider.html">Home w/ Slider</a></li>
 								<li><a href="index-with-flexslider.html">Home w/ Slider 2</a></li>
@@ -82,10 +85,7 @@
 							</ul>
 						</li>
 						<li>
-							<a href="works-stackgrid-with-title.html">
-								<span class="count hide-on-mobile">02.</span>
-								Works
-							</a>
+							<a href="works-stackgrid-with-title.html">Works</a>
 							<ul>
 								<li><a href="works-stackgrid-images.html">Images Only</a></li>
 								<li><a href="works-architecture-three-columns.html">Architecture</a></li>
@@ -101,20 +101,14 @@
 						</li>
 
 						<li>
-							<a href="shop.html">
-								<span class="count hide-on-mobile">03.</span>
-								Shop
-							</a>
+							<a href="shop.html">Shop</a>
 							<ul>
 								<li><a href="shop-item.html">Single Item</a></li>
 							</ul>
 						</li>
 
 						<li>
-							<a href="archive-blog.html">
-								<span class="count hide-on-mobile">04.</span>
-								Blog
-							</a>
+							<a href="archive-blog.html">Blog</a>
 							<ul>
 								<li><a href="single-blog.html">Single Page</a></li>
 							</ul>
@@ -128,14 +122,13 @@
 		<div class="logo-wrap">
 			<div class="container">
 				<div class="desktop-6 columns">
+					<!--
+						The wordmark is text, not a bitmap: it stays sharp at any
+						size, inherits the text colour in both themes, and costs no
+						request. The ring is drawn in CSS by .wordmark-ring.
+					-->
 					<h1 class="site-title">
-						<a href="index.html">
-							<picture>
-								<source srcset="images/logo_text_half.avif" type="image/avif">
-								<source srcset="images/logo_text_half.webp" type="image/webp">
-								<img src="images/logo_text_half.png" alt="Bernd" width="764" height="157" loading="eager" decoding="async" fetchpriority="high" class="invert-on-dark">
-							</picture>
-						</a>
+						<a href="index.html">Bernd<span class="wordmark-ring" aria-hidden="true"></span></a>
 					</h1>
 				</div><!-- // .desktop-6 -->
 
@@ -177,7 +170,7 @@
 
 				<div class="sidebar sticky">
 
-				<div class="desktop-3 tablet-8 columns">
+				<div class="desktop-6 tablet-8 columns">
 					<h2 class="border-top item-name">Rubato Umbrella <span class="item-price"> $12</span></h2>
 					
 					<p>Our unique umbrella is designed to protect against rain or sunlight. It is severely tested on all types of weather conditions. Don't forget to pick the right size. </p>
@@ -205,9 +198,9 @@
 					</form><!-- // form#item-selection -->
 
 					<p><a href="#" class="button full">Add to Cart</a></p>
-				</div><!-- // .desktop-3 -->
+				</div><!-- // .desktop-6 -->
 
-				<div class="desktop-3 tablet-4 columns">
+				<div class="desktop-6 tablet-4 columns">
 					<div class="sidecart">
 						<h2 class="border-top"><a href="shop.html">Cart Summary</a></h2>
 
@@ -218,7 +211,7 @@
 						<a href="#" class="button black full">Checkout</a>
 						<p class="desc">Payments are securely processed via Paypal.</p>
 					</div><!-- // .sidecart -->
-				</div><!-- // .desktop-3 -->
+				</div><!-- // .desktop-6 -->
 
 				</div><!-- // .sidebar -->
 			</div><!-- // .desktop-6 .nested -->
