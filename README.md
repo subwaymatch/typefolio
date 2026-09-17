@@ -148,7 +148,7 @@ css/
   style.css      design tokens, components, page styles
 js/
   typefolio.js   menu and slider
-fonts/           self-hosted Roboto Slab (Apache 2.0)
+fonts/           self-hosted Inter (SIL Open Font License 1.1)
 images/          placeholder artwork, each in AVIF, WebP and the original
 _headers         cache and security headers for Cloudflare Pages / Netlify
 tests/           development only, see tests/README.md
@@ -169,8 +169,8 @@ Everything is a custom property at the top of `css/style.css`:
   --color-accent: #22eedd;
   --color-accent-text: #097b72;  /* darkened, for small text on white */
   --color-text: #111;
-  --font-sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
-  --font-serif: "Roboto Slab", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --tracking-text: -0.011em;
 }
 ```
 
@@ -181,6 +181,21 @@ and is unreadable at body size. If you change one, change both.
 
 The dark palette is a second `:root` block under
 `@media (prefers-color-scheme: dark)`. To ship light-only, delete that block.
+
+### The wordmark
+
+The header logo is text, not an image:
+
+```html
+<h1 class="site-title">
+  <a href="index.html">Bernd<span class="wordmark-ring" aria-hidden="true"></span></a>
+</h1>
+```
+
+Put your own name in, and drop the `<span>` if you do not want the ring. It is
+set in the page typeface at `--tracking-wordmark` and sized in `cqw` against
+the column it sits in, so it fills the header at every width without a
+breakpoint.
 
 ### The grid
 
@@ -234,7 +249,9 @@ not `.desktop-3`.
 ```
 
 The track is a CSS scroll-snap container, so swipe, trackpad and arrow keys
-work with no script at all. `js/typefolio.js` only keeps the buttons in step.
+work with no script at all. `js/typefolio.js` keeps the buttons in step and
+adds mouse drag, which is the one gesture a scroll container does not give
+you for free.
 
 - Drop `data-slider-autoplay` to leave it still.
 - Add `.is-peeking` to let neighbouring slides show at the edges.
@@ -248,6 +265,10 @@ work with no script at all. `js/typefolio.js` only keeps the buttons in step.
 Write the navigation once, as `<ul id="nav">`. Below 768px the script copies
 it into a collapsible menu, so there is no second list to keep in sync. Add
 `.hide-on-mobile` to an `<li>` to drop it from the narrow bar.
+
+An item with a nested `<ul>` gets a chevron at the right of its row, drawn in
+CSS from `--icon-chevron-down` and `--icon-chevron-right`, so the markup stays
+a plain list. The dropdown surface is `--color-menu` / `--color-on-menu`.
 
 ### Sticky sidebars
 
@@ -354,7 +375,7 @@ Converting the artwork cut what a visitor downloads by a further two thirds:
 - **The placeholder images are not yours to use.** They were bought from stock
   libraries (mostly Shutterstock) without extended licences. Replace every
   image in `images/` before you publish.
-- Roboto Slab in `fonts/` is Apache 2.0. See `fonts/LICENSE.txt`.
+- Inter in `fonts/` is under the SIL Open Font License 1.1. See `fonts/LICENSE.txt`.
 
 ## Author
 
