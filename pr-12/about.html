@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<!-- Basic Page Needs
+	================================================== -->
+	<meta charset="utf-8">
+	<title>About the Studio | Typefolio</title>
+	<meta name="description" content="What Ombra Studio does, who does it, and how a project with the studio works.">
+
+	<!-- Mobile Specific Metas
+	================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="color-scheme" content="light dark">
+	<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+	<meta name="theme-color" content="#101010" media="(prefers-color-scheme: dark)">
+
+	<!-- Social Sharing
+	     Replace the og:url and og:image values with absolute URLs on your
+	     own domain. Relative paths are not resolved by most link previews.
+	================================================== -->
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="Typefolio">
+	<meta property="og:title" content="About the Studio">
+	<meta property="og:description" content="What Ombra Studio does, who does it, and how a project with the studio works.">
+	<meta property="og:image" content="images/works_stackgrid15.jpg">
+	<meta name="twitter:card" content="summary_large_image">
+
+	<!-- CSS Files
+	* reset.css     - Local reset and element defaults
+	* typegrid.css  - Fluid 12-column grid
+	* style.css     - Design tokens and everything else
+	================================================== -->
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/typegrid.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Fonts
+	     Self-hosted, so there is no third-party request on page load. Inter
+	     sets every page, so every page preloads it.
+	================================================== -->
+	<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="icon" href="images/favicon.ico" sizes="32x32">
+	<link rel="icon" href="images/favicon.png" type="image/png" sizes="32x32">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+	<!-- JS
+	     defer keeps the parser moving and still runs before DOMContentLoaded.
+	================================================== -->
+	<script src="js/typefolio.js" defer></script>
+
+</head>
+
+<body>
+
+
+	<!-- Header
+	================================================== -->
+	<header id="header">
+
+		<a class="skip-link" href="#main">Skip to content</a>
+
+		<!-- * * * * * * * * * * * * * * * * * * * * * * *
+
+			Top Bar & Menu (#nav)
+
+			This one list drives both menus. js/typefolio.js copies it into a
+			collapsible menu below 768px, so there is nothing to keep in sync.
+			Add .hide-on-mobile to an <li> to drop it from narrow viewports.
+
+		* * * * * * * * * * * * * * * * * * * * * * * * -->
+		<div class="topbar">
+			<div class="container">
+				<nav aria-label="Main">
+					<ul id="nav" class="full">
+						<li>
+							<a href="about.html">About</a>
+							<ul>
+								<li><a href="index-with-slider.html">Home with slider</a></li>
+								<li><a href="contact.html">Contact</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="works-stackgrid-with-title.html">Works</a>
+							<ul>
+								<li><a href="works-stackgrid-images.html">Images only</a></li>
+								<li><a href="works-architecture-three-columns.html">Architecture</a></li>
+								<li class="hide-on-mobile"><a href="works-architecture-two-columns.html">Two columns</a></li>
+								<li>
+									<a href="single-photography-sidebar-right.html">Single</a>
+									<ul>
+										<li><a href="single-photography-full-width.html">Full width</a></li>
+										<li><a href="single-photography-sidebar-left.html">Left sidebar</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="shop.html">Shop</a>
+							<ul>
+								<li><a href="shop-item.html">Single item</a></li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="archive-blog.html">Blog</a>
+							<ul>
+								<li><a href="single-blog.html">Single page</a></li>
+							</ul>
+						</li>
+					
+					</ul><!-- // #nav -->
+				</nav>
+			</div><!-- // .container -->
+		</div><!-- // .topbar -->
+
+		<div class="logo-wrap">
+			<div class="container">
+				<div class="desktop-6 columns">
+					<!--
+						The wordmark is text, not a bitmap: it stays sharp at any
+						size, inherits the text colour in both themes, and costs no
+						request. The ring is drawn in CSS by .wordmark-ring.
+					-->
+					<h1 class="site-title">
+						<a href="index.html">Ombra<span class="wordmark-ring" aria-hidden="true"></span></a>
+					</h1>
+				</div><!-- // .desktop-6 -->
+
+				<div class="desktop-6 columns">
+					<p class="site-desc">
+						Ombra Studio, Chicago<br>
+						<span class="font-color-primary">Illustration, photography and digital design</span>
+					</p><!-- // .site-desc -->
+				</div><!-- // .desktop-6 -->
+
+				<div class="clear"></div>
+			</div><!-- // .container -->
+		</div><!-- // .logo-wrap -->
+	</header><!-- // #header -->
+
+	<main id="main">
+
+
+	<!-- About
+	================================================== -->
+	<section id="about" class="page">
+
+		<div class="container">
+
+			<div class="desktop-12 columns"><div class="border-top"></div></div>
+
+			<div class="clear"></div>
+
+			<div class="desktop-3 tablet-12 columns">
+				<h2>Studio</h2>
+			</div><!-- // .desktop-3 -->
+
+			<div class="desktop-9 tablet-12 columns">
+				<p class="page-desc">Ombra is a studio of six in Chicago’s West Loop. We draw, photograph and build things for brands that would rather be understood than noticed.</p>
+
+				<ul class="facts">
+					<li><span class="value">2014</span><span class="label">Founded</span></li>
+					<li><span class="value">6</span><span class="label">People, one room</span></li>
+					<li><span class="value">140</span><span class="label">Projects shipped</span></li>
+				</ul>
+			</div><!-- // .desktop-9 -->
+
+			<div class="clear"></div>
+		</div><!-- // .container -->
+
+
+		<!-- Services
+		================================================== -->
+		<div class="services">
+			<div class="container">
+
+				<div class="item">
+					<div class="desktop-3 tablet-6 columns">
+						<picture>
+							<source srcset="images/about_services01.avif" type="image/avif">
+							<source srcset="images/about_services01.webp" type="image/webp">
+							<img src="images/about_services01.png" alt="" width="720" height="600" loading="lazy" decoding="async" class="invert-on-dark">
+						</picture>
+					</div><!-- // .desktop-3 -->
+
+					<div class="desktop-6 tablet-6 columns">
+						<h3>Illustration</h3>
+						<p>Engravings, line drawings and editorial illustration. We work from the plate up: every drawing starts as ink on paper and is only vectorised once it has earned it. Recent work runs from a single spot illustration to a sixty-plate field guide.</p>
+					</div><!-- // .desktop-6 -->
+
+					<div class="clear"></div>
+				</div><!-- // .item -->
+
+				<div class="item">
+					<div class="desktop-3 offset-3 tablet-6 tablet-offset-0 columns">
+						<picture>
+							<source srcset="images/about_services02.avif" type="image/avif">
+							<source srcset="images/about_services02.webp" type="image/webp">
+							<img src="images/about_services02.png" alt="" width="720" height="600" loading="lazy" decoding="async" class="invert-on-dark">
+						</picture>
+					</div><!-- // .desktop-3 -->
+
+					<div class="desktop-6 tablet-6 columns">
+						<h3>Photography</h3>
+						<p>Product, still life and architecture, shot in our own studio on a black glass stage or on location with a bag of two lights. We art direct, shoot and retouch under one roof, so what you approve on the contact sheet is what ships.</p>
+					</div><!-- // .desktop-6 -->
+
+					<div class="clear"></div>
+				</div><!-- // .item -->
+
+				<div class="item">
+					<div class="desktop-3 push-6 tablet-6 tablet-push-0 columns">
+						<picture>
+							<source srcset="images/about_services03.avif" type="image/avif">
+							<source srcset="images/about_services03.webp" type="image/webp">
+							<img src="images/about_services03.png" alt="" width="720" height="600" loading="lazy" decoding="async" class="invert-on-dark">
+						</picture>
+					</div><!-- // .desktop-3 -->
+
+					<div class="desktop-6 pull-3 tablet-6 tablet-pull-0 columns">
+						<h3>Digital design</h3>
+						<p>Websites, identities and the design systems behind them. We build in the open with the people who will maintain the work, write the documentation ourselves, and leave behind fewer moving parts than we found.</p>
+					</div><!-- // .desktop-6 -->
+
+					<div class="clear"></div>
+				</div><!-- // .item -->
+
+				<div class="item">
+					<div class="desktop-3 offset-3 tablet-6 tablet-offset-0 columns">
+						<picture>
+							<source srcset="images/about_services04.avif" type="image/avif">
+							<source srcset="images/about_services04.webp" type="image/webp">
+							<img src="images/about_services04.png" alt="" width="720" height="600" loading="lazy" decoding="async" class="invert-on-dark">
+						</picture>
+					</div><!-- // .desktop-3 -->
+
+					<div class="desktop-6 tablet-6 columns">
+						<h3>Print and identity</h3>
+						<p>Marks, stationery, packaging and the occasional book. We spend the first week of every identity with a pencil, test the result at stamp size and on the side of a van, and choose the paper before the typeface.</p>
+					</div><!-- // .desktop-6 -->
+
+					<div class="clear"></div>
+				</div><!-- // .item -->
+
+			</div><!-- // .container -->
+		</div><!-- // .services -->
+
+
+		<!-- People
+		     The portraits are drawings, so they do not carry .invert-on-dark;
+		     each sits on a light disc that stays light in dark mode.
+		================================================== -->
+		<div class="people">
+			<div class="container">
+
+				<div class="desktop-12 columns"><div class="border-top"></div></div>
+
+				<div class="clear"></div>
+
+				<div class="desktop-3 tablet-12 columns">
+					<h2>People</h2>
+				</div><!-- // .desktop-3 -->
+
+				<div class="desktop-9 tablet-12 columns">
+					<p class="page-desc">Six of us, four of whom agreed to sit for a portrait.</p>
+				</div><!-- // .desktop-9 -->
+
+				<div class="clear"></div>
+
+				<div class="desktop-3 tablet-3 mobile-half columns">
+					<div class="person">
+						<div class="portrait">
+							<picture>
+								<source srcset="images/about_people01.avif" type="image/avif">
+								<source srcset="images/about_people01.webp" type="image/webp">
+								<img src="images/about_people01.png" alt="Pencil portrait of Ines Carvalho" width="720" height="720" loading="lazy" decoding="async">
+							</picture>
+						</div><!-- // .portrait -->
+						<h3>Ines Carvalho</h3>
+						<span class="role">Founder and creative director</span>
+					</div><!-- // .person -->
+				</div><!-- // .desktop-3 -->
+
+				<div class="desktop-3 tablet-3 mobile-half columns">
+					<div class="person">
+						<div class="portrait">
+							<picture>
+								<source srcset="images/about_people02.avif" type="image/avif">
+								<source srcset="images/about_people02.webp" type="image/webp">
+								<img src="images/about_people02.png" alt="Pencil portrait of Mara Lindqvist" width="720" height="720" loading="lazy" decoding="async">
+							</picture>
+						</div><!-- // .portrait -->
+						<h3>Mara Lindqvist</h3>
+						<span class="role">Photographer</span>
+					</div><!-- // .person -->
+				</div><!-- // .desktop-3 -->
+
+				<div class="clear show-on-mobile"></div>
+
+				<div class="desktop-3 tablet-3 mobile-half columns">
+					<div class="person">
+						<div class="portrait">
+							<picture>
+								<source srcset="images/about_people03.avif" type="image/avif">
+								<source srcset="images/about_people03.webp" type="image/webp">
+								<img src="images/about_people03.png" alt="Pencil portrait of Kwame Boateng" width="720" height="720" loading="lazy" decoding="async">
+							</picture>
+						</div><!-- // .portrait -->
+						<h3>Kwame Boateng</h3>
+						<span class="role">Digital design lead</span>
+					</div><!-- // .person -->
+				</div><!-- // .desktop-3 -->
+
+				<div class="desktop-3 tablet-3 mobile-half columns">
+					<div class="person">
+						<div class="portrait">
+							<picture>
+								<source srcset="images/about_people04.avif" type="image/avif">
+								<source srcset="images/about_people04.webp" type="image/webp">
+								<img src="images/about_people04.png" alt="Pencil portrait of Yuki Tanabe" width="720" height="720" loading="lazy" decoding="async">
+							</picture>
+						</div><!-- // .portrait -->
+						<h3>Yuki Tanabe</h3>
+						<span class="role">Producer</span>
+					</div><!-- // .person -->
+				</div><!-- // .desktop-3 -->
+
+				<div class="clear"></div>
+
+			</div><!-- // .container -->
+		</div><!-- // .people -->
+
+
+		<!-- Get in touch
+		================================================== -->
+		<div class="cta">
+			<div class="container">
+
+				<div class="desktop-12 columns"><div class="border-top"></div></div>
+
+				<div class="clear"></div>
+
+				<div class="desktop-3 tablet-12 columns">
+					<h2>Working together</h2>
+				</div><!-- // .desktop-3 -->
+
+				<div class="desktop-6 tablet-12 columns">
+					<p>We take on a handful of projects each season and prefer to start with a conversation rather than a brief. Tell us what you are making, roughly when it needs to exist, and we will tell you honestly whether we are the right studio for it.</p>
+
+					<a href="contact.html" class="button">Get in touch</a>
+				</div><!-- // .desktop-6 -->
+
+				<div class="clear"></div>
+
+			</div><!-- // .container -->
+		</div><!-- // .cta -->
+
+	</section><!-- // section#about -->
+	</main><!-- // #main -->
+
+	<!-- Footer
+	================================================== -->
+	<footer id="footer">
+		<div class="container">
+			<div class="desktop-3 columns">
+				<p>&copy; 2026 Ombra Studio. Template by <a href="https://www.typebig.com" class="italic">Typebig</a></p>
+			</div><!-- // .desktop-3 -->
+
+			<div class="desktop-9 columns">
+				<nav aria-label="Social">
+					<ul id="social">
+						<li><a href="https://www.facebook.com" class="hoverMe" rel="me noopener">Facebook</a></li>
+						<li><a href="https://www.instagram.com" class="hoverMe" rel="me noopener">Instagram</a></li>
+						<li><a href="https://www.linkedin.com" class="hoverMe" rel="me noopener">LinkedIn</a></li>
+					</ul><!-- // #social -->
+				</nav>
+			</div><!-- // .desktop-9 -->
+
+			<div class="clear"></div>
+		</div><!-- // .container -->
+	</footer><!-- // #footer -->
+
+
+<!-- End Document
+================================================== -->
+</body>
+</html>

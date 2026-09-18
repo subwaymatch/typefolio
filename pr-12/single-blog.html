@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<!-- Basic Page Needs
+	================================================== -->
+	<meta charset="utf-8">
+	<title>Why we still start every identity with a pencil | Journal | Typefolio</title>
+	<meta name="description" content="A journal entry on why every identity project at Ombra begins with a week of pencil thumbnails.">
+
+	<!-- Mobile Specific Metas
+	================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="color-scheme" content="light dark">
+	<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+	<meta name="theme-color" content="#101010" media="(prefers-color-scheme: dark)">
+
+	<!-- Social Sharing
+	     Replace the og:url and og:image values with absolute URLs on your
+	     own domain. Relative paths are not resolved by most link previews.
+	================================================== -->
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="Typefolio">
+	<meta property="og:title" content="Why we still start every identity with a pencil">
+	<meta property="og:description" content="A journal entry on why every identity project at Ombra begins with a week of pencil thumbnails.">
+	<meta property="og:image" content="images/thumb_blog01.jpg">
+	<meta name="twitter:card" content="summary_large_image">
+
+	<!-- CSS Files
+	* reset.css     - Local reset and element defaults
+	* typegrid.css  - Fluid 12-column grid
+	* style.css     - Design tokens and everything else
+	================================================== -->
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/typegrid.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Fonts
+	     Self-hosted, so there is no third-party request on page load. Inter
+	     sets every page, so every page preloads it.
+	================================================== -->
+	<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="icon" href="images/favicon.ico" sizes="32x32">
+	<link rel="icon" href="images/favicon.png" type="image/png" sizes="32x32">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+	<!-- JS
+	     defer keeps the parser moving and still runs before DOMContentLoaded.
+	================================================== -->
+	<script src="js/typefolio.js" defer></script>
+
+</head>
+
+<body>
+
+
+	<!-- Header
+	================================================== -->
+	<header id="header">
+
+		<a class="skip-link" href="#main">Skip to content</a>
+
+		<!-- * * * * * * * * * * * * * * * * * * * * * * *
+
+			Top Bar & Menu (#nav)
+
+			This one list drives both menus. js/typefolio.js copies it into a
+			collapsible menu below 768px, so there is nothing to keep in sync.
+			Add .hide-on-mobile to an <li> to drop it from narrow viewports.
+
+		* * * * * * * * * * * * * * * * * * * * * * * * -->
+		<div class="topbar">
+			<div class="container">
+				<nav aria-label="Main">
+					<ul id="nav" class="full">
+						<li>
+							<a href="about.html">About</a>
+							<ul>
+								<li><a href="index-with-slider.html">Home with slider</a></li>
+								<li><a href="contact.html">Contact</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="works-stackgrid-with-title.html">Works</a>
+							<ul>
+								<li><a href="works-stackgrid-images.html">Images only</a></li>
+								<li><a href="works-architecture-three-columns.html">Architecture</a></li>
+								<li class="hide-on-mobile"><a href="works-architecture-two-columns.html">Two columns</a></li>
+								<li>
+									<a href="single-photography-sidebar-right.html">Single</a>
+									<ul>
+										<li><a href="single-photography-full-width.html">Full width</a></li>
+										<li><a href="single-photography-sidebar-left.html">Left sidebar</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="shop.html">Shop</a>
+							<ul>
+								<li><a href="shop-item.html">Single item</a></li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="archive-blog.html">Blog</a>
+							<ul>
+								<li><a href="single-blog.html">Single page</a></li>
+							</ul>
+						</li>
+					
+					</ul><!-- // #nav -->
+				</nav>
+			</div><!-- // .container -->
+		</div><!-- // .topbar -->
+
+		<div class="logo-wrap">
+			<div class="container">
+				<div class="desktop-6 columns">
+					<!--
+						The wordmark is text, not a bitmap: it stays sharp at any
+						size, inherits the text colour in both themes, and costs no
+						request. The ring is drawn in CSS by .wordmark-ring.
+					-->
+					<h1 class="site-title">
+						<a href="index.html">Ombra<span class="wordmark-ring" aria-hidden="true"></span></a>
+					</h1>
+				</div><!-- // .desktop-6 -->
+
+				<div class="desktop-6 columns">
+					<p class="site-desc">
+						Ombra Studio, Chicago<br>
+						<span class="font-color-primary">Illustration, photography and digital design</span>
+					</p><!-- // .site-desc -->
+				</div><!-- // .desktop-6 -->
+
+				<div class="clear"></div>
+			</div><!-- // .container -->
+		</div><!-- // .logo-wrap -->
+	</header><!-- // #header -->
+
+	<main id="main">
+
+		<h2 class="visually-hidden">Why we still start every identity with a pencil</h2>
+
+
+
+	<!-- Blog (Single)
+	================================================== -->
+	<section id="archive">
+		<div class="container">
+
+			<div class="entry">
+
+				<div class="desktop-12 columns">
+					<picture>
+						<source srcset="images/thumb_blog01.avif" type="image/avif">
+						<source srcset="images/thumb_blog01.webp" type="image/webp">
+						<img src="images/thumb_blog01.jpg" alt="Pencil thumbnails of logo marks on tracing paper" width="1160" height="500" loading="eager" decoding="async" fetchpriority="high">
+					</picture>
+				</div><!-- // .desktop-12 -->
+
+
+				<div class="desktop-3 tablet-12 columns">
+					<div class="box-meta">
+						<span class="category"><a href="archive-blog.html">Process</a></span><br>
+						<span class="date">September 9, 2026</span>
+					</div><!-- // .box-meta -->
+				</div><!-- // .desktop-3 -->
+
+
+				<div class="desktop-9 tablet-12 columns">
+					<div class="box-content">
+						<a href="single-blog.html" class="permalink">
+							<h3>Why we still start every identity with a pencil</h3>
+						</a><!-- // PERMALINK -->
+						
+						<p>Every identity we shipped this year began as a page of thumbnails no wider than a thumb. It is not nostalgia, and it is not a rule we enforce on new hires with any ceremony. A pencil is simply the fastest way to find out whether an idea survives being drawn badly. Most of them do not, and the ones that do tend to survive everything else too: the wrong typeface, a bad print, a client’s nephew’s opinion.</p>
+
+						<blockquote>
+							<p class="quote">If a mark only works when it is drawn well, it does not work.</p>
+							<footer>Ines Carvalho, founder</footer>
+						</blockquote>
+
+						<p>So the first week of a brand project happens on paper. Two people, one room, a stack of tracing sheets and a rule that nothing gets erased. By Friday there are perhaps two hundred marks on the wall and three worth keeping. The laptop stays shut until then, because a vector is far too easy to fall in love with and far too hard to throw away.</p>
+
+						<p>The other thing the pencil does is keep the client honest. Show someone a rendered logo and they will judge the rendering. Show them a thumbnail and they can only judge the idea, which is the only thing that matters in week one. We have lost work by insisting on this. We have never regretted it.</p>
+
+
+					</div><!-- // .box-content -->
+				</div><!-- // .desktop-9 -->
+
+				<div class="clear"></div>
+			</div><!-- // .entry -->
+
+		</div><!-- // .container -->
+	</section><!-- // section#archive -->
+	</main><!-- // #main -->
+
+	<!-- Footer
+	================================================== -->
+	<footer id="footer">
+		<div class="container">
+			<div class="desktop-3 columns">
+				<p>&copy; 2026 Ombra Studio. Template by <a href="https://www.typebig.com" class="italic">Typebig</a></p>
+			</div><!-- // .desktop-3 -->
+
+			<div class="desktop-9 columns">
+				<nav aria-label="Social">
+					<ul id="social">
+						<li><a href="https://www.facebook.com" class="hoverMe" rel="me noopener">Facebook</a></li>
+						<li><a href="https://www.instagram.com" class="hoverMe" rel="me noopener">Instagram</a></li>
+						<li><a href="https://www.linkedin.com" class="hoverMe" rel="me noopener">LinkedIn</a></li>
+					</ul><!-- // #social -->
+				</nav>
+			</div><!-- // .desktop-9 -->
+
+			<div class="clear"></div>
+		</div><!-- // .container -->
+	</footer><!-- // #footer -->
+
+
+<!-- End Document
+================================================== -->
+</body>
+</html>

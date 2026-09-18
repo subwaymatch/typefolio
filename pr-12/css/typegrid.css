@@ -1,0 +1,295 @@
+/*--------------------------------------------------------------------------
+
+	Typegrid
+
+	A small, fluid 12-column grid for Typefolio.
+
+	Everything is expressed as a percentage of the container, so the layout
+	fills whatever width it is given instead of snapping to a handful of
+	fixed pixel widths. The class names are unchanged from earlier versions
+	of the template.
+
+	  .container                  centred wrapper, max 1200px
+	  .columns / .column          a grid cell (adds the gutter)
+	  .desktop-1 ... .desktop-12  width from 960px up
+	  .tablet-1  ... .tablet-12   width from 768px to 959px
+	  .mobile-half, .mobile-one-third,
+	  .mobile-one-fourth, .mobile-one-fifth, .mobile-full
+	                              width below 768px
+	  .offset-N / .tablet-offset-N        leading space
+	  .push-N / .pull-N                   visual reordering
+	  .clear                      start a new row
+	  .hide-on-mobile, .show-on-mobile,
+	  .hide-on-tablet, .show-on-tablet,
+	  .hide-under-tablet, .show-under-tablet,
+	  .hide-on-widescreen, .show-on-widescreen
+
+	Breakpoints
+	  < 768px    phone       columns stack unless a .mobile-* class is set
+	  >= 768px   tablet      .tablet-N takes over from .desktop-N
+	  >= 960px   desktop     .desktop-N applies
+	  >= 1300px  widescreen  container reaches its 1200px maximum
+
+--------------------------------------------------------------------------*/
+
+:root {
+	/* Half the space between two neighbouring columns. */
+	--grid-gutter: 20px;
+
+	/* Widest the content area is ever allowed to get. */
+	--grid-max-width: 1200px;
+}
+
+
+/*--------------------------------------------------------------------------
+	1. Container
+--------------------------------------------------------------------------*/
+
+.container {
+	position: relative;
+	width: 100%;
+	max-width: var(--grid-max-width);
+	margin-inline: auto;
+
+	/* Self-clearing without the old :after clearfix hack. */
+	display: flow-root;
+}
+
+/*
+	Specificity here is deliberate: (0,1,0), same as a bare .desktop-3.
+
+	Written as `.container .columns` it would be (0,2,0) and quietly pin
+	every column to 100% width. Written as `:where(.container) :where(...)`
+	it would be (0,0,0) and lose the gutter to the reset's `div { padding: 0 }`.
+	One class in, the rest in :where(), leaves the width and offset classes
+	below free to override by source order.
+*/
+.container :where(.column, .columns) {
+	position: relative;
+	float: left;
+	width: 100%;
+	padding-inline: var(--grid-gutter);
+}
+
+/* A nested grid sits flush inside its parent column. */
+.nest,
+.nested { padding-inline: 0; }
+
+
+/*--------------------------------------------------------------------------
+	2. Phone (default)
+
+	Columns stack full width. Add a .mobile-* class to keep two or more
+	items on a row.
+--------------------------------------------------------------------------*/
+
+.mobile-full { width: 100%; }
+.mobile-half { width: 50%; }
+.mobile-one-third { width: 33.3333%; }
+.mobile-one-fourth { width: 25%; }
+.mobile-one-fifth { width: 20%; }
+
+/* Offsets and reordering are meaningless in a stacked layout. */
+.offset-1,
+.offset-2,
+.offset-3,
+.offset-4,
+.offset-5,
+.offset-6,
+.offset-7,
+.offset-8,
+.offset-9,
+.offset-10,
+.offset-11 { margin-inline-start: 0; }
+
+.push-1,
+.push-2,
+.push-3,
+.push-4,
+.push-5,
+.push-6,
+.push-7,
+.push-8,
+.push-9,
+.push-10,
+.push-11 { left: 0; }
+
+.pull-1,
+.pull-2,
+.pull-3,
+.pull-4,
+.pull-5,
+.pull-6,
+.pull-7,
+.pull-8,
+.pull-9,
+.pull-10,
+.pull-11 { right: 0; }
+
+
+/*--------------------------------------------------------------------------
+	3. Tablet and up (>= 768px)
+--------------------------------------------------------------------------*/
+
+@media screen and (min-width: 768px) {
+
+	.desktop-1 { width: 8.3333%; }
+	.desktop-2 { width: 16.6667%; }
+	.desktop-3 { width: 25%; }
+	.desktop-4 { width: 33.3333%; }
+	.desktop-5 { width: 41.6667%; }
+	.desktop-6 { width: 50%; }
+	.desktop-7 { width: 58.3333%; }
+	.desktop-8 { width: 66.6667%; }
+	.desktop-9 { width: 75%; }
+	.desktop-10 { width: 83.3333%; }
+	.desktop-11 { width: 91.6667%; }
+	.desktop-12 { width: 100%; }
+
+	.offset-1 { margin-inline-start: 8.3333%; }
+	.offset-2 { margin-inline-start: 16.6667%; }
+	.offset-3 { margin-inline-start: 25%; }
+	.offset-4 { margin-inline-start: 33.3333%; }
+	.offset-5 { margin-inline-start: 41.6667%; }
+	.offset-6 { margin-inline-start: 50%; }
+	.offset-7 { margin-inline-start: 58.3333%; }
+	.offset-8 { margin-inline-start: 66.6667%; }
+	.offset-9 { margin-inline-start: 75%; }
+	.offset-10 { margin-inline-start: 83.3333%; }
+	.offset-11 { margin-inline-start: 91.6667%; }
+
+	.push-1 { left: 8.3333%; }
+	.push-2 { left: 16.6667%; }
+	.push-3 { left: 25%; }
+	.push-4 { left: 33.3333%; }
+	.push-5 { left: 41.6667%; }
+	.push-6 { left: 50%; }
+	.push-7 { left: 58.3333%; }
+	.push-8 { left: 66.6667%; }
+	.push-9 { left: 75%; }
+	.push-10 { left: 83.3333%; }
+	.push-11 { left: 91.6667%; }
+
+	.pull-1 { right: 8.3333%; }
+	.pull-2 { right: 16.6667%; }
+	.pull-3 { right: 25%; }
+	.pull-4 { right: 33.3333%; }
+	.pull-5 { right: 41.6667%; }
+	.pull-6 { right: 50%; }
+	.pull-7 { right: 58.3333%; }
+	.pull-8 { right: 66.6667%; }
+	.pull-9 { right: 75%; }
+	.pull-10 { right: 83.3333%; }
+	.pull-11 { right: 91.6667%; }
+}
+
+
+/*--------------------------------------------------------------------------
+	4. Tablet only (768px - 959px)
+
+	.tablet-* wins over .desktop-* in this range only.
+--------------------------------------------------------------------------*/
+
+@media screen and (min-width: 768px) and (max-width: 959px) {
+
+	.tablet-1 { width: 8.3333%; }
+	.tablet-2 { width: 16.6667%; }
+	.tablet-3 { width: 25%; }
+	.tablet-4 { width: 33.3333%; }
+	.tablet-5 { width: 41.6667%; }
+	.tablet-6 { width: 50%; }
+	.tablet-7 { width: 58.3333%; }
+	.tablet-8 { width: 66.6667%; }
+	.tablet-9 { width: 75%; }
+	.tablet-10 { width: 83.3333%; }
+	.tablet-11 { width: 91.6667%; }
+	.tablet-12 { width: 100%; }
+
+	.tablet-offset-0 { margin-inline-start: 0; }
+	.tablet-offset-1 { margin-inline-start: 8.3333%; }
+	.tablet-offset-2 { margin-inline-start: 16.6667%; }
+	.tablet-offset-3 { margin-inline-start: 25%; }
+	.tablet-offset-4 { margin-inline-start: 33.3333%; }
+	.tablet-offset-5 { margin-inline-start: 41.6667%; }
+	.tablet-offset-6 { margin-inline-start: 50%; }
+	.tablet-offset-7 { margin-inline-start: 58.3333%; }
+	.tablet-offset-8 { margin-inline-start: 66.6667%; }
+	.tablet-offset-9 { margin-inline-start: 75%; }
+	.tablet-offset-10 { margin-inline-start: 83.3333%; }
+	.tablet-offset-11 { margin-inline-start: 91.6667%; }
+
+	.tablet-push-0 { left: 0; }
+	.tablet-push-1 { left: 8.3333%; }
+	.tablet-push-2 { left: 16.6667%; }
+	.tablet-push-3 { left: 25%; }
+	.tablet-push-4 { left: 33.3333%; }
+	.tablet-push-5 { left: 41.6667%; }
+	.tablet-push-6 { left: 50%; }
+	.tablet-push-7 { left: 58.3333%; }
+	.tablet-push-8 { left: 66.6667%; }
+	.tablet-push-9 { left: 75%; }
+	.tablet-push-10 { left: 83.3333%; }
+	.tablet-push-11 { left: 91.6667%; }
+
+	.tablet-pull-0 { right: 0; }
+	.tablet-pull-1 { right: 8.3333%; }
+	.tablet-pull-2 { right: 16.6667%; }
+	.tablet-pull-3 { right: 25%; }
+	.tablet-pull-4 { right: 33.3333%; }
+	.tablet-pull-5 { right: 41.6667%; }
+	.tablet-pull-6 { right: 50%; }
+	.tablet-pull-7 { right: 58.3333%; }
+	.tablet-pull-8 { right: 66.6667%; }
+	.tablet-pull-9 { right: 75%; }
+	.tablet-pull-10 { right: 83.3333%; }
+	.tablet-pull-11 { right: 91.6667%; }
+}
+
+
+/*--------------------------------------------------------------------------
+	5. Visibility helpers
+--------------------------------------------------------------------------*/
+
+.show-on-widescreen,
+.show-on-tablet,
+.show-under-tablet,
+.show-on-mobile { display: none !important; }
+
+@media screen and (max-width: 767px) {
+	.hide-on-mobile { display: none !important; }
+	.show-on-mobile { display: block !important; }
+}
+
+@media screen and (max-width: 959px) {
+	.hide-under-tablet { display: none !important; }
+	.show-under-tablet { display: block !important; }
+}
+
+@media screen and (min-width: 768px) and (max-width: 959px) {
+	.hide-on-tablet { display: none !important; }
+	.show-on-tablet { display: block !important; }
+}
+
+@media screen and (min-width: 1300px) {
+	.hide-on-widescreen { display: none !important; }
+	.show-on-widescreen { display: block !important; }
+}
+
+
+/*--------------------------------------------------------------------------
+	6. Clearing
+
+	.clear starts a new row. .row and .clearfix clear their own children.
+--------------------------------------------------------------------------*/
+
+.clear {
+	clear: both;
+	display: block;
+	overflow: hidden;
+	width: 0;
+	height: 0;
+	visibility: hidden;
+}
+
+.row,
+.clearfix { display: flow-root; }

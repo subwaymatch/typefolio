@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<!-- Basic Page Needs
+	================================================== -->
+	<meta charset="utf-8">
+	<title>Field Guide | Illustration | Typefolio</title>
+	<meta name="description" content="Field Guide, a series of engravings for a pocket field guide, with project details in a left sidebar.">
+
+	<!-- Mobile Specific Metas
+	================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="color-scheme" content="light dark">
+	<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+	<meta name="theme-color" content="#101010" media="(prefers-color-scheme: dark)">
+
+	<!-- Social Sharing
+	     Replace the og:url and og:image values with absolute URLs on your
+	     own domain. Relative paths are not resolved by most link previews.
+	================================================== -->
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="Typefolio">
+	<meta property="og:title" content="Field Guide">
+	<meta property="og:description" content="Field Guide, a series of engravings for a pocket field guide, with project details in a left sidebar.">
+	<meta property="og:image" content="images/works_stackgrid01.jpg">
+	<meta name="twitter:card" content="summary_large_image">
+
+	<!-- CSS Files
+	* reset.css     - Local reset and element defaults
+	* typegrid.css  - Fluid 12-column grid
+	* style.css     - Design tokens and everything else
+	================================================== -->
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/typegrid.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Fonts
+	     Self-hosted, so there is no third-party request on page load. Inter
+	     sets every page, so every page preloads it.
+	================================================== -->
+	<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="icon" href="images/favicon.ico" sizes="32x32">
+	<link rel="icon" href="images/favicon.png" type="image/png" sizes="32x32">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+	<!-- JS
+	     defer keeps the parser moving and still runs before DOMContentLoaded.
+	================================================== -->
+	<script src="js/typefolio.js" defer></script>
+
+</head>
+
+<body>
+
+
+	<!-- Header
+	================================================== -->
+	<header id="header">
+
+		<a class="skip-link" href="#main">Skip to content</a>
+
+		<!-- * * * * * * * * * * * * * * * * * * * * * * *
+
+			Top Bar & Menu (#nav)
+
+			This one list drives both menus. js/typefolio.js copies it into a
+			collapsible menu below 768px, so there is nothing to keep in sync.
+			Add .hide-on-mobile to an <li> to drop it from narrow viewports.
+
+		* * * * * * * * * * * * * * * * * * * * * * * * -->
+		<div class="topbar">
+			<div class="container">
+				<nav aria-label="Main">
+					<ul id="nav" class="full">
+						<li>
+							<a href="about.html">About</a>
+							<ul>
+								<li><a href="index-with-slider.html">Home with slider</a></li>
+								<li><a href="contact.html">Contact</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="works-stackgrid-with-title.html">Works</a>
+							<ul>
+								<li><a href="works-stackgrid-images.html">Images only</a></li>
+								<li><a href="works-architecture-three-columns.html">Architecture</a></li>
+								<li class="hide-on-mobile"><a href="works-architecture-two-columns.html">Two columns</a></li>
+								<li>
+									<a href="single-photography-sidebar-right.html">Single</a>
+									<ul>
+										<li><a href="single-photography-full-width.html">Full width</a></li>
+										<li><a href="single-photography-sidebar-left.html">Left sidebar</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="shop.html">Shop</a>
+							<ul>
+								<li><a href="shop-item.html">Single item</a></li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="archive-blog.html">Blog</a>
+							<ul>
+								<li><a href="single-blog.html">Single page</a></li>
+							</ul>
+						</li>
+					
+					</ul><!-- // #nav -->
+				</nav>
+			</div><!-- // .container -->
+		</div><!-- // .topbar -->
+
+		<div class="logo-wrap">
+			<div class="container">
+				<div class="desktop-6 columns">
+					<!--
+						The wordmark is text, not a bitmap: it stays sharp at any
+						size, inherits the text colour in both themes, and costs no
+						request. The ring is drawn in CSS by .wordmark-ring.
+					-->
+					<h1 class="site-title">
+						<a href="index.html">Ombra<span class="wordmark-ring" aria-hidden="true"></span></a>
+					</h1>
+				</div><!-- // .desktop-6 -->
+
+				<div class="desktop-6 columns">
+					<p class="site-desc">
+						Ombra Studio, Chicago<br>
+						<span class="font-color-primary">Illustration, photography and digital design</span>
+					</p><!-- // .site-desc -->
+				</div><!-- // .desktop-6 -->
+
+				<div class="clear"></div>
+			</div><!-- // .container -->
+		</div><!-- // .logo-wrap -->
+	</header><!-- // #header -->
+
+	<main id="main">
+
+		<h2 class="visually-hidden">Field Guide</h2>
+
+
+
+	<!-- Work - Single Page (Left Sidebar)
+	================================================== -->
+	<section id="works" class="page single">
+		<div class="container">
+
+			<div class="desktop-3 tablet-12 nested columns">
+
+				<div class="sidebar sticky">
+
+					<div class="desktop-12 tablet-12 columns">
+					
+						<div class="box-info">
+							<h3 class="border-top">Field Guide</h3>
+							<p class="project-desc">2025</p>
+
+							<p>Sixty engravings for a pocket field guide, redrawn from nineteenth-century plates and cut down to the fewest lines that still read at stamp size.</p>
+						</div><!-- // .box-info -->
+
+					</div><!-- // .desktop-12 -->
+
+					<div class="desktop-12 tablet-6 mobile-half columns">
+
+						<div class="box-info">
+							<h4 class="border-top">Category</h4>
+							<p>
+								Illustration<br>
+								Engraving
+							</p>
+						</div><!-- // .box-info -->
+
+					</div><!-- // .desktop-12 -->
+
+					<div class="desktop-12 tablet-6 mobile-half columns">
+						
+						<div class="box-info">
+							<h4 class="border-top">Client</h4>
+							<p>Larkspur Press</p>
+						</div><!-- // .box-info -->
+
+					</div><!-- // .desktop-12 -->
+
+					<div class="clear"></div>
+
+				</div><!-- // .sticky -->
+
+			</div><!-- // .desktop-3 .nested -->
+
+			<div class="desktop-9 tablet-12 columns">
+
+				<picture>
+					<source srcset="images/works_illustration01.avif" type="image/avif">
+					<source srcset="images/works_illustration01.webp" type="image/webp">
+					<img src="images/works_illustration01.jpg" alt="Field Guide: engraved bird illustration" width="1200" height="800" loading="lazy" decoding="async">
+				</picture>
+				<picture>
+					<source srcset="images/works_illustration02.avif" type="image/avif">
+					<source srcset="images/works_illustration02.webp" type="image/webp">
+					<img src="images/works_illustration02.jpg" alt="Field Guide: engraved anatomical study" width="1200" height="800" loading="lazy" decoding="async">
+				</picture>
+				<picture>
+					<source srcset="images/works_illustration03.avif" type="image/avif">
+					<source srcset="images/works_illustration03.webp" type="image/webp">
+					<img src="images/works_illustration03.jpg" alt="Field Guide: engraved mechanical detail" width="1200" height="800" loading="lazy" decoding="async">
+				</picture>
+				<picture>
+					<source srcset="images/works_illustration04.avif" type="image/avif">
+					<source srcset="images/works_illustration04.webp" type="image/webp">
+					<img src="images/works_illustration04.jpg" alt="Field Guide: engraved botanical plate" width="1200" height="800" loading="lazy" decoding="async">
+				</picture>
+				<picture>
+					<source srcset="images/works_illustration05.avif" type="image/avif">
+					<source srcset="images/works_illustration05.webp" type="image/webp">
+					<img src="images/works_illustration05.jpg" alt="Field Guide: engraved nautical study" width="1200" height="800" loading="lazy" decoding="async">
+				</picture>
+
+			</div><!-- // .desktop-9 -->
+
+			<div class="clear"></div>
+
+		</div><!-- // .container -->
+	</section><!-- // section -->
+	</main><!-- // #main -->
+
+	<!-- Footer
+	================================================== -->
+	<footer id="footer">
+		<div class="container">
+			<div class="desktop-3 columns">
+				<p>&copy; 2026 Ombra Studio. Template by <a href="https://www.typebig.com" class="italic">Typebig</a></p>
+			</div><!-- // .desktop-3 -->
+
+			<div class="desktop-9 columns">
+				<nav aria-label="Social">
+					<ul id="social">
+						<li><a href="https://www.facebook.com" class="hoverMe" rel="me noopener">Facebook</a></li>
+						<li><a href="https://www.instagram.com" class="hoverMe" rel="me noopener">Instagram</a></li>
+						<li><a href="https://www.linkedin.com" class="hoverMe" rel="me noopener">LinkedIn</a></li>
+					</ul><!-- // #social -->
+				</nav>
+			</div><!-- // .desktop-9 -->
+
+			<div class="clear"></div>
+		</div><!-- // .container -->
+	</footer><!-- // #footer -->
+
+
+<!-- End Document
+================================================== -->
+</body>
+</html>

@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<!-- Basic Page Needs
+	================================================== -->
+	<meta charset="utf-8">
+	<title>Shop | Typefolio</title>
+	<meta name="description" content="Objects designed and photographed by Ombra Studio: furniture, kitchenware, watches and accessories.">
+
+	<!-- Mobile Specific Metas
+	================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="color-scheme" content="light dark">
+	<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+	<meta name="theme-color" content="#101010" media="(prefers-color-scheme: dark)">
+
+	<!-- Social Sharing
+	     Replace the og:url and og:image values with absolute URLs on your
+	     own domain. Relative paths are not resolved by most link previews.
+	================================================== -->
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="Typefolio">
+	<meta property="og:title" content="Shop">
+	<meta property="og:description" content="Objects designed and photographed by Ombra Studio: furniture, kitchenware, watches and accessories.">
+	<meta property="og:image" content="images/item_shop01.jpg">
+	<meta name="twitter:card" content="summary_large_image">
+
+	<!-- CSS Files
+	* reset.css     - Local reset and element defaults
+	* typegrid.css  - Fluid 12-column grid
+	* style.css     - Design tokens and everything else
+	================================================== -->
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/typegrid.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Fonts
+	     Self-hosted, so there is no third-party request on page load. Inter
+	     sets every page, so every page preloads it.
+	================================================== -->
+	<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="icon" href="images/favicon.ico" sizes="32x32">
+	<link rel="icon" href="images/favicon.png" type="image/png" sizes="32x32">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+	<!-- JS
+	     defer keeps the parser moving and still runs before DOMContentLoaded.
+	================================================== -->
+	<script src="js/typefolio.js" defer></script>
+
+</head>
+
+<body>
+
+
+	<!-- Header
+	================================================== -->
+	<header id="header">
+
+		<a class="skip-link" href="#main">Skip to content</a>
+
+		<!-- * * * * * * * * * * * * * * * * * * * * * * *
+
+			Top Bar & Menu (#nav)
+
+			This one list drives both menus. js/typefolio.js copies it into a
+			collapsible menu below 768px, so there is nothing to keep in sync.
+			Add .hide-on-mobile to an <li> to drop it from narrow viewports.
+
+		* * * * * * * * * * * * * * * * * * * * * * * * -->
+		<div class="topbar">
+			<div class="container">
+				<nav aria-label="Main">
+					<ul id="nav" class="full">
+						<li>
+							<a href="about.html">About</a>
+							<ul>
+								<li><a href="index-with-slider.html">Home with slider</a></li>
+								<li><a href="contact.html">Contact</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="works-stackgrid-with-title.html">Works</a>
+							<ul>
+								<li><a href="works-stackgrid-images.html">Images only</a></li>
+								<li><a href="works-architecture-three-columns.html">Architecture</a></li>
+								<li class="hide-on-mobile"><a href="works-architecture-two-columns.html">Two columns</a></li>
+								<li>
+									<a href="single-photography-sidebar-right.html">Single</a>
+									<ul>
+										<li><a href="single-photography-full-width.html">Full width</a></li>
+										<li><a href="single-photography-sidebar-left.html">Left sidebar</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="shop.html">Shop</a>
+							<ul>
+								<li><a href="shop-item.html">Single item</a></li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="archive-blog.html">Blog</a>
+							<ul>
+								<li><a href="single-blog.html">Single page</a></li>
+							</ul>
+						</li>
+					
+					</ul><!-- // #nav -->
+				</nav>
+			</div><!-- // .container -->
+		</div><!-- // .topbar -->
+
+		<div class="logo-wrap">
+			<div class="container">
+				<div class="desktop-6 columns">
+					<!--
+						The wordmark is text, not a bitmap: it stays sharp at any
+						size, inherits the text colour in both themes, and costs no
+						request. The ring is drawn in CSS by .wordmark-ring.
+					-->
+					<h1 class="site-title">
+						<a href="index.html">Ombra<span class="wordmark-ring" aria-hidden="true"></span></a>
+					</h1>
+				</div><!-- // .desktop-6 -->
+
+				<div class="desktop-6 columns">
+					<p class="site-desc">
+						Ombra Studio, Chicago<br>
+						<span class="font-color-primary">Illustration, photography and digital design</span>
+					</p><!-- // .site-desc -->
+				</div><!-- // .desktop-6 -->
+
+				<div class="clear"></div>
+			</div><!-- // .container -->
+		</div><!-- // .logo-wrap -->
+	</header><!-- // #header -->
+
+	<main id="main">
+
+		<h2 class="visually-hidden">Shop</h2>
+
+
+
+	<!-- Shop
+	================================================== -->
+	<section id="shop">
+		<div class="container">
+
+			<div class="desktop-9 tablet-12 nested columns">
+				
+				<div class="desktop-12 tablet-12 columns">
+					<div class="border-top"></div>
+				</div><!-- // .desktop-12 -->
+
+				
+
+				<div class="desktop-4 tablet-4 mobile-half columns">
+					<div class="cart-item">
+						<a href="shop-item.html" class="permalink">
+
+							<picture>
+								<source srcset="images/item_shop01.avif" type="image/avif">
+								<source srcset="images/item_shop01.webp" type="image/webp">
+								<img src="images/item_shop01.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
+							</picture>
+							
+							<div class="item-info">
+								<div class="item-name">
+									<h3>Tempest Umbrella</h3>
+									<span class="category">Accessories</span>
+								</div><!-- // .item-info -->
+
+								<div class="item-price">
+									<span class="item_price">$48</span>
+								</div><!-- // .item-price -->
+
+								<input type="hidden" value="1" class="item_Quantity" />
+
+								<div class="clear"></div>
+							</div><!-- // .item-info -->
+
+							<div class="clear"></div>
+						</a>
+					</div><!-- // .item -->
+				</div><!-- // .desktop-4 -->
+
+				
+
+				<div class="desktop-4 tablet-4 mobile-half columns">
+					<div class="cart-item">
+						<a href="shop-item.html" class="permalink">
+
+							<picture>
+								<source srcset="images/item_shop02.avif" type="image/avif">
+								<source srcset="images/item_shop02.webp" type="image/webp">
+								<img src="images/item_shop02.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
+							</picture>
+							
+							<div class="item-info">
+								<div class="item-name">
+									<h3>Harbour Blazer</h3>
+									<span class="category">Clothing</span>
+								</div><!-- // .item-info -->
+
+								<div class="item-price">
+									<span class="markdown">$240</span>
+									<span class="item_price">$210</span>
+								</div><!-- // .item-price -->
+
+								<input type="hidden" value="1" class="item_Quantity" />
+
+								<div class="clear"></div>
+							</div><!-- // .item-info -->
+
+							<div class="clear"></div>
+						</a>
+					</div><!-- // .item -->
+				</div><!-- // .desktop-4 -->
+
+				
+
+				<div class="clear show-on-mobile"></div>
+
+
+				<div class="desktop-4 tablet-4 mobile-half columns">
+					<div class="cart-item">
+						<a href="shop-item.html" class="permalink">
+
+							<picture>
+								<source srcset="images/item_shop03.avif" type="image/avif">
+								<source srcset="images/item_shop03.webp" type="image/webp">
+								<img src="images/item_shop03.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
+							</picture>
+							
+							<div class="item-info">
+								<div class="item-name">
+									<h3>Stillwater Cask Strength</h3>
+									<span class="category">Spirits</span>
+								</div><!-- // .item-info -->
+
+								<div class="item-price">
+									<span class="item_price">$64</span>
+								</div><!-- // .item-price -->
+
+								<input type="hidden" value="1" class="item_Quantity" />
+
+								<div class="clear"></div>
+							</div><!-- // .item-info -->
+
+							<div class="clear"></div>
+						</a>
+					</div><!-- // .item -->
+				</div><!-- // .desktop-4 -->
+
+				
+
+				<div class="clear hide-under-tablet"></div>
+
+				
+
+				<div class="desktop-4 tablet-4 mobile-half columns">
+					<div class="cart-item">
+						<a href="shop-item.html" class="permalink">
+
+							<picture>
+								<source srcset="images/item_shop04.avif" type="image/avif">
+								<source srcset="images/item_shop04.webp" type="image/webp">
+								<img src="images/item_shop04.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
+							</picture>
+							
+							<div class="item-info">
+								<div class="item-name">
+									<h3>Glacier Still Water</h3>
+									<span class="category">Food &amp; drink</span>
+								</div><!-- // .item-info -->
+
+								<div class="item-price">
+									<span class="markdown">$3</span>
+									<span class="item_price">$2.50</span>
+								</div><!-- // .item-price -->
+
+								<input type="hidden" value="1" class="item_Quantity" />
+
+								<div class="clear"></div>
+							</div><!-- // .item-info -->
+
+							<div class="clear"></div>
+						</a>
+					</div><!-- // .item -->
+				</div><!-- // .desktop-4 -->
+
+				
+
+				<div class="clear show-on-mobile"></div>
+
+
+				<div class="desktop-4 tablet-4 mobile-half columns">
+					<div class="cart-item">
+						<a href="shop-item.html" class="permalink">
+
+							<picture>
+								<source srcset="images/item_shop05.avif" type="image/avif">
+								<source srcset="images/item_shop05.webp" type="image/webp">
+								<img src="images/item_shop05.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
+							</picture>
+							
+							<div class="item-info">
+								<div class="item-name">
+									<h3>Meridian Chronograph</h3>
+									<span class="category">Watches</span>
+								</div><!-- // .item-info -->
+
+								<div class="item-price">
+									<span class="item_price">$420</span>
+								</div><!-- // .item-price -->
+
+								<input type="hidden" value="1" class="item_Quantity" />
+
+								<div class="clear"></div>
+							</div><!-- // .item-info -->
+
+							<div class="clear"></div>
+						</a>
+					</div><!-- // .item -->
+				</div><!-- // .desktop-4 -->
+
+				
+
+				<div class="desktop-4 tablet-4 mobile-half columns">
+					<div class="cart-item">
+						<a href="shop-item.html" class="permalink">
+
+							<picture>
+								<source srcset="images/item_shop06.avif" type="image/avif">
+								<source srcset="images/item_shop06.webp" type="image/webp">
+								<img src="images/item_shop06.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
+							</picture>
+							
+							<div class="item-info">
+								<div class="item-name">
+									<h3>Field Watch, Tan Strap</h3>
+									<span class="category">Watches</span>
+								</div><!-- // .item-info -->
+
+								<div class="item-price">
+									<span class="markdown">$360</span>
+									<span class="item_price">$310</span>
+								</div><!-- // .item-price -->
+
+								<input type="hidden" value="1" class="item_Quantity" />
+
+								<div class="clear"></div>
+							</div><!-- // .item-info -->
+
+							<div class="clear"></div>
+						</a>
+					</div><!-- // .item -->
+				</div><!-- // .desktop-4 -->
+
+				
+
+				<div class="clear show-on-mobile"></div>
+
+
+				<div class="clear hide-under-tablet"></div>
+
+				
+
+				<div class="desktop-4 tablet-4 mobile-half columns">
+					<div class="cart-item">
+						<a href="shop-item.html" class="permalink">
+
+							<picture>
+								<source srcset="images/item_shop07.avif" type="image/avif">
+								<source srcset="images/item_shop07.webp" type="image/webp">
+								<img src="images/item_shop07.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
+							</picture>
+							
+							<div class="item-info">
+								<div class="item-name">
+									<h3>Fairway Driver</h3>
+									<span class="category">Golf</span>
+								</div><!-- // .item-info -->
+
+								<div class="item-price">
+									<span class="item_price">$299</span>
+								</div><!-- // .item-price -->
+
+								<input type="hidden" value="1" class="item_Quantity" />
+
+								<div class="clear"></div>
+							</div><!-- // .item-info -->
+
+							<div class="clear"></div>
+						</a>
+					</div><!-- // .item -->
+				</div><!-- // .desktop-4 -->
+
+				
+
+				<div class="desktop-4 tablet-4 mobile-half columns">
+					<div class="cart-item">
+						<a href="shop-item.html" class="permalink">
+
+							<picture>
+								<source srcset="images/item_shop08.avif" type="image/avif">
+								<source srcset="images/item_shop08.webp" type="image/webp">
+								<img src="images/item_shop08.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
+							</picture>
+							
+							<div class="item-info">
+								<div class="item-name">
+									<h3>Forge Knife Pair</h3>
+									<span class="category">Kitchen</span>
+								</div><!-- // .item-info -->
+
+								<div class="item-price">
+									<span class="markdown">$120</span>
+									<span class="item_price">$96</span>
+								</div><!-- // .item-price -->
+
+								<input type="hidden" value="1" class="item_Quantity" />
+
+								<div class="clear"></div>
+							</div><!-- // .item-info -->
+
+							<div class="clear"></div>
+						</a>
+					</div><!-- // .item -->
+				</div><!-- // .desktop-4 -->
+
+				
+
+				<div class="clear show-on-mobile"></div>
+
+
+				<div class="desktop-4 tablet-4 mobile-half columns">
+					<div class="cart-item">
+						<a href="shop-item.html" class="permalink">
+
+							<picture>
+								<source srcset="images/item_shop09.avif" type="image/avif">
+								<source srcset="images/item_shop09.webp" type="image/webp">
+								<img src="images/item_shop09.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
+							</picture>
+							
+							<div class="item-info">
+								<div class="item-name">
+									<h3>Forge Cutlery Set</h3>
+									<span class="category">Kitchen</span>
+								</div><!-- // .item-info -->
+
+								<div class="item-price">
+									<span class="item_price">$85</span>
+								</div><!-- // .item-price -->
+
+								<input type="hidden" value="1" class="item_Quantity" />
+
+								<div class="clear"></div>
+							</div><!-- // .item-info -->
+
+							<div class="clear"></div>
+						</a>
+					</div><!-- // .item -->
+				</div><!-- // .desktop-4 -->
+
+				
+
+				<div class="clear hide-under-tablet"></div>
+
+				
+
+				<div class="desktop-4 tablet-4 mobile-half columns">
+					<div class="cart-item">
+						<a href="shop-item.html" class="permalink">
+
+							<picture>
+								<source srcset="images/item_shop10.avif" type="image/avif">
+								<source srcset="images/item_shop10.webp" type="image/webp">
+								<img src="images/item_shop10.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
+							</picture>
+							
+							<div class="item-info">
+								<div class="item-name">
+									<h3>Cocoon Lounge Chair</h3>
+									<span class="category">Furniture</span>
+								</div><!-- // .item-info -->
+
+								<div class="item-price">
+									<span class="markdown">$1,150</span>
+									<span class="item_price">$990</span>
+								</div><!-- // .item-price -->
+
+								<input type="hidden" value="1" class="item_Quantity" />
+
+								<div class="clear"></div>
+							</div><!-- // .item-info -->
+
+							<div class="clear"></div>
+						</a>
+					</div><!-- // .item -->
+				</div><!-- // .desktop-4 -->
+
+				
+
+				<div class="clear show-on-mobile"></div>
+
+
+				<div class="desktop-4 tablet-4 mobile-half columns">
+					<div class="cart-item">
+						<a href="shop-item.html" class="permalink">
+
+							<picture>
+								<source srcset="images/item_shop11.avif" type="image/avif">
+								<source srcset="images/item_shop11.webp" type="image/webp">
+								<img src="images/item_shop11.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
+							</picture>
+							
+							<div class="item-info">
+								<div class="item-name">
+									<h3>Slat Dining Chair</h3>
+									<span class="category">Furniture</span>
+								</div><!-- // .item-info -->
+
+								<div class="item-price">
+									<span class="item_price">$280</span>
+								</div><!-- // .item-price -->
+
+								<input type="hidden" value="1" class="item_Quantity" />
+
+								<div class="clear"></div>
+							</div><!-- // .item-info -->
+
+							<div class="clear"></div>
+						</a>
+					</div><!-- // .item -->
+				</div><!-- // .desktop-4 -->
+
+				
+
+				<div class="desktop-4 tablet-4 mobile-half columns">
+					<div class="cart-item">
+						<a href="shop-item.html" class="permalink">
+
+							<picture>
+								<source srcset="images/item_shop12.avif" type="image/avif">
+								<source srcset="images/item_shop12.webp" type="image/webp">
+								<img src="images/item_shop12.jpg" alt="" width="1440" height="1800" loading="lazy" decoding="async">
+							</picture>
+							
+							<div class="item-info">
+								<div class="item-name">
+									<h3>Loft Armchair</h3>
+									<span class="category">Furniture</span>
+								</div><!-- // .item-info -->
+
+								<div class="item-price">
+									<span class="item_price">$890</span>
+								</div><!-- // .item-price -->
+
+								<input type="hidden" value="1" class="item_Quantity" />
+
+								<div class="clear"></div>
+							</div><!-- // .item-info -->
+
+							<div class="clear"></div>
+						</a>
+					</div><!-- // .item -->
+				</div><!-- // .desktop-4 -->
+
+				
+
+				<div class="clear show-on-mobile"></div>
+
+
+				<div class="clear hide-under-tablet"></div>
+
+				
+
+				<div class="desktop-12 tablet-12 columns">
+					
+
+					<div class="nav-pages">
+						<a href="#" title="Previous" class="link-prev">
+							<div>
+								<span>Previous</span>
+							</div>
+						</a><!-- // .link-prev -->
+
+						<a href="#" title="Next" class="link-next">
+							<div>
+								<span>Next</span>
+							</div>
+						</a><!-- // .link-next -->
+						
+						<div class="clear"></div>
+					</div><!-- // .nav-pages -->
+				</div><!-- // .desktop-12 -->
+			</div><!-- // .desktop-9 .nested -->
+
+			<div class="desktop-3 tablet-12 columns">
+				
+				<div class="sidebar sticky">
+					<div class="shop-info">
+						<h2 class="border-top">Ombra Goods</h2>
+						
+						<picture>
+							<source srcset="images/shop_description.avif" type="image/avif">
+							<source srcset="images/shop_description.webp" type="image/webp">
+							<img src="images/shop_description.png" alt="" width="720" height="400" loading="lazy" decoding="async" class="invert-on-dark">
+						</picture>
+						
+						<p><strong>Ombra Goods</strong> is the studio’s own shop: objects we designed, objects we photographed, and a few we simply could not stop looking at. Everything ships from Chicago in recycled packaging.</p>
+
+						<p><a href="#" class="button black full">About the shop</a></p>
+					</div><!-- // .shop-info -->
+				</div><!-- // .sidebar -->
+
+			</div><!-- // .desktop-3 -->
+
+			<div class="clear"></div>
+			
+		</div><!-- // .container -->
+	</section><!-- // section#shop -->
+	</main><!-- // #main -->
+
+	<!-- Footer
+	================================================== -->
+	<footer id="footer">
+		<div class="container">
+			<div class="desktop-3 columns">
+				<p>&copy; 2026 Ombra Studio. Template by <a href="https://www.typebig.com" class="italic">Typebig</a></p>
+			</div><!-- // .desktop-3 -->
+
+			<div class="desktop-9 columns">
+				<nav aria-label="Social">
+					<ul id="social">
+						<li><a href="https://www.facebook.com" class="hoverMe" rel="me noopener">Facebook</a></li>
+						<li><a href="https://www.instagram.com" class="hoverMe" rel="me noopener">Instagram</a></li>
+						<li><a href="https://www.linkedin.com" class="hoverMe" rel="me noopener">LinkedIn</a></li>
+					</ul><!-- // #social -->
+				</nav>
+			</div><!-- // .desktop-9 -->
+
+			<div class="clear"></div>
+		</div><!-- // .container -->
+	</footer><!-- // #footer -->
+
+
+<!-- End Document
+================================================== -->
+</body>
+</html>
