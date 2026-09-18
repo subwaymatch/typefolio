@@ -44,10 +44,10 @@ against a dark page.
   every page.
 - **Dark mode** via `prefers-color-scheme`, driven by CSS custom properties.
 - **Accessible.** Keyboard-operable menu and sliders, visible focus, real form
-  labels, AA contrast throughout. Zero axe-core violations on all 18 pages in
+  labels, AA contrast throughout. Zero axe-core violations on all 17 pages in
   both themes, at desktop and phone widths.
 - **Respects `prefers-reduced-motion`.** Autoplay and smooth scrolling switch off.
-- **18 page layouts:** three home pages, portfolio grids, project pages with
+- **17 page layouts:** two home pages, portfolio grids, project pages with
   optional sidebars, a shop, a journal and a contact page.
 
 ## Getting started
@@ -162,7 +162,10 @@ files is served to a visitor.
 
 ### Colours and type
 
-Everything is a custom property at the top of `css/style.css`:
+Everything is a custom property at the top of `css/style.css`. The whole
+template is set in one weight range: 300 for display lines, 400 for text and
+600 for anything emphasised. Nothing uses 700, which reads heavy in Inter at
+text sizes; the only heavier weight is the 800 wordmark.
 
 ```css
 :root {
@@ -188,14 +191,15 @@ The header logo is text, not an image:
 
 ```html
 <h1 class="site-title">
-  <a href="index.html">Bernd<span class="wordmark-ring" aria-hidden="true"></span></a>
+  <a href="index.html">Ombra<span class="wordmark-ring" aria-hidden="true"></span></a>
 </h1>
 ```
 
 Put your own name in, and drop the `<span>` if you do not want the ring. It is
 set in the page typeface at `--tracking-wordmark` and sized in `cqw` against
 the column it sits in, so it fills the header at every width without a
-breakpoint.
+breakpoint. The size (`font-size: 25cqw` on `#header h1.site-title a`) is
+tuned for a five-letter name; a longer name needs a smaller value.
 
 ### The grid
 
@@ -254,11 +258,12 @@ adds mouse drag, which is the one gesture a scroll container does not give
 you for free.
 
 - Drop `data-slider-autoplay` to leave it still.
-- Add `.is-peeking` to let neighbouring slides show at the edges.
+- Add `.is-peeking` to let neighbouring slides show at the edges. The current
+  slide stays centred, the first and last included.
 - Set `--slide-ratio` (for example `.is-wide`) to match your artwork; the track
   height follows.
 - Any element with `data-slider-goto="N"` becomes a control, which is how the
-  thumbnail strip and the labelled project nav are built.
+  thumbnail strip under the carousel is built.
 
 ### The menu
 
@@ -308,7 +313,9 @@ await sharp(src).webp({ quality: 78, effort: 6 }).toFile(dest + '.webp');
 ### Dark mode and images
 
 Black line art on a transparent background disappears on a dark page. Add
-`.invert-on-dark` to those images. Do not add it to photographs.
+`.invert-on-dark` to those images. Do not add it to photographs, or to tonal
+drawings such as the pencil portraits on the about page: those sit on a light
+disc (`--color-plate`) that stays light in both themes instead.
 
 ## Browser support
 
@@ -372,9 +379,12 @@ Converting the artwork cut what a visitor downloads by a further two thirds:
 
 - Free to use in personal and commercial projects.
 - Please do not resell it on template or theme markets.
-- **The placeholder images are not yours to use.** They were bought from stock
-  libraries (mostly Shutterstock) without extended licences. Replace every
-  image in `images/` before you publish.
+- **The placeholder images are not yours to use.** Most were bought from stock
+  libraries (mostly Shutterstock) without extended licences. The about page
+  illustrations and portraits, the shop emblem, the lamp on the home page,
+  eight of the works grid photographs, one carousel slide and the first
+  journal image were generated with an image model for this template. Replace
+  every image in `images/` before you publish.
 - Inter in `fonts/` is under the SIL Open Font License 1.1. See `fonts/LICENSE.txt`.
 
 ## Author

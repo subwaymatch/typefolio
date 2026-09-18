@@ -90,7 +90,7 @@ const browser = await chromium.launch();
 }
 
 /* -------------------------------------------------------------- slider --- */
-for (const file of ['index-with-iosslider.html', 'index-with-flexslider.html']) {
+for (const file of ['index-with-slider.html']) {
   const ctx = await browser.newContext(VIEWPORTS.desktop);
   const page = await ctx.newPage();
   await page.goto(BASE + file, { waitUntil: 'load' });
