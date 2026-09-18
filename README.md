@@ -258,7 +258,8 @@ adds mouse drag, which is the one gesture a scroll container does not give
 you for free.
 
 - Drop `data-slider-autoplay` to leave it still.
-- Add `.is-peeking` to let neighbouring slides show at the edges.
+- Add `.is-peeking` to let neighbouring slides show at the edges. The current
+  slide stays centred, the first and last included.
 - Set `--slide-ratio` (for example `.is-wide`) to match your artwork; the track
   height follows.
 - Any element with `data-slider-goto="N"` becomes a control, which is how the

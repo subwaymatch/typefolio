@@ -1963,8 +1963,27 @@ b, strong { font-weight: 600; }
 	*/
 	.tf-slider.is-peeking .tf-slider__slide { flex-basis: 100%; }
 
+	/*
+		The slide width and the track padding are both measured against the
+		slider itself (cqw), not the track: a percentage would resolve
+		against the track's content box, which the padding shrinks.
+	*/
+	.tf-slider.is-peeking { container-type: inline-size; }
+
 	@media screen and (min-width: 768px) {
-		.tf-slider.is-peeking .tf-slider__slide { flex-basis: min(1160px, 80%); }
+		.tf-slider.is-peeking { --peek-slide: min(1160px, 80cqw); }
+
+		.tf-slider.is-peeking .tf-slider__slide { flex-basis: var(--peek-slide); }
+
+		/*
+			A centred snap point cannot centre the first or last slide unless
+			there is room beside it. Half the leftover width on each side gives
+			the ends the same position as every slide in between, so slide one
+			sits in the middle at rest instead of against the left edge.
+		*/
+		.tf-slider.is-peeking .tf-slider__track {
+			padding-inline: calc((100cqw - var(--peek-slide)) / 2);
+		}
 	}
 
 
