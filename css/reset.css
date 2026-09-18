@@ -117,12 +117,18 @@ video { height: auto; }
 
 iframe { border: 0; }
 
-/* Form controls inherit type instead of falling back to the UA font. */
+/*
+	Form controls inherit type instead of falling back to the UA font. The
+	font shorthand does not carry letter-spacing, and Chromium's own sheet
+	resets it to normal on controls, so it is inherited explicitly: buttons
+	and fields are set in the same tightened Inter as everything else.
+*/
 input,
 button,
 textarea,
 select {
 	font: inherit;
+	letter-spacing: inherit;
 	color: inherit;
 }
 

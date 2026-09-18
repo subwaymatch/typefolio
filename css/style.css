@@ -19,7 +19,7 @@
 		3.9. Footer
 	4. Components
 		4.1. Slider
-		4.2. Slider navigation
+		4.2. Slider thumbnails
 
 	Load order: reset.css, typegrid.css, style.css.
 
@@ -34,7 +34,9 @@
 	load, and a visitor IP address handed to a third party.
 
 	One variable file covers every weight the design uses, from the 300 of
-	the display lines to the 800 of the wordmark. Licence in
+	the display lines to the 800 of the wordmark. Everything in between is
+	600: the template never uses 700, which reads heavy in Inter at text
+	sizes. Licence in
 	fonts/LICENSE.txt (SIL Open Font License 1.1).
 --------------------------------------------------------------------------*/
 
@@ -89,6 +91,10 @@
 	--color-bg: #fff;
 	--color-bg-invert: #111;
 	--color-bg-sunken: #f7f7f7;
+
+	/* The disc a portrait drawing sits on. Light in both themes: a pencil
+	   portrait cannot be inverted the way the line art is. */
+	--color-plate: #f1f1f1;
 
 	/*
 		Dark panels (menus, inverted buttons, notices). These stay dark in
@@ -170,6 +176,7 @@
 		--color-bg: #101010;
 		--color-bg-invert: #f5f5f5;
 		--color-bg-sunken: #181818;
+		--color-plate: #dcdcdc;
 
 		--color-text: #f2f2f2;
 		--color-text-muted: #b8b8b8;
@@ -233,7 +240,7 @@ h2,
 h3,
 h4,
 h5,
-h6 { font-weight: bold; }
+h6 { font-weight: 600; }
 
 
 /* Links */
@@ -298,7 +305,7 @@ p a:visited { line-height: inherit; }
 	color: var(--color-on-panel);
 	background: var(--color-panel);
 	font-size: 14px;
-	font-weight: bold;
+	font-weight: 600;
 	transform: translateY(-120%);
 	transition: transform var(--transition-fast);
 }
@@ -321,7 +328,7 @@ p a:visited { line-height: inherit; }
 em,
 i,
 .italic { font-style: italic; }
-b, strong { font-weight: bold; }
+b, strong { font-weight: 600; }
 
 .underline {
 	display: inline-block;
@@ -403,7 +410,7 @@ b, strong { font-weight: bold; }
 		background: var(--color-accent);
 		font-size: 14px;
 		line-height: 20px;
-		font-weight: bold;
+		font-weight: 600;
 		text-align: center;
 		padding: 13px 24px 12px 24px;
 		border: 0;
@@ -479,6 +486,7 @@ b, strong { font-weight: bold; }
 		width: 100%;
 		padding: 20px 25px;
 		color: var(--color-text);
+		background: var(--color-bg);
 		margin: 0 0 15px 0;
 		border: 1px solid var(--color-rule-strong);
 		outline: none;
@@ -519,7 +527,7 @@ b, strong { font-weight: bold; }
 	/* Page elements */
 	.page p.title-desc {
 		color: var(--color-text-subtle);
-		font-weight: bold;
+		font-weight: 600;
 		margin-top: 0;
 	}
 
@@ -585,8 +593,7 @@ b, strong { font-weight: bold; }
 		.nav-pages a.link-prev,
 		.nav-pages a.link-next {
 			color: var(--color-text-muted);
-			text-transform: uppercase;
-			letter-spacing: 2px;
+			font-weight: 600;
 			text-align: center;
 			padding: 25px 0;
 			display: block;
@@ -651,7 +658,7 @@ b, strong { font-weight: bold; }
 		flex-wrap: wrap;
 		font-size: 14px;
 		line-height: 21px;
-		font-weight: bold;
+		font-weight: 600;
 	}
 
 	/*
@@ -809,7 +816,7 @@ b, strong { font-weight: bold; }
 		border-radius: 0;
 		font-size: 15px;
 		line-height: 25px;
-		font-weight: bold;
+		font-weight: 600;
 		text-align: left;
 		cursor: pointer;
 	}
@@ -891,11 +898,16 @@ b, strong { font-weight: bold; }
 		font-weight: 800;
 	}
 
+		/*
+			25cqw fits a five-letter name plus the ring with a little air to
+			spare. A longer or wider name needs a smaller value; a shorter
+			one can go larger.
+		*/
 		#header h1.site-title a {
 			display: inline-flex;
 			align-items: flex-start;
 			color: var(--color-text);
-			font-size: 28cqw;
+			font-size: 25cqw;
 			line-height: 0.82;
 			letter-spacing: var(--tracking-wordmark);
 			text-transform: uppercase;
@@ -995,16 +1007,61 @@ b, strong { font-weight: bold; }
 	}
 
 
+	/* What we do (home page with slider) */
+	.box-services { padding: 30px 0 20px 0; }
+
+		.box-services h3 {
+			font-size: 16px;
+			line-height: 26px;
+			display: inline-block;
+			padding-bottom: 5px;
+			border-bottom: 1px solid var(--color-text);
+		}
+
+		.box-services p {
+			font-size: 15px;
+			line-height: 26px;
+			margin-top: 15px;
+		}
+
+	@media screen and (max-width: 767px) {
+		.box-services { padding-bottom: 0; }
+		.box-services h3 { margin-top: 10px; }
+	}
+
+
 	/*---------------------------------------------------
 			3.4 About
 	---------------------------------------------------*/
 
 	#about h2 { padding-top: 30px; }
 
-	#about .services h3 {
-		font-size: 32px;
-		line-height: 42px;
+	/* Three studio facts under the introduction. */
+	#about .facts {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 20px 40px;
+		margin-bottom: 30px;
+		padding-top: 30px;
+		border-top: 1px solid var(--color-rule);
 	}
+
+		#about .facts li { flex: 1 1 140px; }
+
+		#about .facts .value {
+			display: block;
+			font-size: 34px;
+			line-height: 44px;
+			font-weight: 300;
+			letter-spacing: var(--tracking-display);
+		}
+
+		#about .facts .label {
+			display: block;
+			color: var(--color-text-subtle);
+			font-size: 14px;
+			line-height: 22px;
+		}
 
 	#about .services .item { padding: 30px 0; }
 
@@ -1023,15 +1080,60 @@ b, strong { font-weight: bold; }
 	}
 
 	@media screen and (max-width: 767px) {
-		#about .services h3 {
-			margin-top: 40px; 
-		}
+		#about .services h3 { margin-top: 40px; }
 
 		#about .services p {
-			font-size: 14px; 
-			line-height: 24px; 
+			font-size: 14px;
+			line-height: 24px;
 		}
 	}
+
+	/*
+		People
+
+		The portraits are pencil drawings, and a drawing cannot be inverted
+		for dark mode the way the line art is: a negative of a face is not a
+		face. Each one sits on a light disc instead, which stays light in
+		both themes.
+	*/
+	#about .people { padding-bottom: 20px; }
+
+	#about .person { padding: 30px 0 10px 0; }
+
+		#about .person .portrait {
+			overflow: hidden;
+			aspect-ratio: 1;
+			border-radius: 50%;
+			background: var(--color-plate);
+		}
+
+			#about .person .portrait img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
+		#about .person h3 {
+			font-size: 15px;
+			line-height: 24px;
+			margin-top: 20px;
+		}
+
+		#about .person .role {
+			display: block;
+			color: var(--color-text-subtle);
+			font-size: 14px;
+			line-height: 22px;
+		}
+
+	/* Closing call to action */
+	#about .cta { padding: 30px 0 20px 0; }
+
+		#about .cta p {
+			margin: 0 0 30px 0;
+			font-size: 16px;
+			line-height: 30px;
+		}
 
 
 	/*---------------------------------------------------
@@ -1044,10 +1146,13 @@ b, strong { font-weight: bold; }
 			color: var(--color-text-muted);
 			font-size: 14px;
 			line-height: 22px;
-			font-weight: bold;
+			font-weight: 600;
 		}
 
 		#works a.permalink:hover h3 { color: var(--color-text); }
+
+		/* When the photo comes first, give the title room to breathe. */
+		#works .item picture + h3 { margin-top: 16px; }
 
 	#works .item span.category {
 		color: var(--color-text-subtle);
@@ -1160,15 +1265,14 @@ b, strong { font-weight: bold; }
 			
 			#works.single .box-info p.project-desc {
 				color: var(--color-text-subtle); 
-				font-weight: bold; 
+				font-weight: 600; 
 				margin-top: 0; 
 			}
 
 			#works.single .box-info h4 {
-				font-size: 14px; 
-				line-height: 21px; 
-				text-transform: uppercase; 
-				letter-spacing: 3px; 
+				color: var(--color-text-subtle);
+				font-size: 13px;
+				line-height: 21px;
 			}
 
 				#works.single .box-info h4.border-top {
@@ -1235,7 +1339,7 @@ b, strong { font-weight: bold; }
 
 			#shop .cart-item .item-name h3 {
 				color: var(--color-text-subtle);
-				font-weight: bold;
+				font-weight: 600;
 			}
 
 			#shop .cart-item .item-name span.category {
@@ -1317,7 +1421,7 @@ b, strong { font-weight: bold; }
 	}
 
 	#shop .sidecart span.simpleCart_quantity {
-		font-weight: bold; 
+		font-weight: 600; 
 	}
 
 	#shop .sidecart h2 a:hover {
@@ -1349,7 +1453,7 @@ b, strong { font-weight: bold; }
 		color: var(--color-text-subtle);
 		font-size: 16px;
 		font-style: italic;
-		font-weight: bold;
+		font-weight: 600;
 		text-align: center;
 		padding: 15px 0;
 	}
@@ -1365,7 +1469,7 @@ b, strong { font-weight: bold; }
 	*/
 
 	.cart-header {
-		font-weight: bold; 
+		font-weight: 600; 
 	}
 
 		.cart-header > div {
@@ -1527,7 +1631,7 @@ b, strong { font-weight: bold; }
 		
 		#archive .box-meta span.category {
 			color: var(--color-text-muted);
-			font-weight: bold;
+			font-weight: 600;
 		}
 
 	
@@ -1651,6 +1755,10 @@ b, strong { font-weight: bold; }
 			font-size: 14px;
 			line-height: 28px;
 			background-size: cover;
+
+			/* An email or URL has nowhere to break inside a half-width phone
+			   column, so let it wrap anywhere rather than push the page out. */
+			overflow-wrap: anywhere;
 		}
 
 			section#contact .box-contact h3 {
@@ -1792,7 +1900,7 @@ b, strong { font-weight: bold; }
 		--slide-ratio: 1160 / 450;
 	}
 
-	/* Matches the wider full-bleed artwork on the second home page. */
+	/* A wider full-bleed ratio, if your artwork suits it. */
 	.tf-slider.is-wide { --slide-ratio: 1600 / 550; }
 
 	@media screen and (max-width: 767px) {
@@ -1946,7 +2054,7 @@ b, strong { font-weight: bold; }
 
 
 	/*---------------------------------------------------
-			4.2 Slider navigation
+			4.2 Slider thumbnails
 	---------------------------------------------------*/
 
 	/* Thumbnail strip (home page with slider) */
@@ -1985,63 +2093,15 @@ b, strong { font-weight: bold; }
 			}
 
 
-	/* Labelled strip (home page with slider 2) */
-	.flexslider-nav-carousel {
-		background: var(--color-stage);
-		margin-bottom: 30px;
-	}
-
-	.item-nav {
-		width: 100%;
-		padding: 27px 0;
-		background: none;
-		border: 0;
-		border-right: 1px solid var(--color-panel-rule);
-		border-radius: 0;
-		text-align: left;
-		cursor: pointer;
-	}
-
-		.item-nav h3 {
-			color: var(--color-on-stage-muted);
-			font-size: 20px;
-			line-height: 30px;
-			transition: color var(--transition-fast);
-		}
-
-		.item-nav span.category {
-			display: inline-block;
-			color: var(--color-on-stage-muted);
-			font-size: 14px;
-			line-height: 21px;
-			text-transform: uppercase;
-			letter-spacing: 2px;
-			margin-top: 10px;
-			border-top: 1px solid var(--color-panel-rule);
-			padding-top: 10px;
-			transition: color var(--transition-fast), border-color var(--transition-fast);
-		}
-
-		.item-nav:hover h3,
-		.item-nav[aria-current="true"] h3 { color: var(--color-on-stage); }
-
-		.item-nav[aria-current="true"] span.category {
-			color: var(--color-on-stage);
-			border-top-color: var(--color-accent);
-		}
-
-
 	/*
 		Focus ring for the controls that sit flush inside a dark strip.
 
-		The shared ring is drawn 3px outside the element, which here either
-		spills past the panel onto the page or is clipped away by the
-		thumbnail strip's own scrolling box. The light-mode ring colour is
+		The shared ring is drawn 3px outside the element, which here is
+		clipped away by the thumbnail strip's own scrolling box. The light-mode ring colour is
 		also too dark to read against the panel. So: bright accent, drawn
 		inside the control.
 	*/
-	.slider-thumbs button:focus-visible,
-	.item-nav:focus-visible {
+	.slider-thumbs button:focus-visible {
 		outline: 2px solid var(--color-accent);
 		outline-offset: -2px;
 		border-radius: 0;
